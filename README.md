@@ -1,5 +1,5 @@
 # DROID Selection Review Dashboard
 
-Static GitHub Pages export generated from Agent-VLA local dashboard.
+Static GitHub Pages mirror of the local Agent-VLA / DreamZero / DROID review dashboard.
 
-Open `index.html` via GitHub Pages. Manual audit can still be exported from browser, but `save local` requires the local save server and is intended for local use only.
+This public copy contains browser-playable media assets and the dashboard UI. Manual label edits on GitHub Pages should be exported from the browser; the local project remains the source of truth for saved audit CSV/JSON files.
