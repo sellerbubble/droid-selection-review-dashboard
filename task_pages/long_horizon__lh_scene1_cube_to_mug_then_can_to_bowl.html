@@ -1141,7 +1141,7 @@
     }
     function showBackendHelp(message) {
       serverHelp.classList.add('visible');
-      serverHelp.innerHTML = `${escapeText(message)}<br><br>Check that <code>Backend URL</code> is exactly <code>https://droid-selection-audit.agent-vla-audit.workers.dev</code>, that your <code>reviewer id</code> is valid, and that the <code>write secret</code> matches the shared audit password. Your current edits are still safe in this browser's localStorage, and a backup JSON is downloaded on failed saves.`;
+      serverHelp.innerHTML = `${escapeText(message)}<br><br>If this says <code>request timed out</code>, this browser/network likely cannot reach the Cloudflare Workers domain <code>*.workers.dev</code>. In that case, use <b>save local</b> with the local save server, or use a backend URL on a custom domain that your browser can open directly. If the backend is reachable but saving fails, then check <code>reviewer id</code> and <code>write secret</code>. Your current edits are still safe in this browser's localStorage, and a light backup JSON is downloaded on failed backend saves.`;
     }
     async function backendRequest(path, body, timeoutMs = BACKEND_TIMEOUT_MS) {
       const { backendUrl, reviewerId, writeSecret } = currentBackendSettings();
