@@ -1,0 +1,20 @@
+{
+  "reason": "backend_save",
+  "created_at": "2026-05-12T00:00:00Z",
+  "page_url": "https://sellerbubble.github.io/droid-selection-review-dashboard/",
+  "overrides": [
+    {
+      "task": "t",
+      "mode": "m",
+      "group": 0,
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
+      "updated_at": "x"
+    }
+  ],
+  "rows": [],
+  "reviewer_id": "browser-like-test",
+  "saved_by_backend_at": "2026-05-12T12:37:28.508Z",
+  "backend": "cloudflare_worker"
+}
