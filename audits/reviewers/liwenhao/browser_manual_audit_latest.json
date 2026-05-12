@@ -1,0 +1,33 @@
+{
+  "reason": "backend_save",
+  "created_at": "2026-05-12T13:39:44.185Z",
+  "page_url": "https://sellerbubble.github.io/droid-selection-review-dashboard/?v=b5604d8",
+  "overrides": [
+    {
+      "task": "lh_scene3_banana_cube_can_to_three_targets",
+      "mode": "baseline_pass1",
+      "group": 0,
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
+      "original_visual_success": null,
+      "original_visual_label": "wait_for_tag",
+      "updated_at": "2026-05-12T12:06:38.657Z"
+    },
+    {
+      "task": "lh_scene3_banana_cube_can_to_three_targets",
+      "mode": "imagegen_failureonly_r0_hier_fixed_vit_k5",
+      "group": 0,
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
+      "original_visual_success": null,
+      "original_visual_label": "wait_for_tag",
+      "updated_at": "2026-05-12T12:19:40.084Z"
+    }
+  ],
+  "rows": [],
+  "reviewer_id": "liwenhao",
+  "saved_by_backend_at": "2026-05-12T13:39:44.770Z",
+  "backend": "cloudflare_worker"
+}
