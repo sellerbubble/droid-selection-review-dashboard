@@ -1,0 +1,10 @@
+{
+  "reason": "full_fallback_smoke_test",
+  "created_at": "2026-05-12T13:26:19.616Z",
+  "page_url": "node-fallback-test",
+  "overrides": [],
+  "rows": [],
+  "reviewer_id": "liwenhao_full_fallback_test",
+  "saved_by_backend_at": "2026-05-12T13:26:26.451Z",
+  "backend": "cloudflare_worker"
+}
