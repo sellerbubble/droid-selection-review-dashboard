@@ -1145,7 +1145,8 @@
         updateLastSaveStatus();
         saveStatus.textContent = `backend saved ${payload.overrides.length} edits`;
         serverHelp.classList.remove('visible');
-        alert(`Saved audit via backend:\n${result.latest}\n${result.snapshot}`);
+        const savedPaths = [result.latest, result.snapshot].filter(Boolean).join('\n');
+        alert(`Saved audit via backend:\n${savedPaths}`);
       } catch (err) {
         console.error(err);
         saveStatus.textContent = 'backend save failed';
