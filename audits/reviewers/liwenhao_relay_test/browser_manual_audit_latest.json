@@ -1,0 +1,10 @@
+{
+  "reason": "relay_smoke_test",
+  "created_at": "2026-05-12T13:18:00.000Z",
+  "page_url": "curl-local-relay-test",
+  "overrides": [],
+  "rows": [],
+  "reviewer_id": "liwenhao_relay_test",
+  "saved_by_backend_at": "2026-05-12T13:20:00.766Z",
+  "backend": "cloudflare_worker"
+}
