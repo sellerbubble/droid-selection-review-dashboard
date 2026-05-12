@@ -1141,7 +1141,7 @@
     }
     function showBackendHelp(message) {
       serverHelp.classList.add('visible');
-      serverHelp.innerHTML = `${escapeText(message)}<br><br>If this says <code>request timed out</code>, this browser/network likely cannot reach the Cloudflare Workers domain <code>*.workers.dev</code>. In that case, use <b>save local</b> with the local save server, or use a backend URL on a custom domain that your browser can open directly. If the backend is reachable but saving fails, then check <code>reviewer id</code> and <code>write secret</code>. Your current edits are still safe in this browser's localStorage, and a light backup JSON is downloaded on failed backend saves.`;
+      serverHelp.innerHTML = `${escapeText(message)}<br><br>If this says <code>request timed out</code>, this browser/network likely cannot reach the Cloudflare Workers domain <code>*.workers.dev</code>. The page will automatically try the localhost relay when the local save server is running. If both direct backend and relay fail, use <b>save local</b> or a backend URL on a custom domain that your browser can open directly. If the backend is reachable but saving fails, then check <code>reviewer id</code> and <code>write secret</code>. Your current edits are still safe in this browser's localStorage, and a light backup JSON is downloaded on failed backend saves.`;
     }
     async function backendRequest(path, body, timeoutMs = BACKEND_TIMEOUT_MS) {
       const { backendUrl, reviewerId, writeSecret } = currentBackendSettings();
@@ -1169,6 +1169,62 @@
       }
       return result;
     }
+    async function backendRelayRequest(path, body, timeoutMs = 35000) {
+      const { backendUrl, reviewerId, writeSecret } = currentBackendSettings();
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), timeoutMs);
+      const relayBody = {
+        backend_url: backendUrl,
+        path,
+        write_secret: writeSecret,
+        body: { reviewer_id: reviewerId, write_secret: writeSecret, ...body },
+      };
+      const response = await fetch(`${SAVE_SERVER_URL}/relay-backend`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(relayBody),
+        signal: controller.signal,
+      });
+      clearTimeout(timeout);
+      const text = await response.text();
+      let result = null;
+      try {
+        result = text ? JSON.parse(text) : null;
+      } catch (err) {
+        throw new Error(`Local relay returned non-JSON response: ${text.slice(0, 240)}`);
+      }
+      if (!response.ok || !result?.ok || !result?.backend?.ok) {
+        throw new Error(result?.backend?.error || result?.error || `Local relay HTTP ${response.status}`);
+      }
+      return result.backend;
+    }
+    async function backendRelayHealth(backendUrl, timeoutMs = 15000) {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), timeoutMs);
+      const response = await fetch(`${SAVE_SERVER_URL}/relay-backend`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          backend_url: backendUrl,
+          path: '/health',
+          write_secret: '',
+          body: {},
+        }),
+        signal: controller.signal,
+      });
+      clearTimeout(timeout);
+      const text = await response.text();
+      let result = null;
+      try {
+        result = text ? JSON.parse(text) : null;
+      } catch (err) {
+        throw new Error(`Local relay health returned non-JSON response: ${text.slice(0, 240)}`);
+      }
+      if (!response.ok || !result?.ok || !result?.backend?.ok) {
+        throw new Error(result?.backend?.error || result?.error || `Local relay health HTTP ${response.status}`);
+      }
+      return result.backend;
+    }
     async function checkBackend() {
       let backendUrl = backendUrlInput.value.trim().replace(/\/+$/, '') || DEFAULT_BACKEND_URL;
       backendUrlInput.value = backendUrl;
@@ -1187,8 +1243,17 @@
         serverHelp.classList.remove('visible');
       } catch (err) {
         clearTimeout(timeout);
-        saveStatus.textContent = 'backend check failed';
-        showBackendHelp(`Backend health check failed: ${err.name === 'AbortError' ? 'request timed out' : err.message}`);
+        try {
+          saveStatus.textContent = 'direct backend failed; checking local relay...';
+          await backendRelayHealth(backendUrl);
+          const elapsed = Math.round(performance.now() - started);
+          saveStatus.textContent = `backend ok via local relay (${elapsed} ms)`;
+          showBackendHelp('Direct backend health check failed, but the localhost relay can reach the backend. You can use save via backend as long as the local save server remains running.');
+        } catch (relayErr) {
+          console.error(err, relayErr);
+          saveStatus.textContent = 'backend check failed';
+          showBackendHelp(`Backend health check failed directly and via localhost relay: direct=${err.name === 'AbortError' ? 'request timed out' : err.message}; relay=${relayErr.name === 'AbortError' ? 'request timed out' : relayErr.message}`);
+        }
       }
     }
     async function saveAuditBackend() {
@@ -1196,26 +1261,44 @@
       const started = performance.now();
       saveStatus.textContent = 'saving via backend...';
       try {
-        const result = await backendRequest('/save-audit', { payload });
+        let result = null;
+        let usedRelay = false;
+        try {
+          result = await backendRequest('/save-audit', { payload });
+        } catch (directErr) {
+          console.warn('Direct backend save failed; trying localhost relay.', directErr);
+          saveStatus.textContent = 'direct backend failed; trying local relay...';
+          result = await backendRelayRequest('/save-audit', { payload });
+          usedRelay = true;
+        }
         const elapsed = Math.round(performance.now() - started);
         localStorage.setItem(LAST_SAVE_STORAGE_KEY, payload.created_at);
         updateLastSaveStatus();
-        saveStatus.textContent = `backend saved ${payload.overrides.length} edits (${elapsed} ms)`;
+        saveStatus.textContent = `${usedRelay ? 'backend saved via local relay' : 'backend saved'} ${payload.overrides.length} edits (${elapsed} ms)`;
         serverHelp.classList.remove('visible');
         const savedPaths = [result.latest, result.snapshot].filter(Boolean).join('\n');
-        alert(`Saved audit via backend:\n${savedPaths}`);
+        alert(`Saved audit via ${usedRelay ? 'local relay + backend' : 'backend'}:\n${savedPaths}`);
       } catch (err) {
         console.error(err);
         saveStatus.textContent = 'backend save failed';
         downloadBackendFailureBackup('backend_failed_save');
-        showBackendHelp(`Backend save failed: ${err.name === 'AbortError' ? 'request timed out after 20s' : err.message}`);
+        showBackendHelp(`Backend save failed after direct request and localhost relay: ${err.name === 'AbortError' ? 'request timed out' : err.message}`);
       }
     }
     async function loadAuditBackend() {
       if (Object.keys(manualOverrides).length && !confirm('Load backend audit and replace current browser-local edits? Export or backup first if you want to keep both.')) return;
       saveStatus.textContent = 'loading backend audit...';
       try {
-        const result = await backendRequest('/load-audit', {});
+        let result = null;
+        let usedRelay = false;
+        try {
+          result = await backendRequest('/load-audit', {});
+        } catch (directErr) {
+          console.warn('Direct backend load failed; trying localhost relay.', directErr);
+          saveStatus.textContent = 'direct backend failed; trying local relay...';
+          result = await backendRelayRequest('/load-audit', {});
+          usedRelay = true;
+        }
         const payload = result.payload || {};
         const nextOverrides = {};
         (payload.overrides || []).forEach(row => {
@@ -1229,11 +1312,11 @@
         }
         updateLastSaveStatus();
         render(taskSelect.value);
-        saveStatus.textContent = `loaded ${Object.keys(nextOverrides).length} backend edits`;
+        saveStatus.textContent = `loaded ${Object.keys(nextOverrides).length} backend edits${usedRelay ? ' via local relay' : ''}`;
       } catch (err) {
         console.error(err);
         saveStatus.textContent = 'backend load failed';
-        showBackendHelp(`Backend load failed: ${err.message}`);
+        showBackendHelp(`Backend load failed after direct request and localhost relay: ${err.message}`);
       }
     }
     async function copyStartServerCommand() {

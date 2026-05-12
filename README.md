@@ -11,11 +11,11 @@ Generated from local source:
 
 `/Users/liwenhao.109/projects/claude_code/agent_vla/outputs/six_task_selection_20260503/video_review_dashboard`
 
-Generated at: `2026-05-12T20:56:41`
+Generated at: `2026-05-12T21:26:56`
 
 Notes:
 
 - GitHub Pages can save labels through the Cloudflare Worker backend when reviewer id and write secret are provided.
-- GitHub-token direct save remains as a fallback for maintainers.
+- If the browser/network cannot directly reach workers.dev, start the local save server and use the dashboard's automatic localhost relay fallback.
 - Use `backup full JSON` before risky edits or before clearing browser storage.
 - The local dashboard also supports `save local` through the local save server.
