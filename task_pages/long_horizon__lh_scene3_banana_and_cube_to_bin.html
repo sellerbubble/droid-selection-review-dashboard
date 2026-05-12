@@ -1040,6 +1040,15 @@
         rows: fullAuditRows(),
       };
     }
+    function backendAuditPayload() {
+      return {
+        reason: 'backend_save',
+        created_at: new Date().toISOString(),
+        page_url: window.location.href,
+        overrides: overrideRows(),
+        rows: [],
+      };
+    }
     function timestampForFilename() {
       return new Date().toISOString().replaceAll(':', '').replaceAll('.', '-');
     }
@@ -1137,7 +1146,7 @@
       return result;
     }
     async function saveAuditBackend() {
-      const payload = auditBackupPayload('backend_save');
+      const payload = backendAuditPayload();
       saveStatus.textContent = 'saving via backend...';
       try {
         const result = await backendRequest('/save-audit', { payload });
