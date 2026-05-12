@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "source": "codex_worker_smoke_test",
+  "saved_at": "2026-05-12T11:34:51Z",
+  "overrides": [
+    {
+      "key": "codex_smoke_test|group_000|backend_smoke",
+      "task": "codex_smoke_test",
+      "group": "group_000",
+      "mode": "backend_smoke",
+      "label": "unclear",
+      "note": "Smoke test for Cloudflare Worker backend. Safe to ignore."
+    }
+  ],
+  "rows": [
+    {
+      "key": "codex_smoke_test|group_000|backend_smoke",
+      "task": "codex_smoke_test",
+      "task_label": "Codex backend smoke test",
+      "group": "group_000",
+      "mode": "backend_smoke",
+      "visual_success_label": "unclear",
+      "audit_source": "backend_smoke_test",
+      "audit_note": "Smoke test for save/load path."
+    }
+  ],
+  "reviewer_id": "codex-smoke",
+  "saved_by_backend_at": "2026-05-12T11:35:12.579Z",
+  "backend": "cloudflare_worker"
+}
