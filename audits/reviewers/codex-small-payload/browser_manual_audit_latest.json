@@ -1,0 +1,18 @@
+{
+  "reason": "backend_save",
+  "created_at": "x",
+  "page_url": "x",
+  "overrides": [
+    {
+      "task": "t",
+      "mode": "m",
+      "group": 0,
+      "visual_label": "success",
+      "visual_success": true
+    }
+  ],
+  "rows": [],
+  "reviewer_id": "codex-small-payload",
+  "saved_by_backend_at": "2026-05-12T12:30:31.038Z",
+  "backend": "cloudflare_worker"
+}
