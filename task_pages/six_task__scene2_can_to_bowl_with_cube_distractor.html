@@ -1110,6 +1110,10 @@
       serverHelp.classList.add('visible');
       serverHelp.innerHTML = `${escapeText(message)}<br><br>Because this GitHub Pages dashboard is static, the browser cannot write files back to your local machine directly. Start the tiny local writer once, then click <b>save local</b> again.<br><br>Option A: copy and run this command in Terminal:<code>${escapeText(START_SERVER_COMMAND)}</code>Option B: double-click this generated launcher:<code>${escapeText(START_SERVER_SCRIPT)}</code>Your current edits are still safe in this browser's localStorage.`;
     }
+    function showBackendHelp(message) {
+      serverHelp.classList.add('visible');
+      serverHelp.innerHTML = `${escapeText(message)}<br><br>Check that <code>Backend URL</code> is exactly <code>https://droid-selection-audit.agent-vla-audit.workers.dev</code>, that your <code>reviewer id</code> is valid, and that the <code>write secret</code> matches the shared audit password. Your current edits are still safe in this browser's localStorage, and a backup JSON is downloaded on failed saves.`;
+    }
     async function backendRequest(path, body) {
       const { backendUrl, reviewerId, writeSecret } = currentBackendSettings();
       const response = await fetch(`${backendUrl}${path}`, {
@@ -1146,7 +1150,7 @@
         console.error(err);
         saveStatus.textContent = 'backend save failed';
         downloadAuditBackup('backend_failed_save');
-        showServerHelp(`Backend save failed: ${err.message}<br><br>A backup JSON was downloaded automatically. Check the backend URL, reviewer id, and write secret.`);
+        showBackendHelp(`Backend save failed: ${err.message}`);
       }
     }
     async function loadAuditBackend() {
@@ -1171,7 +1175,7 @@
       } catch (err) {
         console.error(err);
         saveStatus.textContent = 'backend load failed';
-        showServerHelp(`Backend load failed: ${err.message}`);
+        showBackendHelp(`Backend load failed: ${err.message}`);
       }
     }
     async function copyStartServerCommand() {
