@@ -523,6 +523,11 @@
         <button id="exportAuditCsv">export CSV</button>
         <button id="exportAuditJson">export JSON</button>
         <button id="backupAuditJson">backup full JSON</button>
+        <input id="backendUrl" placeholder="Backend URL" autocomplete="off" />
+        <input id="reviewerId" placeholder="reviewer id" autocomplete="off" />
+        <input id="writeSecret" type="password" placeholder="write secret" autocomplete="off" />
+        <button id="saveAuditBackend">save via backend</button>
+        <button id="loadAuditBackend">load my backend audit</button>
         <input id="githubToken" type="password" placeholder="GitHub token" autocomplete="off" />
         <label class="remember-token"><input id="rememberGithubToken" type="checkbox" /> remember</label>
         <button id="saveAuditGithub">save to GitHub</button>
@@ -555,6 +560,9 @@
     const overrideCount = document.getElementById('overrideCount');
     const saveStatus = document.getElementById('saveStatus');
     const lastSaveStatus = document.getElementById('lastSaveStatus');
+    const backendUrlInput = document.getElementById('backendUrl');
+    const reviewerIdInput = document.getElementById('reviewerId');
+    const writeSecretInput = document.getElementById('writeSecret');
     const githubTokenInput = document.getElementById('githubToken');
     const rememberGithubTokenInput = document.getElementById('rememberGithubToken');
     const serverHelp = document.getElementById('serverHelp');
@@ -562,6 +570,10 @@
     const modeOrder = ["baseline_pass1", "target_l1_last_schedule_retrieved_success_exclude_self_g20_k5", "target_feature_last_schedule_retrieved_success_exclude_self_g20_k5", "target_l1_last_retrieved_success_exclude_self_g20_k5", "target_feature_last_retrieved_success_exclude_self_g20_k5", "d2c_latent_l2_target_zero", "d2c_decoded_pixel_l1_schedule", "d2c_decoded_pixel_l1_schedule_strongalpha", "imagegen_successref_r2_hier_fixed_vit_k5", "imagegen_failureonly_r0_hier_fixed_vit_k5", "vlm_agent_realbank_routed_l1_k5", "vlm_agent_imagegenbank_routed_l1_k5", "vlm_agent_failureonly_r0_diagnostic_l1_k5"];
     const REVIEW_STORAGE_KEY = 'droid-selection-review-manual-overrides-v2';
     const LAST_SAVE_STORAGE_KEY = 'droid-selection-review-last-save-v2';
+    const BACKEND_URL_STORAGE_KEY = 'droid-selection-review-backend-url-v1';
+    const REVIEWER_ID_STORAGE_KEY = 'droid-selection-review-reviewer-id-v1';
+    const WRITE_SECRET_SESSION_KEY = 'droid-selection-review-write-secret-session-v1';
+    const DEFAULT_BACKEND_URL = '';
     const GITHUB_TOKEN_STORAGE_KEY = 'droid-selection-review-github-token-v1';
     const GITHUB_TOKEN_SESSION_KEY = 'droid-selection-review-github-token-session-v1';
     const GITHUB_OWNER = 'sellerbubble';
@@ -669,6 +681,25 @@
       localStorage.setItem(REVIEW_STORAGE_KEY, JSON.stringify(manualOverrides));
       updateOverrideCount();
       saveStatus.textContent = 'unsaved local edits';
+    }
+    function loadBackendSettings() {
+      backendUrlInput.value = localStorage.getItem(BACKEND_URL_STORAGE_KEY) || DEFAULT_BACKEND_URL;
+      reviewerIdInput.value = localStorage.getItem(REVIEWER_ID_STORAGE_KEY) || '';
+      writeSecretInput.value = sessionStorage.getItem(WRITE_SECRET_SESSION_KEY) || '';
+    }
+    function currentBackendSettings() {
+      const backendUrl = backendUrlInput.value.trim().replace(/\/+$/, '');
+      const reviewerId = reviewerIdInput.value.trim().toLowerCase();
+      const writeSecret = writeSecretInput.value;
+      if (!backendUrl) throw new Error('Missing backend URL.');
+      if (!/^[a-z0-9][a-z0-9._-]{1,62}[a-z0-9]$/.test(reviewerId)) {
+        throw new Error('Invalid reviewer id. Use 3-64 chars: lowercase letters, numbers, dot, underscore, hyphen.');
+      }
+      if (!writeSecret) throw new Error('Missing write secret.');
+      localStorage.setItem(BACKEND_URL_STORAGE_KEY, backendUrl);
+      localStorage.setItem(REVIEWER_ID_STORAGE_KEY, reviewerId);
+      sessionStorage.setItem(WRITE_SECRET_SESSION_KEY, writeSecret);
+      return { backendUrl, reviewerId, writeSecret };
     }
     function loadGithubToken() {
       const remembered = localStorage.getItem(GITHUB_TOKEN_STORAGE_KEY);
@@ -909,6 +940,8 @@
       document.getElementById('exportAuditCsv').addEventListener('click', exportAuditCsv);
       document.getElementById('exportAuditJson').addEventListener('click', exportAuditJson);
       document.getElementById('backupAuditJson').addEventListener('click', backupAuditJson);
+      document.getElementById('saveAuditBackend').addEventListener('click', saveAuditBackend);
+      document.getElementById('loadAuditBackend').addEventListener('click', loadAuditBackend);
       document.getElementById('saveAuditGithub').addEventListener('click', saveAuditGithub);
       document.getElementById('loadAuditGithub').addEventListener('click', loadAuditGithub);
       document.getElementById('clearGithubToken').addEventListener('click', clearGithubToken);
@@ -1121,6 +1154,70 @@
       serverHelp.classList.add('visible');
       serverHelp.innerHTML = `${escapeText(message)}<br><br>Because this GitHub Pages dashboard is static, the browser cannot write files back to your local machine directly. Start the tiny local writer once, then click <b>save local</b> again.<br><br>Option A: copy and run this command in Terminal:<code>${escapeText(START_SERVER_COMMAND)}</code>Option B: double-click this generated launcher:<code>${escapeText(START_SERVER_SCRIPT)}</code>Your current edits are still safe in this browser's localStorage.`;
     }
+    async function backendRequest(path, body) {
+      const { backendUrl, reviewerId, writeSecret } = currentBackendSettings();
+      const response = await fetch(`${backendUrl}${path}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Write-Secret': writeSecret,
+        },
+        body: JSON.stringify({ reviewer_id: reviewerId, write_secret: writeSecret, ...body }),
+      });
+      const text = await response.text();
+      let result = null;
+      try {
+        result = text ? JSON.parse(text) : null;
+      } catch (err) {
+        throw new Error(`Backend returned non-JSON response: ${text.slice(0, 240)}`);
+      }
+      if (!response.ok || !result?.ok) {
+        throw new Error(result?.error || `Backend HTTP ${response.status}`);
+      }
+      return result;
+    }
+    async function saveAuditBackend() {
+      const payload = auditBackupPayload('backend_save');
+      saveStatus.textContent = 'saving via backend...';
+      try {
+        const result = await backendRequest('/save-audit', { payload });
+        localStorage.setItem(LAST_SAVE_STORAGE_KEY, payload.created_at);
+        updateLastSaveStatus();
+        saveStatus.textContent = `backend saved ${payload.overrides.length} edits`;
+        serverHelp.classList.remove('visible');
+        alert(`Saved audit via backend:\n${result.latest}\n${result.snapshot}`);
+      } catch (err) {
+        console.error(err);
+        saveStatus.textContent = 'backend save failed';
+        downloadAuditBackup('backend_failed_save');
+        showServerHelp(`Backend save failed: ${err.message}<br><br>A backup JSON was downloaded automatically. Check the backend URL, reviewer id, and write secret.`);
+      }
+    }
+    async function loadAuditBackend() {
+      if (Object.keys(manualOverrides).length && !confirm('Load backend audit and replace current browser-local edits? Export or backup first if you want to keep both.')) return;
+      saveStatus.textContent = 'loading backend audit...';
+      try {
+        const result = await backendRequest('/load-audit', {});
+        const payload = result.payload || {};
+        const nextOverrides = {};
+        (payload.overrides || []).forEach(row => {
+          if (!row.task || !row.mode || row.group === undefined) return;
+          nextOverrides[overrideKey(row.task, row.mode, row.group)] = row;
+        });
+        manualOverrides = nextOverrides;
+        saveOverrides();
+        if (payload.created_at || payload.saved_by_backend_at) {
+          localStorage.setItem(LAST_SAVE_STORAGE_KEY, payload.created_at || payload.saved_by_backend_at);
+        }
+        updateLastSaveStatus();
+        render(taskSelect.value);
+        saveStatus.textContent = `loaded ${Object.keys(nextOverrides).length} backend edits`;
+      } catch (err) {
+        console.error(err);
+        saveStatus.textContent = 'backend load failed';
+        showServerHelp(`Backend load failed: ${err.message}`);
+      }
+    }
     async function githubRequest(path, options = {}) {
       const token = currentGithubToken();
       if (!token) throw new Error('Missing GitHub token. Use a fine-grained token with Contents read/write for this repository.');
@@ -1292,6 +1389,7 @@
       });
     }
     render();
+    loadBackendSettings();
     loadGithubToken();
   </script>
 </body>
