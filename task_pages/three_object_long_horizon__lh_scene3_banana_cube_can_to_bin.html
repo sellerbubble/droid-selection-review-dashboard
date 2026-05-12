@@ -528,6 +528,7 @@
         <input id="writeSecret" type="password" placeholder="write secret" autocomplete="off" />
         <button id="saveAuditBackend">save via backend</button>
         <button id="loadAuditBackend">load my backend audit</button>
+        <button id="checkBackend">check backend</button>
         <button id="clearManualAudit">clear edits</button>
         <span id="overrideCount">0 edits</span>
         <span id="saveStatus">not saved</span>
@@ -566,7 +567,8 @@
     const BACKEND_URL_STORAGE_KEY = 'droid-selection-review-backend-url-v1';
     const REVIEWER_ID_STORAGE_KEY = 'droid-selection-review-reviewer-id-v1';
     const WRITE_SECRET_SESSION_KEY = 'droid-selection-review-write-secret-session-v1';
-    const DEFAULT_BACKEND_URL = '';
+    const DEFAULT_BACKEND_URL = 'https://droid-selection-audit.agent-vla-audit.workers.dev';
+    const BACKEND_TIMEOUT_MS = 20000;
     const SAVE_SERVER_URL = 'http://127.0.0.1:8765';
     const START_SERVER_COMMAND = "python /Users/liwenhao.109/projects/claude_code/agent_vla/tools/droid_smoke/dashboard_audit_save_server.py --port 8765 --output-dir /Users/liwenhao.109/projects/claude_code/agent_vla/outputs/six_task_selection_20260503/video_review_dashboard/manual_reaudit_v2";
     const START_SERVER_SCRIPT = "/Users/liwenhao.109/projects/claude_code/agent_vla/outputs/six_task_selection_20260503/video_review_dashboard/start_save_server.command";
@@ -902,6 +904,7 @@
       document.getElementById('backupAuditJson').addEventListener('click', backupAuditJson);
       document.getElementById('saveAuditBackend').addEventListener('click', saveAuditBackend);
       document.getElementById('loadAuditBackend').addEventListener('click', loadAuditBackend);
+      document.getElementById('checkBackend').addEventListener('click', checkBackend);
       document.getElementById('clearManualAudit').addEventListener('click', clearManualAudit);
     }
     function bindTaskEvents() {
@@ -1049,6 +1052,17 @@
         rows: [],
       };
     }
+    function backendFailureBackupPayload(reason) {
+      return {
+        reason,
+        created_at: new Date().toISOString(),
+        page_url: window.location.href,
+        backend_url: backendUrlInput.value.trim(),
+        reviewer_id: reviewerIdInput.value.trim().toLowerCase(),
+        overrides: overrideRows(),
+        rows: [],
+      };
+    }
     function timestampForFilename() {
       return new Date().toISOString().replaceAll(':', '').replaceAll('.', '-');
     }
@@ -1083,6 +1097,12 @@
     }
     function backupAuditJson() {
       downloadAuditBackup('manual');
+    }
+    function downloadBackendFailureBackup(reason) {
+      const payload = backendFailureBackupPayload(reason);
+      const filename = `manual_audit_backend_backup_${reason}_${timestampForFilename()}.json`;
+      downloadText(filename, JSON.stringify(payload, null, 2), 'application/json;charset=utf-8');
+      saveStatus.textContent = `light backup downloaded: ${payload.overrides.length} edits`;
     }
     function fullAuditRows() {
       const rows = [];
@@ -1123,8 +1143,10 @@
       serverHelp.classList.add('visible');
       serverHelp.innerHTML = `${escapeText(message)}<br><br>Check that <code>Backend URL</code> is exactly <code>https://droid-selection-audit.agent-vla-audit.workers.dev</code>, that your <code>reviewer id</code> is valid, and that the <code>write secret</code> matches the shared audit password. Your current edits are still safe in this browser's localStorage, and a backup JSON is downloaded on failed saves.`;
     }
-    async function backendRequest(path, body) {
+    async function backendRequest(path, body, timeoutMs = BACKEND_TIMEOUT_MS) {
       const { backendUrl, reviewerId, writeSecret } = currentBackendSettings();
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), timeoutMs);
       const response = await fetch(`${backendUrl}${path}`, {
         method: 'POST',
         headers: {
@@ -1132,7 +1154,9 @@
           'X-Write-Secret': writeSecret,
         },
         body: JSON.stringify({ reviewer_id: reviewerId, write_secret: writeSecret, ...body }),
+        signal: controller.signal,
       });
+      clearTimeout(timeout);
       const text = await response.text();
       let result = null;
       try {
@@ -1145,22 +1169,46 @@
       }
       return result;
     }
+    async function checkBackend() {
+      let backendUrl = backendUrlInput.value.trim().replace(/\/+$/, '') || DEFAULT_BACKEND_URL;
+      backendUrlInput.value = backendUrl;
+      localStorage.setItem(BACKEND_URL_STORAGE_KEY, backendUrl);
+      saveStatus.textContent = 'checking backend...';
+      const started = performance.now();
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000);
+      try {
+        const response = await fetch(`${backendUrl}/health`, { cache: 'no-store', signal: controller.signal });
+        clearTimeout(timeout);
+        const elapsed = Math.round(performance.now() - started);
+        const result = await response.json();
+        if (!response.ok || !result?.ok) throw new Error(result?.error || `HTTP ${response.status}`);
+        saveStatus.textContent = `backend ok (${elapsed} ms)`;
+        serverHelp.classList.remove('visible');
+      } catch (err) {
+        clearTimeout(timeout);
+        saveStatus.textContent = 'backend check failed';
+        showBackendHelp(`Backend health check failed: ${err.name === 'AbortError' ? 'request timed out' : err.message}`);
+      }
+    }
     async function saveAuditBackend() {
       const payload = backendAuditPayload();
+      const started = performance.now();
       saveStatus.textContent = 'saving via backend...';
       try {
         const result = await backendRequest('/save-audit', { payload });
+        const elapsed = Math.round(performance.now() - started);
         localStorage.setItem(LAST_SAVE_STORAGE_KEY, payload.created_at);
         updateLastSaveStatus();
-        saveStatus.textContent = `backend saved ${payload.overrides.length} edits`;
+        saveStatus.textContent = `backend saved ${payload.overrides.length} edits (${elapsed} ms)`;
         serverHelp.classList.remove('visible');
         const savedPaths = [result.latest, result.snapshot].filter(Boolean).join('\n');
         alert(`Saved audit via backend:\n${savedPaths}`);
       } catch (err) {
         console.error(err);
         saveStatus.textContent = 'backend save failed';
-        downloadAuditBackup('backend_failed_save');
-        showBackendHelp(`Backend save failed: ${err.message}`);
+        downloadBackendFailureBackup('backend_failed_save');
+        showBackendHelp(`Backend save failed: ${err.name === 'AbortError' ? 'request timed out after 20s' : err.message}`);
       }
     }
     async function loadAuditBackend() {
