@@ -528,11 +528,6 @@
         <input id="writeSecret" type="password" placeholder="write secret" autocomplete="off" />
         <button id="saveAuditBackend">save via backend</button>
         <button id="loadAuditBackend">load my backend audit</button>
-        <input id="githubToken" type="password" placeholder="GitHub token" autocomplete="off" />
-        <label class="remember-token"><input id="rememberGithubToken" type="checkbox" /> remember</label>
-        <button id="saveAuditGithub">save to GitHub</button>
-        <button id="loadAuditGithub">load from GitHub</button>
-        <button id="clearGithubToken">clear token</button>
         <button id="clearManualAudit">clear edits</button>
         <span id="overrideCount">0 edits</span>
         <span id="saveStatus">not saved</span>
@@ -563,8 +558,6 @@
     const backendUrlInput = document.getElementById('backendUrl');
     const reviewerIdInput = document.getElementById('reviewerId');
     const writeSecretInput = document.getElementById('writeSecret');
-    const githubTokenInput = document.getElementById('githubToken');
-    const rememberGithubTokenInput = document.getElementById('rememberGithubToken');
     const serverHelp = document.getElementById('serverHelp');
 
     const modeOrder = ["baseline_pass1", "target_l1_last_schedule_retrieved_success_exclude_self_g20_k5", "target_feature_last_schedule_retrieved_success_exclude_self_g20_k5", "target_l1_last_retrieved_success_exclude_self_g20_k5", "target_feature_last_retrieved_success_exclude_self_g20_k5", "d2c_latent_l2_target_zero", "d2c_decoded_pixel_l1_schedule", "d2c_decoded_pixel_l1_schedule_strongalpha", "imagegen_successref_r2_hier_fixed_vit_k5", "imagegen_failureonly_r0_hier_fixed_vit_k5", "vlm_agent_realbank_routed_l1_k5", "vlm_agent_imagegenbank_routed_l1_k5", "vlm_agent_failureonly_r0_diagnostic_l1_k5"];
@@ -574,13 +567,6 @@
     const REVIEWER_ID_STORAGE_KEY = 'droid-selection-review-reviewer-id-v1';
     const WRITE_SECRET_SESSION_KEY = 'droid-selection-review-write-secret-session-v1';
     const DEFAULT_BACKEND_URL = '';
-    const GITHUB_TOKEN_STORAGE_KEY = 'droid-selection-review-github-token-v1';
-    const GITHUB_TOKEN_SESSION_KEY = 'droid-selection-review-github-token-session-v1';
-    const GITHUB_OWNER = 'sellerbubble';
-    const GITHUB_REPO = 'droid-selection-review-dashboard';
-    const GITHUB_BRANCH = 'main';
-    const GITHUB_AUDIT_LATEST_PATH = 'audits/browser_manual_audit_latest.json';
-    const GITHUB_AUDIT_SNAPSHOT_PREFIX = 'audits/snapshots/browser_manual_audit_';
     const SAVE_SERVER_URL = 'http://127.0.0.1:8765';
     const START_SERVER_COMMAND = "python /Users/liwenhao.109/projects/claude_code/agent_vla/tools/droid_smoke/dashboard_audit_save_server.py --port 8765 --output-dir /Users/liwenhao.109/projects/claude_code/agent_vla/outputs/six_task_selection_20260503/video_review_dashboard/manual_reaudit_v2";
     const START_SERVER_SCRIPT = "/Users/liwenhao.109/projects/claude_code/agent_vla/outputs/six_task_selection_20260503/video_review_dashboard/start_save_server.command";
@@ -700,32 +686,6 @@
       localStorage.setItem(REVIEWER_ID_STORAGE_KEY, reviewerId);
       sessionStorage.setItem(WRITE_SECRET_SESSION_KEY, writeSecret);
       return { backendUrl, reviewerId, writeSecret };
-    }
-    function loadGithubToken() {
-      const remembered = localStorage.getItem(GITHUB_TOKEN_STORAGE_KEY);
-      const sessionToken = sessionStorage.getItem(GITHUB_TOKEN_SESSION_KEY);
-      const token = remembered || sessionToken || '';
-      githubTokenInput.value = token;
-      rememberGithubTokenInput.checked = !!remembered;
-    }
-    function currentGithubToken() {
-      const token = githubTokenInput.value.trim();
-      if (!token) return '';
-      if (rememberGithubTokenInput.checked) {
-        localStorage.setItem(GITHUB_TOKEN_STORAGE_KEY, token);
-        sessionStorage.removeItem(GITHUB_TOKEN_SESSION_KEY);
-      } else {
-        sessionStorage.setItem(GITHUB_TOKEN_SESSION_KEY, token);
-        localStorage.removeItem(GITHUB_TOKEN_STORAGE_KEY);
-      }
-      return token;
-    }
-    function clearGithubToken() {
-      githubTokenInput.value = '';
-      rememberGithubTokenInput.checked = false;
-      localStorage.removeItem(GITHUB_TOKEN_STORAGE_KEY);
-      sessionStorage.removeItem(GITHUB_TOKEN_SESSION_KEY);
-      saveStatus.textContent = 'GitHub token cleared';
     }
     function updateLastSaveStatus() {
       const savedAt = localStorage.getItem(LAST_SAVE_STORAGE_KEY);
@@ -942,9 +902,6 @@
       document.getElementById('backupAuditJson').addEventListener('click', backupAuditJson);
       document.getElementById('saveAuditBackend').addEventListener('click', saveAuditBackend);
       document.getElementById('loadAuditBackend').addEventListener('click', loadAuditBackend);
-      document.getElementById('saveAuditGithub').addEventListener('click', saveAuditGithub);
-      document.getElementById('loadAuditGithub').addEventListener('click', loadAuditGithub);
-      document.getElementById('clearGithubToken').addEventListener('click', clearGithubToken);
       document.getElementById('clearManualAudit').addEventListener('click', clearManualAudit);
     }
     function bindTaskEvents() {
@@ -1079,7 +1036,6 @@
         reason,
         created_at: new Date().toISOString(),
         page_url: window.location.href,
-        github_repo: `${GITHUB_OWNER}/${GITHUB_REPO}`,
         overrides: overrideRows(),
         rows: fullAuditRows(),
       };
@@ -1218,91 +1174,6 @@
         showServerHelp(`Backend load failed: ${err.message}`);
       }
     }
-    async function githubRequest(path, options = {}) {
-      const token = currentGithubToken();
-      if (!token) throw new Error('Missing GitHub token. Use a fine-grained token with Contents read/write for this repository.');
-      const response = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`, {
-        ...options,
-        headers: {
-          'Accept': 'application/vnd.github+json',
-          'Authorization': `Bearer ${token}`,
-          'X-GitHub-Api-Version': '2022-11-28',
-          ...(options.headers || {}),
-        },
-      });
-      if (!response.ok) {
-        const text = await response.text();
-        throw new Error(`GitHub API ${response.status} for ${path}: ${text.slice(0, 240)}`);
-      }
-      return response.json();
-    }
-    async function githubFileSha(path) {
-      try {
-        const result = await githubRequest(`${path}?ref=${encodeURIComponent(GITHUB_BRANCH)}`, { method: 'GET' });
-        return result.sha || null;
-      } catch (err) {
-        if (String(err.message || err).includes('GitHub API 404')) return null;
-        throw err;
-      }
-    }
-    async function putGithubJson(path, payload, message) {
-      const text = JSON.stringify(payload, null, 2);
-      const sha = await githubFileSha(path);
-      const body = {
-        message,
-        content: toBase64Utf8(text),
-        branch: GITHUB_BRANCH,
-      };
-      if (sha) body.sha = sha;
-      return githubRequest(path, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      });
-    }
-    async function saveAuditGithub() {
-      const payload = auditBackupPayload('github_save');
-      const compactTime = timestampForFilename();
-      const snapshotPath = `${GITHUB_AUDIT_SNAPSHOT_PREFIX}${compactTime}.json`;
-      saveStatus.textContent = 'saving to GitHub...';
-      try {
-        await putGithubJson(snapshotPath, payload, `Save dashboard audit snapshot ${compactTime}`);
-        await putGithubJson(GITHUB_AUDIT_LATEST_PATH, payload, `Update latest dashboard audit ${compactTime}`);
-        localStorage.setItem(LAST_SAVE_STORAGE_KEY, payload.created_at);
-        updateLastSaveStatus();
-        saveStatus.textContent = `GitHub saved ${payload.overrides.length} edits`;
-        serverHelp.classList.remove('visible');
-        alert(`Saved audit to GitHub:\n${GITHUB_AUDIT_LATEST_PATH}\n${snapshotPath}`);
-      } catch (err) {
-        console.error(err);
-        saveStatus.textContent = 'GitHub save failed';
-        downloadAuditBackup('github_failed_save');
-        showServerHelp(`GitHub save failed: ${err.message}<br><br>Token requirement: fine-grained GitHub token with <code>Contents: Read and write</code> on <code>${GITHUB_OWNER}/${GITHUB_REPO}</code>. A backup JSON was downloaded automatically.`);
-      }
-    }
-    async function loadAuditGithub() {
-      if (Object.keys(manualOverrides).length && !confirm('Load remote GitHub audit and replace current browser-local edits? Export or backup first if you want to keep both.')) return;
-      saveStatus.textContent = 'loading from GitHub...';
-      try {
-        const result = await githubRequest(`${GITHUB_AUDIT_LATEST_PATH}?ref=${encodeURIComponent(GITHUB_BRANCH)}`, { method: 'GET' });
-        const payload = JSON.parse(fromBase64Utf8(result.content || ''));
-        const nextOverrides = {};
-        (payload.overrides || []).forEach(row => {
-          if (!row.task || !row.mode || row.group === undefined) return;
-          nextOverrides[overrideKey(row.task, row.mode, row.group)] = row;
-        });
-        manualOverrides = nextOverrides;
-        saveOverrides();
-        if (payload.created_at) localStorage.setItem(LAST_SAVE_STORAGE_KEY, payload.created_at);
-        updateLastSaveStatus();
-        render(taskSelect.value);
-        saveStatus.textContent = `loaded ${Object.keys(nextOverrides).length} GitHub edits`;
-      } catch (err) {
-        console.error(err);
-        saveStatus.textContent = 'GitHub load failed';
-        showServerHelp(`GitHub load failed: ${err.message}`);
-      }
-    }
     async function copyStartServerCommand() {
       try {
         await navigator.clipboard.writeText(START_SERVER_COMMAND);
@@ -1390,7 +1261,6 @@
     }
     render();
     loadBackendSettings();
-    loadGithubToken();
   </script>
 </body>
 </html>
