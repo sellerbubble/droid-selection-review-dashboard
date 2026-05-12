@@ -1,0 +1,7 @@
+{
+  "overrides": [],
+  "rows": [],
+  "reviewer_id": "codex-cors-smoke",
+  "saved_by_backend_at": "2026-05-12T12:08:29.197Z",
+  "backend": "cloudflare_worker"
+}
