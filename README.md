@@ -1,5 +1,18 @@
 # DROID Selection Review Dashboard
 
-Static GitHub Pages mirror of the local Agent-VLA / DreamZero / DROID review dashboard.
+Published static review dashboard for Agent-VLA / DreamZero / DROID experiments.
 
-This public copy contains browser-playable media assets and dashboard UI with baked manual audit overrides. Manual label edits on GitHub Pages should be exported from the browser; the local project remains the source of truth for saved audit CSV/JSON files.
+- Main dashboard: `index.html`
+- Lightweight per-task entry: `task_pages/index.html`
+- Media files: `media/`
+
+Generated from local source:
+
+`/Users/liwenhao.109/projects/claude_code/agent_vla/outputs/six_task_selection_20260503/video_review_dashboard`
+
+Generated at: `2026-05-12T17:02:27`
+
+Notes:
+
+- GitHub Pages is read-only from the browser. Use `export CSV`, `export JSON`, or `backup full JSON` for manual labels made on the public page.
+- The local dashboard supports `save local` through the local save server.

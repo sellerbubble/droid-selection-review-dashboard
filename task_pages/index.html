@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DROID Review Task Pages</title>
+  <style>
+    :root { --ink:#15130f; --muted:#776f62; --paper:#f7f1e4; --line:rgba(35,29,18,.16); --good:#2e7d57; }
+    * { box-sizing: border-box; }
+    body { margin:0; padding:34px; color:var(--ink); background:linear-gradient(135deg,#fbf5e7,#ead7b7); font-family:Charter, Georgia, serif; }
+    h1 { margin:0 0 8px; font-family:Didot, Georgia, serif; font-size:44px; letter-spacing:-.04em; }
+    p { color:var(--muted); max-width:900px; line-height:1.45; }
+    section { margin-top:28px; }
+    h2 { font:900 13px ui-monospace, SFMono-Regular, Menlo, monospace; text-transform:uppercase; color:var(--muted); }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:12px; }
+    .task-card { display:flex; flex-direction:column; gap:8px; min-height:130px; padding:18px; border:1px solid var(--line); border-radius:22px; background:rgba(255,252,244,.82); color:inherit; text-decoration:none; box-shadow:0 12px 30px rgba(38,30,16,.08); }
+    .task-card:hover { outline:3px solid rgba(46,125,87,.25); transform:translateY(-1px); }
+    .task-card strong { font-size:21px; line-height:1.12; }
+    .task-card span { color:var(--muted); }
+    .task-card .section { font:800 11px ui-monospace, SFMono-Regular, Menlo, monospace; color:var(--good); text-transform:uppercase; }
+    code { background:rgba(255,255,255,.65); padding:2px 5px; border-radius:6px; }
+  </style>
+</head>
+<body>
+  <h1>DROID Review Task Pages</h1>
+  <p>This split dashboard keeps each task in its own HTML file. Use it when the all-in-one dashboard becomes slow. Manual labels are still stored under the same browser localStorage key and can be saved with the same local save server.</p>
+  <p>All-in-one dashboard remains available at <code>../index.html</code>.</p>
+  <section><h2>Six-Task Selection</h2><div class="grid"><a class="task-card" href="six_task__scene1_cube_to_mug_with_can_distractor.html"><span class="section">Six-Task Selection</span><strong>Scene1 task: pick up cube into mug with can as distractor</strong><span>20 groups · 11 modes · 200 videos</span></a>
+<a class="task-card" href="six_task__scene2_can_to_bowl_with_cube_distractor.html"><span class="section">Six-Task Selection</span><strong>Scene2 task: pick up can into bowl with cube as distractor</strong><span>20 groups · 9 modes · 180 videos</span></a>
+<a class="task-card" href="six_task__scene2_can_to_mug_with_cube_distractor.html"><span class="section">Six-Task Selection</span><strong>Scene2 task: pick up can into mug with cube as distractor</strong><span>20 groups · 11 modes · 200 videos</span></a></div></section>
+<section><h2>Long-Horizon Selection</h2><div class="grid"><a class="task-card" href="long_horizon__lh_scene1_cube_to_mug_then_can_to_bowl.html"><span class="section">Long-Horizon Selection</span><strong>Scene1 task: put cube into mug, then can into bowl</strong><span>20 groups · 3 modes · 50 videos</span></a>
+<a class="task-card" href="long_horizon__lh_scene2_can_to_mug_then_cube_to_bowl.html"><span class="section">Long-Horizon Selection</span><strong>Scene2 task: put can into mug, then cube into bowl</strong><span>20 groups · 3 modes · 50 videos</span></a>
+<a class="task-card" href="long_horizon__lh_scene3_banana_and_cube_to_bin.html"><span class="section">Long-Horizon Selection</span><strong>Scene3 task: put banana and cube into bin</strong><span>20 groups · 8 modes · 80 videos</span></a>
+<a class="task-card" href="long_horizon__lh_scene3_banana_to_bin_then_cube_to_bowl.html"><span class="section">Long-Horizon Selection</span><strong>Scene3 task: put banana into bin, then cube into bowl</strong><span>20 groups · 8 modes · 80 videos</span></a>
+<a class="task-card" href="long_horizon__lh_scene3_banana_to_bowl_then_cube_to_bin.html"><span class="section">Long-Horizon Selection</span><strong>Scene3 task: put banana into bowl, then cube into bin</strong><span>20 groups · 3 modes · 50 videos</span></a></div></section>
+<section><h2>Three-object long-horizon pilots</h2><div class="grid"><a class="task-card" href="three_object_long_horizon__lh_scene3_banana_cube_can_to_bin.html"><span class="section">Three-object long-horizon pilots</span><strong>Scene3 three-object task: banana, cube, and can into bin</strong><span>20 groups · 6 modes · 70 videos</span></a>
+<a class="task-card" href="three_object_long_horizon__lh_scene3_banana_cube_can_to_three_targets.html"><span class="section">Three-object long-horizon pilots</span><strong>Scene3 three-object task: banana into bin, cube into bowl, can into mug</strong><span>20 groups · 3 modes · 40 videos</span></a></div></section>
+</body>
+</html>
