@@ -1,8 +1,228 @@
 {
   "reason": "backend_save",
-  "created_at": "2026-05-12T13:39:44.185Z",
+  "created_at": "2026-05-13T03:45:08.531Z",
   "page_url": "https://sellerbubble.github.io/droid-selection-review-dashboard/?v=b5604d8",
   "overrides": [
+    {
+      "task": "lh_scene1_cube_to_mug_then_can_to_bowl",
+      "mode": "vlm_agent_failureonly_r0_diagnostic_l1_k5",
+      "group": 0,
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
+      "original_visual_success": null,
+      "original_visual_label": "wait_for_tag",
+      "updated_at": "2026-05-13T03:40:19.091Z"
+    },
+    {
+      "task": "lh_scene1_cube_to_mug_then_can_to_bowl",
+      "mode": "vlm_agent_failureonly_r0_diagnostic_l1_k5",
+      "group": 1,
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
+      "original_visual_success": null,
+      "original_visual_label": "wait_for_tag",
+      "updated_at": "2026-05-13T03:40:25.322Z"
+    },
+    {
+      "task": "lh_scene1_cube_to_mug_then_can_to_bowl",
+      "mode": "vlm_agent_failureonly_r0_diagnostic_l1_k5",
+      "group": 2,
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
+      "original_visual_success": null,
+      "original_visual_label": "wait_for_tag",
+      "updated_at": "2026-05-13T03:40:35.988Z"
+    },
+    {
+      "task": "lh_scene1_cube_to_mug_then_can_to_bowl",
+      "mode": "vlm_agent_failureonly_r0_diagnostic_l1_k5",
+      "group": 3,
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
+      "original_visual_success": null,
+      "original_visual_label": "wait_for_tag",
+      "updated_at": "2026-05-13T03:40:40.144Z"
+    },
+    {
+      "task": "lh_scene1_cube_to_mug_then_can_to_bowl",
+      "mode": "vlm_agent_failureonly_r0_diagnostic_l1_k5",
+      "group": 4,
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
+      "original_visual_success": null,
+      "original_visual_label": "wait_for_tag",
+      "updated_at": "2026-05-13T03:40:52.670Z"
+    },
+    {
+      "task": "lh_scene1_cube_to_mug_then_can_to_bowl",
+      "mode": "vlm_agent_failureonly_r0_diagnostic_l1_k5",
+      "group": 5,
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
+      "original_visual_success": null,
+      "original_visual_label": "wait_for_tag",
+      "updated_at": "2026-05-13T03:41:09.793Z"
+    },
+    {
+      "task": "lh_scene1_cube_to_mug_then_can_to_bowl",
+      "mode": "vlm_agent_failureonly_r0_diagnostic_l1_k5",
+      "group": 6,
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
+      "original_visual_success": null,
+      "original_visual_label": "wait_for_tag",
+      "updated_at": "2026-05-13T03:41:19.203Z"
+    },
+    {
+      "task": "lh_scene1_cube_to_mug_then_can_to_bowl",
+      "mode": "vlm_agent_failureonly_r0_diagnostic_l1_k5",
+      "group": 7,
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
+      "original_visual_success": null,
+      "original_visual_label": "wait_for_tag",
+      "updated_at": "2026-05-13T03:41:28.950Z"
+    },
+    {
+      "task": "lh_scene1_cube_to_mug_then_can_to_bowl",
+      "mode": "vlm_agent_failureonly_r0_diagnostic_l1_k5",
+      "group": 8,
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
+      "original_visual_success": null,
+      "original_visual_label": "wait_for_tag",
+      "updated_at": "2026-05-13T03:41:32.988Z"
+    },
+    {
+      "task": "lh_scene1_cube_to_mug_then_can_to_bowl",
+      "mode": "vlm_agent_failureonly_r0_diagnostic_l1_k5",
+      "group": 9,
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
+      "original_visual_success": null,
+      "original_visual_label": "wait_for_tag",
+      "updated_at": "2026-05-13T03:41:38.902Z"
+    },
+    {
+      "task": "lh_scene2_can_to_mug_then_cube_to_bowl",
+      "mode": "vlm_agent_failureonly_r0_diagnostic_l1_k5",
+      "group": 0,
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
+      "original_visual_success": null,
+      "original_visual_label": "wait_for_tag",
+      "updated_at": "2026-05-13T03:42:19.527Z"
+    },
+    {
+      "task": "lh_scene2_can_to_mug_then_cube_to_bowl",
+      "mode": "vlm_agent_failureonly_r0_diagnostic_l1_k5",
+      "group": 1,
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
+      "original_visual_success": null,
+      "original_visual_label": "wait_for_tag",
+      "updated_at": "2026-05-13T03:42:35.855Z"
+    },
+    {
+      "task": "lh_scene2_can_to_mug_then_cube_to_bowl",
+      "mode": "vlm_agent_failureonly_r0_diagnostic_l1_k5",
+      "group": 2,
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
+      "original_visual_success": null,
+      "original_visual_label": "wait_for_tag",
+      "updated_at": "2026-05-13T03:43:36.093Z"
+    },
+    {
+      "task": "lh_scene2_can_to_mug_then_cube_to_bowl",
+      "mode": "vlm_agent_failureonly_r0_diagnostic_l1_k5",
+      "group": 3,
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
+      "original_visual_success": null,
+      "original_visual_label": "wait_for_tag",
+      "updated_at": "2026-05-13T03:43:43.439Z"
+    },
+    {
+      "task": "lh_scene2_can_to_mug_then_cube_to_bowl",
+      "mode": "vlm_agent_failureonly_r0_diagnostic_l1_k5",
+      "group": 4,
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
+      "original_visual_success": null,
+      "original_visual_label": "wait_for_tag",
+      "updated_at": "2026-05-13T03:44:01.610Z"
+    },
+    {
+      "task": "lh_scene2_can_to_mug_then_cube_to_bowl",
+      "mode": "vlm_agent_failureonly_r0_diagnostic_l1_k5",
+      "group": 5,
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
+      "original_visual_success": null,
+      "original_visual_label": "wait_for_tag",
+      "updated_at": "2026-05-13T03:44:11.521Z"
+    },
+    {
+      "task": "lh_scene2_can_to_mug_then_cube_to_bowl",
+      "mode": "vlm_agent_failureonly_r0_diagnostic_l1_k5",
+      "group": 6,
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
+      "original_visual_success": null,
+      "original_visual_label": "wait_for_tag",
+      "updated_at": "2026-05-13T03:44:23.759Z"
+    },
+    {
+      "task": "lh_scene2_can_to_mug_then_cube_to_bowl",
+      "mode": "vlm_agent_failureonly_r0_diagnostic_l1_k5",
+      "group": 7,
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
+      "original_visual_success": null,
+      "original_visual_label": "wait_for_tag",
+      "updated_at": "2026-05-13T03:44:41.422Z"
+    },
+    {
+      "task": "lh_scene2_can_to_mug_then_cube_to_bowl",
+      "mode": "vlm_agent_failureonly_r0_diagnostic_l1_k5",
+      "group": 8,
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
+      "original_visual_success": null,
+      "original_visual_label": "wait_for_tag",
+      "updated_at": "2026-05-13T03:44:47.067Z"
+    },
+    {
+      "task": "lh_scene2_can_to_mug_then_cube_to_bowl",
+      "mode": "vlm_agent_failureonly_r0_diagnostic_l1_k5",
+      "group": 9,
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
+      "original_visual_success": null,
+      "original_visual_label": "wait_for_tag",
+      "updated_at": "2026-05-13T03:44:49.672Z"
+    },
     {
       "task": "lh_scene3_banana_cube_can_to_three_targets",
       "mode": "baseline_pass1",
@@ -28,6 +248,6 @@
   ],
   "rows": [],
   "reviewer_id": "liwenhao",
-  "saved_by_backend_at": "2026-05-12T13:39:44.770Z",
+  "saved_by_backend_at": "2026-05-13T03:45:09.199Z",
   "backend": "cloudflare_worker"
 }
