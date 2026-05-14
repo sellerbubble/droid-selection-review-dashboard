@@ -1,7 +1,7 @@
 {
   "reason": "backend_save",
-  "created_at": "2026-05-13T03:49:57.185Z",
-  "page_url": "https://sellerbubble.github.io/droid-selection-review-dashboard/?v=b5604d8",
+  "created_at": "2026-05-14T07:02:30.816Z",
+  "page_url": "https://sellerbubble.github.io/droid-selection-review-dashboard/",
   "overrides": [
     {
       "task": "lh_scene1_cube_to_mug_then_can_to_bowl",
@@ -908,6 +908,6 @@
   ],
   "rows": [],
   "reviewer_id": "liwenhao",
-  "saved_by_backend_at": "2026-05-13T03:49:57.526Z",
+  "saved_by_backend_at": "2026-05-14T07:02:31.575Z",
   "backend": "cloudflare_worker"
 }
