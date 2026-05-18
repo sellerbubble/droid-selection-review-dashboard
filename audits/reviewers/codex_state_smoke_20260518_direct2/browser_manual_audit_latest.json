@@ -1,0 +1,20 @@
+{
+  "reason": "state_dashboard_backend_smoke_test",
+  "created_at": "2026-05-18T00:00:00Z",
+  "page_url": "https://sellerbubble.github.io/droid-selection-review-dashboard/state_experiments/index.html",
+  "overrides": [
+    {
+      "task": "smoke_task",
+      "mode": "smoke_mode",
+      "group": 0,
+      "visual_label": "wait_for_tag",
+      "label": "wait_for_tag",
+      "visual_success": null,
+      "updated_at": "2026-05-18T00:00:00Z"
+    }
+  ],
+  "rows": [],
+  "reviewer_id": "codex_state_smoke_20260518_direct2",
+  "saved_by_backend_at": "2026-05-18T05:32:30.107Z",
+  "backend": "cloudflare_worker"
+}
