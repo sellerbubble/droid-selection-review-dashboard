@@ -1,0 +1,19 @@
+{
+  "source_file": "/Users/liwenhao.109/projects/claude_code/agent_vla/outputs/github_pages/droid_selection_review/audits/reviewers/songjia/browser_manual_audit_latest.json",
+  "source_created_at": "2026-05-18T17:13:00.869Z",
+  "source_saved_by_backend_at": "2026-05-18T17:13:02.148Z",
+  "mapping": {
+    "short_*": "short_scene3_*",
+    "long_*": "long_scene3_*"
+  },
+  "source_override_count": 500,
+  "migrated_override_count": 500,
+  "unmatched_override_count": 0,
+  "current_dashboard_row_count": 780,
+  "label_distribution": {
+    "wait_for_tag": 240,
+    "success": 125,
+    "fail": 104,
+    "partial": 31
+  }
+}
