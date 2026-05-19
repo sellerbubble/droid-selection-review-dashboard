@@ -1,0 +1,1479 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>State Experiment Review</title>
+  <style>
+    :root {
+      --ink: #15130f;
+      --muted: #776f62;
+      --paper: #f7f1e4;
+      --panel: rgba(255, 252, 244, 0.88);
+      --line: rgba(35, 29, 18, 0.16);
+      --coal: #25231e;
+      --good: #2e7d57;
+      --bad: #b7442f;
+      --warn: #b8860b;
+      --accent: #d35f2d;
+      --blue: #1e5b73;
+      --shadow: 0 18px 45px rgba(38, 30, 16, 0.18);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 20% 10%, rgba(211, 95, 45, .18), transparent 28rem),
+        radial-gradient(circle at 86% 3%, rgba(30, 91, 115, .16), transparent 24rem),
+        linear-gradient(135deg, #fbf5e7 0%, #eee1cb 54%, #ead7b7 100%);
+      font-family: Charter, Georgia, "Times New Roman", serif;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .16;
+      background-image:
+        linear-gradient(90deg, rgba(0,0,0,.05) 1px, transparent 1px),
+        linear-gradient(rgba(0,0,0,.04) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mix-blend-mode: multiply;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid var(--line);
+      background: rgba(247, 241, 228, .84);
+      backdrop-filter: blur(18px);
+    }
+    .topbar {
+      max-width: 1880px;
+      margin: 0 auto;
+      padding: 12px 24px 10px;
+      display: grid;
+      grid-template-columns: minmax(430px, .9fr) minmax(620px, 1.4fr);
+      gap: 20px;
+      align-items: center;
+    }
+    h1 {
+      margin: 0;
+      font-family: Didot, "Bodoni 72", Georgia, serif;
+      font-size: clamp(30px, 3vw, 44px);
+      line-height: .92;
+      letter-spacing: -0.045em;
+      white-space: nowrap;
+    }
+    .subtitle {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 13px;
+      max-width: 760px;
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-end;
+      align-items: center;
+    }
+    .remember-token {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--muted);
+      font: 800 11px ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    .remember-token input {
+      width: auto;
+      margin: 0;
+    }
+    select, input, button {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.65);
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 9px 13px;
+      font: 600 13px ui-monospace, SFMono-Regular, Menlo, monospace;
+      outline: none;
+    }
+    #sectionSelect { min-width: 220px; }
+    #taskSelect { min-width: 310px; max-width: 520px; }
+    #resultFilter, #layoutMode { min-width: 190px; }
+    #groupSearch { width: 120px; }
+    button {
+      cursor: pointer;
+      transition: transform .15s ease, background .15s ease;
+    }
+    button:hover { transform: translateY(-1px); background: white; }
+    main {
+      max-width: 1880px;
+      margin: 0 auto;
+      padding: 22px 24px 80px;
+    }
+    .task-tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .tab {
+      border-radius: 18px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .45);
+      cursor: pointer;
+      font: 700 13px ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    .tab.active {
+      background: var(--coal);
+      color: #fff7e8;
+      box-shadow: var(--shadow);
+    }
+    .scene-card {
+      display: none;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .scene-card.active { display: block; }
+    .scene-head {
+      padding: 22px;
+      display: grid;
+      grid-template-columns: minmax(420px, .9fr) minmax(620px, 1.6fr);
+      gap: 16px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(90deg, rgba(255,255,255,.62), rgba(255,255,255,.2));
+    }
+    .scene-title {
+      margin: 0;
+      font-size: 28px;
+      letter-spacing: -.02em;
+    }
+    .score-strip {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      align-content: center;
+      max-width: 1240px;
+    }
+    .score {
+      min-width: 118px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,.52);
+    }
+    .score.best {
+      background: #1f372b;
+      color: #fff8e9;
+      border-color: transparent;
+    }
+    .score.best .name { color: rgba(255,248,233,.72); }
+    .score .name {
+      color: var(--muted);
+      font: 700 10px ui-monospace, SFMono-Regular, Menlo, monospace;
+      text-transform: uppercase;
+    }
+    .score .value {
+      margin-top: 3px;
+      font: 800 22px ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    .mode-toggles {
+      padding: 14px 18px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .mode-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 11px;
+      background: rgba(255,255,255,.45);
+      font: 700 12px ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    .mode-toggle input { width: auto; margin: 0; }
+    .legend {
+      margin-left: auto;
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      color: var(--muted);
+      font: 800 11px ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    .method-guide {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(260px, 1fr));
+      gap: 12px;
+      padding: 0 18px 16px;
+      border-bottom: 1px solid var(--line);
+    }
+    .method-guide-card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px 13px;
+      background: rgba(255,255,255,.44);
+    }
+    .method-guide-card h3 {
+      margin: 0 0 6px;
+      font: 900 12px ui-monospace, SFMono-Regular, Menlo, monospace;
+      text-transform: uppercase;
+      color: var(--ink);
+      letter-spacing: .02em;
+    }
+    .method-guide-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.42;
+    }
+    .method-guide-card code {
+      font: 800 11px ui-monospace, SFMono-Regular, Menlo, monospace;
+      color: var(--blue);
+      background: rgba(255,255,255,.62);
+      border-radius: 6px;
+      padding: 1px 4px;
+    }
+    .group-list { padding: 18px; display: grid; gap: 18px; }
+    .group-row {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: rgba(255,255,255,.48);
+      overflow: hidden;
+    }
+    .group-row.selection-win {
+      border-color: rgba(46, 125, 87, .55);
+      box-shadow: inset 6px 0 0 var(--good);
+    }
+    .group-row.any-fail:not(.selection-win) {
+      box-shadow: inset 6px 0 0 rgba(183, 68, 47, .78);
+    }
+    .group-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      font: 800 13px ui-monospace, SFMono-Regular, Menlo, monospace;
+      background: rgba(37,35,30,.055);
+    }
+    .chips { display: flex; gap: 6px; flex-wrap: wrap; }
+    .chip {
+      border-radius: 999px;
+      padding: 3px 8px;
+      font: 800 11px ui-monospace, SFMono-Regular, Menlo, monospace;
+      border: 1px solid var(--line);
+    }
+    .chip.good { color: white; background: var(--good); border-color: transparent; }
+    .chip.bad { color: white; background: var(--bad); border-color: transparent; }
+    .chip.partial { color: white; background: var(--warn); border-color: transparent; }
+    .chip.wait { color: white; background: var(--blue); border-color: transparent; }
+    .chip.missing { color: var(--muted); background: rgba(255,255,255,.5); }
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(var(--visible-cols, 5), minmax(300px, 1fr));
+      gap: 1px;
+      background: var(--line);
+    }
+    .video-card {
+      background: #fffaf0;
+      min-width: 0;
+      padding: 12px;
+    }
+    .video-card.success {
+      background: linear-gradient(180deg, rgba(46,125,87,.10), #fffaf0 58%);
+    }
+    .video-card.failure {
+      background: linear-gradient(180deg, rgba(183,68,47,.12), #fffaf0 58%);
+    }
+    .video-card.partial {
+      background: linear-gradient(180deg, rgba(184,134,11,.15), #fffaf0 58%);
+    }
+    .video-card.wait {
+      background: linear-gradient(180deg, rgba(30,91,115,.16), #fffaf0 58%);
+    }
+    .video-card.unclear {
+      background: linear-gradient(180deg, rgba(119,111,98,.12), #fffaf0 58%);
+    }
+    .video-card.baseline {
+      border-top: 4px solid var(--coal);
+    }
+    .video-card.hidden-mode { display: none; }
+    .video-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+      font: 800 12px ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    .badge {
+      border-radius: 999px;
+      padding: 2px 7px;
+      font-size: 10px;
+      color: white;
+      background: var(--muted);
+    }
+    .badge.good { background: var(--good); }
+    .badge.bad { background: var(--bad); }
+    .badge.partial { background: var(--warn); }
+    .badge.wait { background: var(--blue); }
+    .badge.manual { background: var(--blue); }
+    .audit-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 8px 0 10px;
+      align-items: center;
+      padding: 8px;
+      border: 1px dashed rgba(30, 91, 115, .36);
+      border-radius: 12px;
+      background: rgba(255,255,255,.58);
+    }
+    .audit-btn {
+      padding: 8px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      background: rgba(255,255,255,.7);
+    }
+    .audit-btn[data-audit-action="success"] { border-color: rgba(46, 125, 87, .55); }
+    .audit-btn[data-audit-action="partial"] { border-color: rgba(184, 134, 11, .55); }
+    .audit-btn[data-audit-action="fail"] { border-color: rgba(183, 68, 47, .55); }
+    .audit-btn[data-audit-action="unclear"] { border-color: rgba(184, 134, 11, .55); }
+    .audit-btn[data-audit-action="wait_for_tag"] { border-color: rgba(30, 91, 115, .55); }
+    .audit-btn.active-success {
+      color: white;
+      background: var(--good);
+      border-color: transparent;
+    }
+    .audit-btn.active-fail {
+      color: white;
+      background: var(--bad);
+      border-color: transparent;
+    }
+    .audit-btn.active-partial {
+      color: white;
+      background: var(--warn);
+      border-color: transparent;
+    }
+    .audit-btn.active-unclear {
+      color: white;
+      background: var(--warn);
+      border-color: transparent;
+    }
+    .audit-btn.active-wait_for_tag {
+      color: white;
+      background: var(--blue);
+      border-color: transparent;
+    }
+    .video-card.manual-override {
+      outline: 3px solid rgba(30, 91, 115, .42);
+      outline-offset: -3px;
+    }
+    .manual-note {
+      color: var(--blue);
+      font: 800 11px ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    .manual-note.dirty {
+      color: var(--warn);
+    }
+    .audit-label {
+      color: var(--blue);
+      font: 900 11px ui-monospace, SFMono-Regular, Menlo, monospace;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+    #overrideCount {
+      color: var(--blue);
+      font: 800 12px ui-monospace, SFMono-Regular, Menlo, monospace;
+      padding: 0 4px;
+    }
+    #saveStatus {
+      min-width: 180px;
+      color: var(--muted);
+      font: 800 11px ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    .server-help {
+      display: none;
+      grid-column: 1 / -1;
+      width: min(980px, 100%);
+      margin-left: auto;
+      padding: 12px 14px;
+      border: 1px solid rgba(184, 134, 11, .32);
+      border-radius: 16px;
+      background: rgba(255, 246, 214, .84);
+      color: #56431a;
+      font: 700 12px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    .server-help.visible { display: block; }
+    .server-help code {
+      display: block;
+      margin-top: 8px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.8);
+      color: #1e1a12;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      user-select: all;
+    }
+    video, .fallback-img {
+      width: 100%;
+      aspect-ratio: 960 / 204;
+      object-fit: contain;
+      background: #15130f;
+      border-radius: 14px;
+      border: 1px solid rgba(0,0,0,.16);
+      display: block;
+    }
+    .fallback-img.contact-fallback { display: none; }
+    .thumbs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .thumbs img {
+      width: 100%;
+      aspect-ratio: 1.35;
+      object-fit: cover;
+      border-radius: 9px;
+      border: 1px solid var(--line);
+      background: white;
+    }
+    .note {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      min-height: 16px;
+    }
+    .empty {
+      min-height: 210px;
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      font: 800 12px ui-monospace, SFMono-Regular, Menlo, monospace;
+      border-radius: 14px;
+      background: rgba(0,0,0,.035);
+    }
+    .is-filtered { display: none; }
+    body.layout-cinema .video-grid {
+      grid-template-columns: repeat(2, minmax(540px, 1fr)) !important;
+      gap: 12px;
+      background: transparent;
+      padding: 12px;
+    }
+    body.layout-cinema .video-card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: 0 12px 24px rgba(38, 30, 16, .08);
+    }
+    body.layout-cinema video,
+    body.layout-cinema .fallback-img {
+      aspect-ratio: 960 / 204;
+    }
+    body.layout-contact .video-card video {
+      display: none;
+    }
+    body.layout-contact .fallback-img.contact-fallback {
+      display: block;
+    }
+    @media (max-width: 980px) {
+      .topbar, .scene-head { grid-template-columns: 1fr; }
+      .controls, .score-strip { justify-content: flex-start; }
+      h1 { white-space: normal; }
+      .video-grid { grid-template-columns: 1fr !important; }
+    }
+  </style>
+</head>
+<body class="layout-cinema">
+  <header>
+    <div class="topbar">
+      <div>
+        <h1>State Experiment Review</h1>
+        <div class="subtitle">State experiment rollouts grouped by state, horizon, and experiment family. All labels start as wait_for_tag for fresh human review.</div>
+      </div>
+      <div class="controls">
+        <select id="sectionSelect"></select>
+        <select id="sceneSelect"></select>
+        <select id="taskSelect"></select>
+        <select id="resultFilter">
+          <option value="all">show all groups</option>
+          <option value="any-fail">any failure</option>
+          <option value="baseline-fail">baseline failure</option>
+          <option value="selection-win">selection beats baseline</option>
+        </select>
+        <select id="layoutMode">
+          <option value="overview">5-column overview</option>
+          <option value="cinema" selected>2-column cinema</option>
+          <option value="contact">final-frame contact</option>
+        </select>
+        <input id="groupSearch" placeholder="group id" />
+        <button id="saveAuditLocal">save local</button>
+        <button id="checkSaveServer">check server</button>
+        <button id="copyServerCommand">copy start cmd</button>
+        <button id="exportAuditCsv">export CSV</button>
+        <button id="exportAuditJson">export JSON</button>
+        <button id="backupAuditJson">backup full JSON</button>
+        <input id="backendUrl" placeholder="Backend URL" autocomplete="off" />
+        <input id="reviewerId" placeholder="reviewer id" autocomplete="off" />
+        <input id="writeSecret" type="password" placeholder="write secret" autocomplete="off" />
+        <button id="saveAuditBackend">save via backend</button>
+        <button id="loadAuditBackend">load my backend audit</button>
+        <button id="checkBackend">check backend</button>
+        <button id="clearManualAudit">clear edits</button>
+        <span id="overrideCount">0 edits</span>
+        <span id="saveStatus">not saved</span>
+        <span id="lastSaveStatus">last saved: never</span>
+        <button id="playVisible">play visible</button>
+        <button id="pauseVisible">pause</button>
+        <div id="serverHelp" class="server-help"></div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div id="tabs" class="task-tabs"></div>
+    <div id="cards"></div>
+  </main>
+  <script id="dashboard-data" type="application/json">{"section": "state_experiment", "section_label": "State Experiments", "summary": {"created_at": "2026-05-18T15:19:38", "project_root": "/Users/liwenhao.109/projects/claude_code/agent_vla", "export_root": "/Users/liwenhao.109/projects/claude_code/agent_vla/outputs/state_experiment_dashboard_export_20260517/dashboard_export", "source_docs": ["/Users/liwenhao.109/projects/claude_code/agent_vla/docs/experiments/state_experiment_summary_20260517_zh.md", "/Users/liwenhao.109/projects/claude_code/agent_vla/docs/experiments/atomic_derived_long_horizon_pass1_run_status_20260516_zh.md", "/Users/liwenhao.109/projects/claude_code/agent_vla/docs/experiments/atomic_short_horizon_hierarchical_banks_20260516_zh.md", "/Users/liwenhao.109/projects/claude_code/agent_vla/docs/experiments/atomic_subtask_g10_19_extension_plan_20260516_zh.md", "/Users/liwenhao.109/projects/claude_code/agent_vla/docs/experiments/atomic_short_horizon_hierarchical_selection_plan_20260517_zh.md", "/Users/liwenhao.109/projects/claude_code/agent_vla/docs/experiments/atomic_subtask_group_to_long_horizon_mapping_20260516_zh.md"], "total_tasks": 7, "total_manifest_rows": 380, "rows_by_state_experiment_family_mode": [{"state_id": "S1", "experiment_family": "baseline_g0_9", "mode": "short_baseline_pass1_g0_9", "rows": 10}, {"state_id": "S1", "experiment_family": "extension_g10_19", "mode": "short_baseline_pass1_g10_19", "rows": 10}, {"state_id": "S1", "experiment_family": "long_g0_9", "mode": "long_baseline_pass1_g0_9", "rows": 10}, {"state_id": "S1", "experiment_family": "long_g10_19", "mode": "long_baseline_pass1_g10_19", "rows": 10}, {"state_id": "S1", "experiment_family": "selection_formal", "mode": "short_hierarchical_fixed_vit_k5_g0_19", "rows": 20}, {"state_id": "S2", "experiment_family": "baseline_g0_9", "mode": "short_baseline_pass1_g0_9", "rows": 10}, {"state_id": "S2", "experiment_family": "extension_g10_19", "mode": "short_baseline_pass1_g10_19", "rows": 10}, {"state_id": "S2", "experiment_family": "long_g0_9", "mode": "long_baseline_pass1_g0_9", "rows": 10}, {"state_id": "S2", "experiment_family": "long_g10_19", "mode": "long_baseline_pass1_g10_19", "rows": 10}, {"state_id": "S2", "experiment_family": "selection_formal", "mode": "short_hierarchical_fixed_vit_k5_g0_19", "rows": 20}, {"state_id": "S3", "experiment_family": "baseline_g0_9", "mode": "short_baseline_pass1_g0_9", "rows": 10}, {"state_id": "S3", "experiment_family": "extension_g10_19", "mode": "short_baseline_pass1_g10_19", "rows": 10}, {"state_id": "S3", "experiment_family": "long_g0_9", "mode": "long_baseline_pass1_g0_9", "rows": 10}, {"state_id": "S3", "experiment_family": "long_g10_19", "mode": "long_baseline_pass1_g10_19", "rows": 10}, {"state_id": "S3", "experiment_family": "selection_formal", "mode": "short_hierarchical_fixed_vit_k5_g0_19", "rows": 20}, {"state_id": "S4", "experiment_family": "baseline_g0_9", "mode": "short_baseline_pass1_g0_9", "rows": 10}, {"state_id": "S4", "experiment_family": "extension_g10_19", "mode": "short_baseline_pass1_g10_19", "rows": 10}, {"state_id": "S4", "experiment_family": "long_g0_9", "mode": "long_baseline_pass1_g0_9", "rows": 10}, {"state_id": "S4", "experiment_family": "long_g10_19", "mode": "long_baseline_pass1_g10_19", "rows": 10}, {"state_id": "S5", "experiment_family": "baseline_g0_9", "mode": "short_baseline_pass1_g0_9", "rows": 10}, {"state_id": "S5", "experiment_family": "extension_g10_19", "mode": "short_baseline_pass1_g10_19", "rows": 10}, {"state_id": "S5", "experiment_family": "long_g0_9", "mode": "long_baseline_pass1_g0_9", "rows": 10}, {"state_id": "S5", "experiment_family": "long_g10_19", "mode": "long_baseline_pass1_g10_19", "rows": 10}, {"state_id": "S5", "experiment_family": "selection_formal", "mode": "short_hierarchical_fixed_vit_k5_g0_19", "rows": 20}, {"state_id": "S6", "experiment_family": "baseline_g0_9", "mode": "short_baseline_pass1_g0_9", "rows": 10}, {"state_id": "S6", "experiment_family": "extension_g10_19", "mode": "short_baseline_pass1_g10_19", "rows": 10}, {"state_id": "S6", "experiment_family": "selection_formal", "mode": "short_hierarchical_fixed_vit_k5_g0_19", "rows": 20}, {"state_id": "S7", "experiment_family": "baseline_g0_9", "mode": "short_baseline_pass1_g0_9", "rows": 10}, {"state_id": "S7", "experiment_family": "extension_g10_19", "mode": "short_baseline_pass1_g10_19", "rows": 10}, {"state_id": "S7", "experiment_family": "long_g0_9", "mode": "long_baseline_pass1_g0_9", "rows": 10}, {"state_id": "S7", "experiment_family": "long_g10_19", "mode": "long_baseline_pass1_g10_19", "rows": 10}, {"state_id": "S7", "experiment_family": "selection_formal", "mode": "short_hierarchical_fixed_vit_k5_g0_19", "rows": 20}], "label_distribution_by_state_mode": [{"state_id": "S1", "mode": "long_baseline_pass1_g0_9", "labels": {"wait_for_tag": 10}}, {"state_id": "S1", "mode": "long_baseline_pass1_g10_19", "labels": {"fail": 10}}, {"state_id": "S1", "mode": "short_baseline_pass1_g0_9", "labels": {"success": 8, "fail": 2}}, {"state_id": "S1", "mode": "short_baseline_pass1_g10_19", "labels": {"success": 10}}, {"state_id": "S1", "mode": "short_hierarchical_fixed_vit_k5_g0_19", "labels": {"wait_for_tag": 20}}, {"state_id": "S2", "mode": "long_baseline_pass1_g0_9", "labels": {"wait_for_tag": 10}}, {"state_id": "S2", "mode": "long_baseline_pass1_g10_19", "labels": {"success": 10}}, {"state_id": "S2", "mode": "short_baseline_pass1_g0_9", "labels": {"success": 6, "fail": 4}}, {"state_id": "S2", "mode": "short_baseline_pass1_g10_19", "labels": {"success": 10}}, {"state_id": "S2", "mode": "short_hierarchical_fixed_vit_k5_g0_19", "labels": {"wait_for_tag": 20}}, {"state_id": "S3", "mode": "long_baseline_pass1_g0_9", "labels": {"wait_for_tag": 10}}, {"state_id": "S3", "mode": "long_baseline_pass1_g10_19", "labels": {"fail": 10}}, {"state_id": "S3", "mode": "short_baseline_pass1_g0_9", "labels": {"wait_for_tag": 10}}, {"state_id": "S3", "mode": "short_baseline_pass1_g10_19", "labels": {"success": 8, "unclear": 1, "fail": 1}}, {"state_id": "S3", "mode": "short_hierarchical_fixed_vit_k5_g0_19", "labels": {"wait_for_tag": 20}}, {"state_id": "S4", "mode": "long_baseline_pass1_g0_9", "labels": {"wait_for_tag": 10}}, {"state_id": "S4", "mode": "long_baseline_pass1_g10_19", "labels": {"fail": 10}}, {"state_id": "S4", "mode": "short_baseline_pass1_g0_9", "labels": {"wait_for_tag": 10}}, {"state_id": "S4", "mode": "short_baseline_pass1_g10_19", "labels": {"wait_for_tag": 10}}, {"state_id": "S5", "mode": "long_baseline_pass1_g0_9", "labels": {"wait_for_tag": 10}}, {"state_id": "S5", "mode": "long_baseline_pass1_g10_19", "labels": {"success": 4, "fail": 5, "partial": 1}}, {"state_id": "S5", "mode": "short_baseline_pass1_g0_9", "labels": {"success": 5, "fail": 5}}, {"state_id": "S5", "mode": "short_baseline_pass1_g10_19", "labels": {"success": 5, "unclear": 5}}, {"state_id": "S5", "mode": "short_hierarchical_fixed_vit_k5_g0_19", "labels": {"wait_for_tag": 20}}, {"state_id": "S6", "mode": "short_baseline_pass1_g0_9", "labels": {"wait_for_tag": 10}}, {"state_id": "S6", "mode": "short_baseline_pass1_g10_19", "labels": {"success": 6, "unclear": 2, "fail": 2}}, {"state_id": "S6", "mode": "short_hierarchical_fixed_vit_k5_g0_19", "labels": {"wait_for_tag": 20}}, {"state_id": "S7", "mode": "long_baseline_pass1_g0_9", "labels": {"wait_for_tag": 10}}, {"state_id": "S7", "mode": "long_baseline_pass1_g10_19", "labels": {"success": 8, "fail": 2}}, {"state_id": "S7", "mode": "short_baseline_pass1_g0_9", "labels": {"wait_for_tag": 10}}, {"state_id": "S7", "mode": "short_baseline_pass1_g10_19", "labels": {"wait_for_tag": 10}}, {"state_id": "S7", "mode": "short_hierarchical_fixed_vit_k5_g0_19", "labels": {"wait_for_tag": 20}}], "missing_rollout_video": 0, "missing_final_frames": 0, "missing_final_right": 0, "missing_final_left": 0, "missing_final_wrist": 0, "missing_metadata_json": 0, "strict_manual_video_audit_experiments": [{"experiment_family": "long_g10_19", "task": "atomic_s1_cube_to_bowl", "audit_source": "strict_manual_video_audit_20260516"}, {"experiment_family": "long_g10_19", "task": "atomic_s2_cube_to_bin", "audit_source": "strict_manual_video_audit_20260516"}, {"experiment_family": "long_g10_19", "task": "atomic_s3_can_to_mug", "audit_source": "strict_manual_video_audit_20260516"}, {"experiment_family": "long_g10_19", "task": "atomic_s4_can_to_bowl", "audit_source": "strict_manual_video_audit_20260516"}, {"experiment_family": "long_g10_19", "task": "atomic_s5_can_to_bin", "audit_source": "strict_manual_video_audit_20260516"}, {"experiment_family": "long_g10_19", "task": "atomic_s7_banana_to_bin", "audit_source": "strict_manual_video_audit_20260516"}], "preliminary_final_frame_audit_experiments": [{"experiment_family": "baseline_g0_9", "task": "atomic_s1_cube_to_bowl", "audit_source": "manual_video_plus_finalframe_partial_sync_20260516"}, {"experiment_family": "baseline_g0_9", "task": "atomic_s2_cube_to_bin", "audit_source": "manual_video_plus_finalframe_partial_sync_20260516"}, {"experiment_family": "baseline_g0_9", "task": "atomic_s5_can_to_bin", "audit_source": "manual_video_plus_finalframe_partial_sync_20260516"}, {"experiment_family": "extension_g10_19", "task": "atomic_s1_cube_to_bowl", "audit_source": "final_frame_precheck"}, {"experiment_family": "extension_g10_19", "task": "atomic_s2_cube_to_bin", "audit_source": "final_frame_precheck"}, {"experiment_family": "extension_g10_19", "task": "atomic_s3_can_to_mug", "audit_source": "final_frame_precheck"}, {"experiment_family": "extension_g10_19", "task": "atomic_s5_can_to_bin", "audit_source": "final_frame_precheck"}, {"experiment_family": "extension_g10_19", "task": "atomic_s6_banana_to_bowl", "audit_source": "final_frame_precheck"}], "aggregate_only_experiments": [], "wait_for_tag_only_experiments": [{"experiment_family": "selection_formal", "task": "atomic_s1_cube_to_bowl", "note": "Local selection formal rollout media exist; no per-group manual audit CSV was found, so rows remain wait_for_tag."}, {"experiment_family": "selection_formal", "task": "atomic_s2_cube_to_bin", "note": "Local selection formal rollout media exist; no per-group manual audit CSV was found, so rows remain wait_for_tag."}, {"experiment_family": "selection_formal", "task": "atomic_s3_can_to_mug", "note": "Local selection formal rollout media exist; no per-group manual audit CSV was found, so rows remain wait_for_tag."}, {"experiment_family": "selection_formal", "task": "atomic_s5_can_to_bin", "note": "Local selection formal rollout media exist; no per-group manual audit CSV was found, so rows remain wait_for_tag."}, {"experiment_family": "selection_formal", "task": "atomic_s6_banana_to_bowl", "note": "Local selection formal rollout media exist; no per-group manual audit CSV was found, so rows remain wait_for_tag."}, {"experiment_family": "selection_formal", "task": "atomic_s7_banana_to_bin", "note": "Local selection formal rollout media exist; no per-group manual audit CSV was found, so rows remain wait_for_tag."}, {"experiment_family": "long_g0_9", "task": "atomic_s1_cube_to_bowl", "note": "Local media exist, but no strict per-group manual video audit CSV was found; rows remain wait_for_tag."}, {"experiment_family": "long_g0_9", "task": "atomic_s2_cube_to_bin", "note": "Local media exist, but no strict per-group manual video audit CSV was found; rows remain wait_for_tag."}, {"experiment_family": "long_g0_9", "task": "atomic_s3_can_to_mug", "note": "Local media exist, but no strict per-group manual video audit CSV was found; rows remain wait_for_tag."}, {"experiment_family": "long_g0_9", "task": "atomic_s4_can_to_bowl", "note": "Local media exist, but no strict per-group manual video audit CSV was found; rows remain wait_for_tag."}, {"experiment_family": "long_g0_9", "task": "atomic_s5_can_to_bin", "note": "Local media exist, but no strict per-group manual video audit CSV was found; rows remain wait_for_tag."}, {"experiment_family": "long_g0_9", "task": "atomic_s7_banana_to_bin", "note": "Local media exist, but no strict per-group manual video audit CSV was found; rows remain wait_for_tag."}], "skipped_states": [{"experiment_family": "selection_formal", "state_id": "S4", "task": "atomic_s4_can_to_bowl", "reason": "skip-for-selection"}, {"experiment_family": "long_g0_9", "state_id": "S6", "task": "atomic_s6_banana_to_bowl", "reason": "mapping skipped"}, {"experiment_family": "long_g10_19", "state_id": "S6", "task": "atomic_s6_banana_to_bowl", "reason": "mapping skipped"}], "missing_local_sync_experiments": [], "resolved_local_sync_experiments_20260518": [{"experiment_family": "baseline_g0_9", "task": "atomic_s3_can_to_mug", "reason": "resolved by short missing-row backfill sync from 4gpu"}, {"experiment_family": "baseline_g0_9", "task": "atomic_s4_can_to_bowl", "reason": "resolved by short missing-row backfill sync from 4gpu"}, {"experiment_family": "baseline_g0_9", "task": "atomic_s6_banana_to_bowl", "reason": "resolved by short missing-row backfill sync from 4gpu-2"}, {"experiment_family": "baseline_g0_9", "task": "atomic_s7_banana_to_bin", "reason": "resolved from existing local reaudit source_sync"}, {"experiment_family": "extension_g10_19", "task": "atomic_s7_banana_to_bin", "reason": "resolved from existing local reaudit source_sync"}], "mode_row_counts": {"short_baseline_pass1_g0_9": 70, "short_baseline_pass1_g10_19": 70, "short_hierarchical_fixed_vit_k5_g0_19": 120, "long_baseline_pass1_g0_9": 60, "long_baseline_pass1_g10_19": 60}, "state_row_counts": {"S1": 60, "S2": 60, "S5": 60, "S3": 60, "S4": 40, "S6": 40, "S7": 60}, "provenance_difference_g0_g9_vs_g10_g19": {"g0_g9": "Baseline lineage from v4_hidden_parked safe10 bank.", "g10_g19": "Extension lineage from v5_g10_19_perturbed safe20 bank derived from v4.", "note": "G00-G19 belong to the same task family coverage but provenance should not be flattened."}, "label_distribution": {"success": 80, "fail": 51, "unclear": 8, "wait_for_tag": 240, "partial": 1}, "audit_source_distribution": {"manual_video_plus_finalframe_partial_sync_20260516": 30, "final_frame_precheck": 50, "wait_for_tag": 240, "strict_manual_video_audit_20260516": 60}, "short_missing_backfill_20260518": {"delivery_level": "A. ready-to-ingest dashboard export", "backup_dir": "/Users/liwenhao.109/projects/claude_code/agent_vla/outputs/state_experiment_dashboard_export_20260517/dashboard_export/backups/before_missing_short_backfill_20260518_151937", "added_rows": 50, "added_groups_by_task_mode": {"atomic_s3_can_to_mug::short_baseline_pass1_g0_9": ["group_000", "group_001", "group_002", "group_003", "group_004", "group_005", "group_006", "group_007", "group_008", "group_009"], "atomic_s4_can_to_bowl::short_baseline_pass1_g0_9": ["group_000", "group_001", "group_002", "group_003", "group_004", "group_005", "group_006", "group_007", "group_008", "group_009"], "atomic_s6_banana_to_bowl::short_baseline_pass1_g0_9": ["group_000", "group_001", "group_002", "group_003", "group_004", "group_005", "group_006", "group_007", "group_008", "group_009"], "atomic_s7_banana_to_bin::short_baseline_pass1_g0_9": ["group_000", "group_001", "group_002", "group_003", "group_004", "group_005", "group_006", "group_007", "group_008", "group_009"], "atomic_s7_banana_to_bin::short_baseline_pass1_g10_19": ["group_010", "group_011", "group_012", "group_013", "group_014", "group_015", "group_016", "group_017", "group_018", "group_019"]}, "missing_after_backfill": [{"task": "atomic_s4_can_to_bowl", "mode": "short_hierarchical_fixed_vit_k5_g0_19", "groups": ["group_000", "group_001", "group_002", "group_003", "group_004", "group_005", "group_006", "group_007", "group_008", "group_009", "group_010", "group_011", "group_012", "group_013", "group_014", "group_015", "group_016", "group_017", "group_018", "group_019"], "reason": "S4 was documented as skip-for-selection; no real selection rollout artifact found locally or on 4gpu."}], "label_policy": "All newly added rows use visual_success_label=wait_for_tag and audit_source=wait_for_tag.", "motion_valid_distribution_for_added_rows": {"true": 50}, "used_diagnostic_success": false, "reran_droid_or_dreamzero": false, "known_caveats": ["S4 hierarchical selection remains missing because S4 was skip-for-selection and no real rollout artifact was found.", "Newly added rows are not manually reviewed; they are ready for dashboard tagging.", "Existing rows and existing manual/preliminary labels were preserved."]}}, "generated_from": {"manifest": "/Users/liwenhao.109/projects/claude_code/agent_vla/outputs/state_experiment_dashboard_export_20260517/dashboard_export/manifest.csv", "summary": "/Users/liwenhao.109/projects/claude_code/agent_vla/outputs/state_experiment_dashboard_export_20260517/dashboard_export/summary.json"}, "state_experiment": {"generated_from": {"manifest": "/Users/liwenhao.109/projects/claude_code/agent_vla/outputs/state_experiment_dashboard_export_20260517/dashboard_export/manifest.csv", "summary": "/Users/liwenhao.109/projects/claude_code/agent_vla/outputs/state_experiment_dashboard_export_20260517/dashboard_export/summary.json"}, "summary": {"created_at": "2026-05-18T15:19:38", "project_root": "/Users/liwenhao.109/projects/claude_code/agent_vla", "export_root": "/Users/liwenhao.109/projects/claude_code/agent_vla/outputs/state_experiment_dashboard_export_20260517/dashboard_export", "source_docs": ["/Users/liwenhao.109/projects/claude_code/agent_vla/docs/experiments/state_experiment_summary_20260517_zh.md", "/Users/liwenhao.109/projects/claude_code/agent_vla/docs/experiments/atomic_derived_long_horizon_pass1_run_status_20260516_zh.md", "/Users/liwenhao.109/projects/claude_code/agent_vla/docs/experiments/atomic_short_horizon_hierarchical_banks_20260516_zh.md", "/Users/liwenhao.109/projects/claude_code/agent_vla/docs/experiments/atomic_subtask_g10_19_extension_plan_20260516_zh.md", "/Users/liwenhao.109/projects/claude_code/agent_vla/docs/experiments/atomic_short_horizon_hierarchical_selection_plan_20260517_zh.md", "/Users/liwenhao.109/projects/claude_code/agent_vla/docs/experiments/atomic_subtask_group_to_long_horizon_mapping_20260516_zh.md"], "total_tasks": 7, "total_manifest_rows": 380, "rows_by_state_experiment_family_mode": [{"state_id": "S1", "experiment_family": "baseline_g0_9", "mode": "short_baseline_pass1_g0_9", "rows": 10}, {"state_id": "S1", "experiment_family": "extension_g10_19", "mode": "short_baseline_pass1_g10_19", "rows": 10}, {"state_id": "S1", "experiment_family": "long_g0_9", "mode": "long_baseline_pass1_g0_9", "rows": 10}, {"state_id": "S1", "experiment_family": "long_g10_19", "mode": "long_baseline_pass1_g10_19", "rows": 10}, {"state_id": "S1", "experiment_family": "selection_formal", "mode": "short_hierarchical_fixed_vit_k5_g0_19", "rows": 20}, {"state_id": "S2", "experiment_family": "baseline_g0_9", "mode": "short_baseline_pass1_g0_9", "rows": 10}, {"state_id": "S2", "experiment_family": "extension_g10_19", "mode": "short_baseline_pass1_g10_19", "rows": 10}, {"state_id": "S2", "experiment_family": "long_g0_9", "mode": "long_baseline_pass1_g0_9", "rows": 10}, {"state_id": "S2", "experiment_family": "long_g10_19", "mode": "long_baseline_pass1_g10_19", "rows": 10}, {"state_id": "S2", "experiment_family": "selection_formal", "mode": "short_hierarchical_fixed_vit_k5_g0_19", "rows": 20}, {"state_id": "S3", "experiment_family": "baseline_g0_9", "mode": "short_baseline_pass1_g0_9", "rows": 10}, {"state_id": "S3", "experiment_family": "extension_g10_19", "mode": "short_baseline_pass1_g10_19", "rows": 10}, {"state_id": "S3", "experiment_family": "long_g0_9", "mode": "long_baseline_pass1_g0_9", "rows": 10}, {"state_id": "S3", "experiment_family": "long_g10_19", "mode": "long_baseline_pass1_g10_19", "rows": 10}, {"state_id": "S3", "experiment_family": "selection_formal", "mode": "short_hierarchical_fixed_vit_k5_g0_19", "rows": 20}, {"state_id": "S4", "experiment_family": "baseline_g0_9", "mode": "short_baseline_pass1_g0_9", "rows": 10}, {"state_id": "S4", "experiment_family": "extension_g10_19", "mode": "short_baseline_pass1_g10_19", "rows": 10}, {"state_id": "S4", "experiment_family": "long_g0_9", "mode": "long_baseline_pass1_g0_9", "rows": 10}, {"state_id": "S4", "experiment_family": "long_g10_19", "mode": "long_baseline_pass1_g10_19", "rows": 10}, {"state_id": "S5", "experiment_family": "baseline_g0_9", "mode": "short_baseline_pass1_g0_9", "rows": 10}, {"state_id": "S5", "experiment_family": "extension_g10_19", "mode": "short_baseline_pass1_g10_19", "rows": 10}, {"state_id": "S5", "experiment_family": "long_g0_9", "mode": "long_baseline_pass1_g0_9", "rows": 10}, {"state_id": "S5", "experiment_family": "long_g10_19", "mode": "long_baseline_pass1_g10_19", "rows": 10}, {"state_id": "S5", "experiment_family": "selection_formal", "mode": "short_hierarchical_fixed_vit_k5_g0_19", "rows": 20}, {"state_id": "S6", "experiment_family": "baseline_g0_9", "mode": "short_baseline_pass1_g0_9", "rows": 10}, {"state_id": "S6", "experiment_family": "extension_g10_19", "mode": "short_baseline_pass1_g10_19", "rows": 10}, {"state_id": "S6", "experiment_family": "selection_formal", "mode": "short_hierarchical_fixed_vit_k5_g0_19", "rows": 20}, {"state_id": "S7", "experiment_family": "baseline_g0_9", "mode": "short_baseline_pass1_g0_9", "rows": 10}, {"state_id": "S7", "experiment_family": "extension_g10_19", "mode": "short_baseline_pass1_g10_19", "rows": 10}, {"state_id": "S7", "experiment_family": "long_g0_9", "mode": "long_baseline_pass1_g0_9", "rows": 10}, {"state_id": "S7", "experiment_family": "long_g10_19", "mode": "long_baseline_pass1_g10_19", "rows": 10}, {"state_id": "S7", "experiment_family": "selection_formal", "mode": "short_hierarchical_fixed_vit_k5_g0_19", "rows": 20}], "label_distribution_by_state_mode": [{"state_id": "S1", "mode": "long_baseline_pass1_g0_9", "labels": {"wait_for_tag": 10}}, {"state_id": "S1", "mode": "long_baseline_pass1_g10_19", "labels": {"fail": 10}}, {"state_id": "S1", "mode": "short_baseline_pass1_g0_9", "labels": {"success": 8, "fail": 2}}, {"state_id": "S1", "mode": "short_baseline_pass1_g10_19", "labels": {"success": 10}}, {"state_id": "S1", "mode": "short_hierarchical_fixed_vit_k5_g0_19", "labels": {"wait_for_tag": 20}}, {"state_id": "S2", "mode": "long_baseline_pass1_g0_9", "labels": {"wait_for_tag": 10}}, {"state_id": "S2", "mode": "long_baseline_pass1_g10_19", "labels": {"success": 10}}, {"state_id": "S2", "mode": "short_baseline_pass1_g0_9", "labels": {"success": 6, "fail": 4}}, {"state_id": "S2", "mode": "short_baseline_pass1_g10_19", "labels": {"success": 10}}, {"state_id": "S2", "mode": "short_hierarchical_fixed_vit_k5_g0_19", "labels": {"wait_for_tag": 20}}, {"state_id": "S3", "mode": "long_baseline_pass1_g0_9", "labels": {"wait_for_tag": 10}}, {"state_id": "S3", "mode": "long_baseline_pass1_g10_19", "labels": {"fail": 10}}, {"state_id": "S3", "mode": "short_baseline_pass1_g0_9", "labels": {"wait_for_tag": 10}}, {"state_id": "S3", "mode": "short_baseline_pass1_g10_19", "labels": {"success": 8, "unclear": 1, "fail": 1}}, {"state_id": "S3", "mode": "short_hierarchical_fixed_vit_k5_g0_19", "labels": {"wait_for_tag": 20}}, {"state_id": "S4", "mode": "long_baseline_pass1_g0_9", "labels": {"wait_for_tag": 10}}, {"state_id": "S4", "mode": "long_baseline_pass1_g10_19", "labels": {"fail": 10}}, {"state_id": "S4", "mode": "short_baseline_pass1_g0_9", "labels": {"wait_for_tag": 10}}, {"state_id": "S4", "mode": "short_baseline_pass1_g10_19", "labels": {"wait_for_tag": 10}}, {"state_id": "S5", "mode": "long_baseline_pass1_g0_9", "labels": {"wait_for_tag": 10}}, {"state_id": "S5", "mode": "long_baseline_pass1_g10_19", "labels": {"success": 4, "fail": 5, "partial": 1}}, {"state_id": "S5", "mode": "short_baseline_pass1_g0_9", "labels": {"success": 5, "fail": 5}}, {"state_id": "S5", "mode": "short_baseline_pass1_g10_19", "labels": {"success": 5, "unclear": 5}}, {"state_id": "S5", "mode": "short_hierarchical_fixed_vit_k5_g0_19", "labels": {"wait_for_tag": 20}}, {"state_id": "S6", "mode": "short_baseline_pass1_g0_9", "labels": {"wait_for_tag": 10}}, {"state_id": "S6", "mode": "short_baseline_pass1_g10_19", "labels": {"success": 6, "unclear": 2, "fail": 2}}, {"state_id": "S6", "mode": "short_hierarchical_fixed_vit_k5_g0_19", "labels": {"wait_for_tag": 20}}, {"state_id": "S7", "mode": "long_baseline_pass1_g0_9", "labels": {"wait_for_tag": 10}}, {"state_id": "S7", "mode": "long_baseline_pass1_g10_19", "labels": {"success": 8, "fail": 2}}, {"state_id": "S7", "mode": "short_baseline_pass1_g0_9", "labels": {"wait_for_tag": 10}}, {"state_id": "S7", "mode": "short_baseline_pass1_g10_19", "labels": {"wait_for_tag": 10}}, {"state_id": "S7", "mode": "short_hierarchical_fixed_vit_k5_g0_19", "labels": {"wait_for_tag": 20}}], "missing_rollout_video": 0, "missing_final_frames": 0, "missing_final_right": 0, "missing_final_left": 0, "missing_final_wrist": 0, "missing_metadata_json": 0, "strict_manual_video_audit_experiments": [{"experiment_family": "long_g10_19", "task": "atomic_s1_cube_to_bowl", "audit_source": "strict_manual_video_audit_20260516"}, {"experiment_family": "long_g10_19", "task": "atomic_s2_cube_to_bin", "audit_source": "strict_manual_video_audit_20260516"}, {"experiment_family": "long_g10_19", "task": "atomic_s3_can_to_mug", "audit_source": "strict_manual_video_audit_20260516"}, {"experiment_family": "long_g10_19", "task": "atomic_s4_can_to_bowl", "audit_source": "strict_manual_video_audit_20260516"}, {"experiment_family": "long_g10_19", "task": "atomic_s5_can_to_bin", "audit_source": "strict_manual_video_audit_20260516"}, {"experiment_family": "long_g10_19", "task": "atomic_s7_banana_to_bin", "audit_source": "strict_manual_video_audit_20260516"}], "preliminary_final_frame_audit_experiments": [{"experiment_family": "baseline_g0_9", "task": "atomic_s1_cube_to_bowl", "audit_source": "manual_video_plus_finalframe_partial_sync_20260516"}, {"experiment_family": "baseline_g0_9", "task": "atomic_s2_cube_to_bin", "audit_source": "manual_video_plus_finalframe_partial_sync_20260516"}, {"experiment_family": "baseline_g0_9", "task": "atomic_s5_can_to_bin", "audit_source": "manual_video_plus_finalframe_partial_sync_20260516"}, {"experiment_family": "extension_g10_19", "task": "atomic_s1_cube_to_bowl", "audit_source": "final_frame_precheck"}, {"experiment_family": "extension_g10_19", "task": "atomic_s2_cube_to_bin", "audit_source": "final_frame_precheck"}, {"experiment_family": "extension_g10_19", "task": "atomic_s3_can_to_mug", "audit_source": "final_frame_precheck"}, {"experiment_family": "extension_g10_19", "task": "atomic_s5_can_to_bin", "audit_source": "final_frame_precheck"}, {"experiment_family": "extension_g10_19", "task": "atomic_s6_banana_to_bowl", "audit_source": "final_frame_precheck"}], "aggregate_only_experiments": [], "wait_for_tag_only_experiments": [{"experiment_family": "selection_formal", "task": "atomic_s1_cube_to_bowl", "note": "Local selection formal rollout media exist; no per-group manual audit CSV was found, so rows remain wait_for_tag."}, {"experiment_family": "selection_formal", "task": "atomic_s2_cube_to_bin", "note": "Local selection formal rollout media exist; no per-group manual audit CSV was found, so rows remain wait_for_tag."}, {"experiment_family": "selection_formal", "task": "atomic_s3_can_to_mug", "note": "Local selection formal rollout media exist; no per-group manual audit CSV was found, so rows remain wait_for_tag."}, {"experiment_family": "selection_formal", "task": "atomic_s5_can_to_bin", "note": "Local selection formal rollout media exist; no per-group manual audit CSV was found, so rows remain wait_for_tag."}, {"experiment_family": "selection_formal", "task": "atomic_s6_banana_to_bowl", "note": "Local selection formal rollout media exist; no per-group manual audit CSV was found, so rows remain wait_for_tag."}, {"experiment_family": "selection_formal", "task": "atomic_s7_banana_to_bin", "note": "Local selection formal rollout media exist; no per-group manual audit CSV was found, so rows remain wait_for_tag."}, {"experiment_family": "long_g0_9", "task": "atomic_s1_cube_to_bowl", "note": "Local media exist, but no strict per-group manual video audit CSV was found; rows remain wait_for_tag."}, {"experiment_family": "long_g0_9", "task": "atomic_s2_cube_to_bin", "note": "Local media exist, but no strict per-group manual video audit CSV was found; rows remain wait_for_tag."}, {"experiment_family": "long_g0_9", "task": "atomic_s3_can_to_mug", "note": "Local media exist, but no strict per-group manual video audit CSV was found; rows remain wait_for_tag."}, {"experiment_family": "long_g0_9", "task": "atomic_s4_can_to_bowl", "note": "Local media exist, but no strict per-group manual video audit CSV was found; rows remain wait_for_tag."}, {"experiment_family": "long_g0_9", "task": "atomic_s5_can_to_bin", "note": "Local media exist, but no strict per-group manual video audit CSV was found; rows remain wait_for_tag."}, {"experiment_family": "long_g0_9", "task": "atomic_s7_banana_to_bin", "note": "Local media exist, but no strict per-group manual video audit CSV was found; rows remain wait_for_tag."}], "skipped_states": [{"experiment_family": "selection_formal", "state_id": "S4", "task": "atomic_s4_can_to_bowl", "reason": "skip-for-selection"}, {"experiment_family": "long_g0_9", "state_id": "S6", "task": "atomic_s6_banana_to_bowl", "reason": "mapping skipped"}, {"experiment_family": "long_g10_19", "state_id": "S6", "task": "atomic_s6_banana_to_bowl", "reason": "mapping skipped"}], "missing_local_sync_experiments": [], "resolved_local_sync_experiments_20260518": [{"experiment_family": "baseline_g0_9", "task": "atomic_s3_can_to_mug", "reason": "resolved by short missing-row backfill sync from 4gpu"}, {"experiment_family": "baseline_g0_9", "task": "atomic_s4_can_to_bowl", "reason": "resolved by short missing-row backfill sync from 4gpu"}, {"experiment_family": "baseline_g0_9", "task": "atomic_s6_banana_to_bowl", "reason": "resolved by short missing-row backfill sync from 4gpu-2"}, {"experiment_family": "baseline_g0_9", "task": "atomic_s7_banana_to_bin", "reason": "resolved from existing local reaudit source_sync"}, {"experiment_family": "extension_g10_19", "task": "atomic_s7_banana_to_bin", "reason": "resolved from existing local reaudit source_sync"}], "mode_row_counts": {"short_baseline_pass1_g0_9": 70, "short_baseline_pass1_g10_19": 70, "short_hierarchical_fixed_vit_k5_g0_19": 120, "long_baseline_pass1_g0_9": 60, "long_baseline_pass1_g10_19": 60}, "state_row_counts": {"S1": 60, "S2": 60, "S5": 60, "S3": 60, "S4": 40, "S6": 40, "S7": 60}, "provenance_difference_g0_g9_vs_g10_g19": {"g0_g9": "Baseline lineage from v4_hidden_parked safe10 bank.", "g10_g19": "Extension lineage from v5_g10_19_perturbed safe20 bank derived from v4.", "note": "G00-G19 belong to the same task family coverage but provenance should not be flattened."}, "label_distribution": {"success": 80, "fail": 51, "unclear": 8, "wait_for_tag": 240, "partial": 1}, "audit_source_distribution": {"manual_video_plus_finalframe_partial_sync_20260516": 30, "final_frame_precheck": 50, "wait_for_tag": 240, "strict_manual_video_audit_20260516": 60}, "short_missing_backfill_20260518": {"delivery_level": "A. ready-to-ingest dashboard export", "backup_dir": "/Users/liwenhao.109/projects/claude_code/agent_vla/outputs/state_experiment_dashboard_export_20260517/dashboard_export/backups/before_missing_short_backfill_20260518_151937", "added_rows": 50, "added_groups_by_task_mode": {"atomic_s3_can_to_mug::short_baseline_pass1_g0_9": ["group_000", "group_001", "group_002", "group_003", "group_004", "group_005", "group_006", "group_007", "group_008", "group_009"], "atomic_s4_can_to_bowl::short_baseline_pass1_g0_9": ["group_000", "group_001", "group_002", "group_003", "group_004", "group_005", "group_006", "group_007", "group_008", "group_009"], "atomic_s6_banana_to_bowl::short_baseline_pass1_g0_9": ["group_000", "group_001", "group_002", "group_003", "group_004", "group_005", "group_006", "group_007", "group_008", "group_009"], "atomic_s7_banana_to_bin::short_baseline_pass1_g0_9": ["group_000", "group_001", "group_002", "group_003", "group_004", "group_005", "group_006", "group_007", "group_008", "group_009"], "atomic_s7_banana_to_bin::short_baseline_pass1_g10_19": ["group_010", "group_011", "group_012", "group_013", "group_014", "group_015", "group_016", "group_017", "group_018", "group_019"]}, "missing_after_backfill": [{"task": "atomic_s4_can_to_bowl", "mode": "short_hierarchical_fixed_vit_k5_g0_19", "groups": ["group_000", "group_001", "group_002", "group_003", "group_004", "group_005", "group_006", "group_007", "group_008", "group_009", "group_010", "group_011", "group_012", "group_013", "group_014", "group_015", "group_016", "group_017", "group_018", "group_019"], "reason": "S4 was documented as skip-for-selection; no real selection rollout artifact found locally or on 4gpu."}], "label_policy": "All newly added rows use visual_success_label=wait_for_tag and audit_source=wait_for_tag.", "motion_valid_distribution_for_added_rows": {"true": 50}, "used_diagnostic_success": false, "reran_droid_or_dreamzero": false, "known_caveats": ["S4 hierarchical selection remains missing because S4 was skip-for-selection and no real rollout artifact was found.", "Newly added rows are not manually reviewed; they are ready for dashboard tagging.", "Existing rows and existing manual/preliminary labels were preserved."]}}, "all_labels_initialized_to": "wait_for_tag"}, "state_experiment_extra_manifests": [{"manifest": "/Users/liwenhao.109/projects/claude_code/agent_vla/outputs/atomic_derived_long_horizon_instruction_switch_dashboard_export_20260518/dashboard_export/manifest.csv", "summary": "/Users/liwenhao.109/projects/claude_code/agent_vla/outputs/atomic_derived_long_horizon_instruction_switch_dashboard_export_20260518/dashboard_export/summary.json", "rows": 120}, {"manifest": "/Users/liwenhao.109/projects/claude_code/agent_vla/outputs/scene12_atomic_baseline_dashboard_export_20260519/dashboard_export/manifest.csv", "summary": "/Users/liwenhao.109/projects/claude_code/agent_vla/outputs/scene12_atomic_baseline_dashboard_export_20260519/dashboard_export/summary.json", "rows": 280}], "tasks": [{"task": "short_scene2_s7_banana_to_bin", "scene": "Scene 2", "scene_key": "scene2", "label": "Scene 2 S7 Short task: put the banana in the bin", "instruction": "put the banana in the bin", "section": "short_horizon_state", "section_label": "Short-Horizon State Tasks", "groups": [{"group": 0, "items": {"baseline_pass1": {"mode": "baseline_pass1", "mode_label": "Baseline pass@1", "phase": "dreamzero_baseline", "video": "../media/db9d2cf5ad60_rollout.mp4", "source_video": "../media/db9d2cf5ad60_rollout.mp4", "contact_sheet": "../media/8d2f7f3053a7_final_frames.jpg", "final_right": "../media/353529d33538_final_right.png", "final_left": "../media/61bf90374f48_final_left.png", "final_wrist": "../media/cc3a018af8c5_final_wrist.png", "visual_success": null, "visual_label": "wait_for_tag", "visual_full_success": null, "visual_partial_success": null, "audit_source": "wait_for_tag", "audit_note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "motion_valid": true, "steps": "432", "open_loop_horizon": "24", "num_candidates": "0", "target_bank_type": "scene12_atomic_three_target_safe20_variant_bank", "selection_mode": "none", "target_aggregation": "none", "feature_model": "", "initial_state_bank": "/mnt/workspace-20260313/users/liwenhao/agent_vla/outputs/scene12_atomic_subtask_initial_states_20260518/banks/scene2/atomic_s7_banana_to_bin/scene2_atomic_s7_banana_to_bin_safe20_variant_bank.json", "source_experiment_root": "/mnt/workspace-20260313/users/liwenhao/agent_vla/runs/scene12_atomic_subtask_pass1_20260518/scene12_atomic_baseline_pass1_g0_19_20260518", "note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "instruction": "put the banana in the bin", "state_id": "S7", "horizon": "short", "scene": "Scene 2", "scene_key": "scene2", "original_task": "atomic_s7_banana_to_bin", "original_mode": "baseline_pass1", "diagnostic_success": null}}}, {"group": 1, "items": {"baseline_pass1": {"mode": "baseline_pass1", "mode_label": "Baseline pass@1", "phase": "dreamzero_baseline", "video": "../media/1d7d9ea636a5_rollout.mp4", "source_video": "../media/1d7d9ea636a5_rollout.mp4", "contact_sheet": "../media/08095243075a_final_frames.jpg", "final_right": "../media/5b2b58baa5a9_final_right.png", "final_left": "../media/a27815e1869f_final_left.png", "final_wrist": "../media/90f327cd1482_final_wrist.png", "visual_success": null, "visual_label": "wait_for_tag", "visual_full_success": null, "visual_partial_success": null, "audit_source": "wait_for_tag", "audit_note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "motion_valid": true, "steps": "432", "open_loop_horizon": "24", "num_candidates": "0", "target_bank_type": "scene12_atomic_three_target_safe20_variant_bank", "selection_mode": "none", "target_aggregation": "none", "feature_model": "", "initial_state_bank": "/mnt/workspace-20260313/users/liwenhao/agent_vla/outputs/scene12_atomic_subtask_initial_states_20260518/banks/scene2/atomic_s7_banana_to_bin/scene2_atomic_s7_banana_to_bin_safe20_variant_bank.json", "source_experiment_root": "/mnt/workspace-20260313/users/liwenhao/agent_vla/runs/scene12_atomic_subtask_pass1_20260518/scene12_atomic_baseline_pass1_g0_19_20260518", "note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "instruction": "put the banana in the bin", "state_id": "S7", "horizon": "short", "scene": "Scene 2", "scene_key": "scene2", "original_task": "atomic_s7_banana_to_bin", "original_mode": "baseline_pass1", "diagnostic_success": null}}}, {"group": 2, "items": {"baseline_pass1": {"mode": "baseline_pass1", "mode_label": "Baseline pass@1", "phase": "dreamzero_baseline", "video": "../media/1a77687f0325_rollout.mp4", "source_video": "../media/1a77687f0325_rollout.mp4", "contact_sheet": "../media/8ac890377d1e_final_frames.jpg", "final_right": "../media/45d78d1891da_final_right.png", "final_left": "../media/563378527c39_final_left.png", "final_wrist": "../media/d541690c462f_final_wrist.png", "visual_success": null, "visual_label": "wait_for_tag", "visual_full_success": null, "visual_partial_success": null, "audit_source": "wait_for_tag", "audit_note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "motion_valid": true, "steps": "432", "open_loop_horizon": "24", "num_candidates": "0", "target_bank_type": "scene12_atomic_three_target_safe20_variant_bank", "selection_mode": "none", "target_aggregation": "none", "feature_model": "", "initial_state_bank": "/mnt/workspace-20260313/users/liwenhao/agent_vla/outputs/scene12_atomic_subtask_initial_states_20260518/banks/scene2/atomic_s7_banana_to_bin/scene2_atomic_s7_banana_to_bin_safe20_variant_bank.json", "source_experiment_root": "/mnt/workspace-20260313/users/liwenhao/agent_vla/runs/scene12_atomic_subtask_pass1_20260518/scene12_atomic_baseline_pass1_g0_19_20260518", "note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "instruction": "put the banana in the bin", "state_id": "S7", "horizon": "short", "scene": "Scene 2", "scene_key": "scene2", "original_task": "atomic_s7_banana_to_bin", "original_mode": "baseline_pass1", "diagnostic_success": null}}}, {"group": 3, "items": {"baseline_pass1": {"mode": "baseline_pass1", "mode_label": "Baseline pass@1", "phase": "dreamzero_baseline", "video": "../media/b1d76399cf7b_rollout.mp4", "source_video": "../media/b1d76399cf7b_rollout.mp4", "contact_sheet": "../media/b99f2d42b5db_final_frames.jpg", "final_right": "../media/193f0ae762df_final_right.png", "final_left": "../media/d4d2b3941979_final_left.png", "final_wrist": "../media/61ce67c8decc_final_wrist.png", "visual_success": null, "visual_label": "wait_for_tag", "visual_full_success": null, "visual_partial_success": null, "audit_source": "wait_for_tag", "audit_note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "motion_valid": true, "steps": "432", "open_loop_horizon": "24", "num_candidates": "0", "target_bank_type": "scene12_atomic_three_target_safe20_variant_bank", "selection_mode": "none", "target_aggregation": "none", "feature_model": "", "initial_state_bank": "/mnt/workspace-20260313/users/liwenhao/agent_vla/outputs/scene12_atomic_subtask_initial_states_20260518/banks/scene2/atomic_s7_banana_to_bin/scene2_atomic_s7_banana_to_bin_safe20_variant_bank.json", "source_experiment_root": "/mnt/workspace-20260313/users/liwenhao/agent_vla/runs/scene12_atomic_subtask_pass1_20260518/scene12_atomic_baseline_pass1_g0_19_20260518", "note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "instruction": "put the banana in the bin", "state_id": "S7", "horizon": "short", "scene": "Scene 2", "scene_key": "scene2", "original_task": "atomic_s7_banana_to_bin", "original_mode": "baseline_pass1", "diagnostic_success": null}}}, {"group": 4, "items": {"baseline_pass1": {"mode": "baseline_pass1", "mode_label": "Baseline pass@1", "phase": "dreamzero_baseline", "video": "../media/81ab3b7fd12c_rollout.mp4", "source_video": "../media/81ab3b7fd12c_rollout.mp4", "contact_sheet": "../media/309edcb13e1a_final_frames.jpg", "final_right": "../media/23dbb9aa1fba_final_right.png", "final_left": "../media/b1565118f482_final_left.png", "final_wrist": "../media/06c7a19ba18e_final_wrist.png", "visual_success": null, "visual_label": "wait_for_tag", "visual_full_success": null, "visual_partial_success": null, "audit_source": "wait_for_tag", "audit_note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "motion_valid": true, "steps": "432", "open_loop_horizon": "24", "num_candidates": "0", "target_bank_type": "scene12_atomic_three_target_safe20_variant_bank", "selection_mode": "none", "target_aggregation": "none", "feature_model": "", "initial_state_bank": "/mnt/workspace-20260313/users/liwenhao/agent_vla/outputs/scene12_atomic_subtask_initial_states_20260518/banks/scene2/atomic_s7_banana_to_bin/scene2_atomic_s7_banana_to_bin_safe20_variant_bank.json", "source_experiment_root": "/mnt/workspace-20260313/users/liwenhao/agent_vla/runs/scene12_atomic_subtask_pass1_20260518/scene12_atomic_baseline_pass1_g0_19_20260518", "note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "instruction": "put the banana in the bin", "state_id": "S7", "horizon": "short", "scene": "Scene 2", "scene_key": "scene2", "original_task": "atomic_s7_banana_to_bin", "original_mode": "baseline_pass1", "diagnostic_success": null}}}, {"group": 5, "items": {"baseline_pass1": {"mode": "baseline_pass1", "mode_label": "Baseline pass@1", "phase": "dreamzero_baseline", "video": "../media/867daa79e3bd_rollout.mp4", "source_video": "../media/867daa79e3bd_rollout.mp4", "contact_sheet": "../media/910e91c7336c_final_frames.jpg", "final_right": "../media/5bc340bf864a_final_right.png", "final_left": "../media/2aed9b020d2a_final_left.png", "final_wrist": "../media/253f3be1b264_final_wrist.png", "visual_success": null, "visual_label": "wait_for_tag", "visual_full_success": null, "visual_partial_success": null, "audit_source": "wait_for_tag", "audit_note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "motion_valid": true, "steps": "432", "open_loop_horizon": "24", "num_candidates": "0", "target_bank_type": "scene12_atomic_three_target_safe20_variant_bank", "selection_mode": "none", "target_aggregation": "none", "feature_model": "", "initial_state_bank": "/mnt/workspace-20260313/users/liwenhao/agent_vla/outputs/scene12_atomic_subtask_initial_states_20260518/banks/scene2/atomic_s7_banana_to_bin/scene2_atomic_s7_banana_to_bin_safe20_variant_bank.json", "source_experiment_root": "/mnt/workspace-20260313/users/liwenhao/agent_vla/runs/scene12_atomic_subtask_pass1_20260518/scene12_atomic_baseline_pass1_g0_19_20260518", "note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "instruction": "put the banana in the bin", "state_id": "S7", "horizon": "short", "scene": "Scene 2", "scene_key": "scene2", "original_task": "atomic_s7_banana_to_bin", "original_mode": "baseline_pass1", "diagnostic_success": null}}}, {"group": 6, "items": {"baseline_pass1": {"mode": "baseline_pass1", "mode_label": "Baseline pass@1", "phase": "dreamzero_baseline", "video": "../media/2c349ead09c0_rollout.mp4", "source_video": "../media/2c349ead09c0_rollout.mp4", "contact_sheet": "../media/240b9710466c_final_frames.jpg", "final_right": "../media/90ce59120eb4_final_right.png", "final_left": "../media/08ae35967850_final_left.png", "final_wrist": "../media/a55ae655df2a_final_wrist.png", "visual_success": null, "visual_label": "wait_for_tag", "visual_full_success": null, "visual_partial_success": null, "audit_source": "wait_for_tag", "audit_note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "motion_valid": true, "steps": "432", "open_loop_horizon": "24", "num_candidates": "0", "target_bank_type": "scene12_atomic_three_target_safe20_variant_bank", "selection_mode": "none", "target_aggregation": "none", "feature_model": "", "initial_state_bank": "/mnt/workspace-20260313/users/liwenhao/agent_vla/outputs/scene12_atomic_subtask_initial_states_20260518/banks/scene2/atomic_s7_banana_to_bin/scene2_atomic_s7_banana_to_bin_safe20_variant_bank.json", "source_experiment_root": "/mnt/workspace-20260313/users/liwenhao/agent_vla/runs/scene12_atomic_subtask_pass1_20260518/scene12_atomic_baseline_pass1_g0_19_20260518", "note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "instruction": "put the banana in the bin", "state_id": "S7", "horizon": "short", "scene": "Scene 2", "scene_key": "scene2", "original_task": "atomic_s7_banana_to_bin", "original_mode": "baseline_pass1", "diagnostic_success": null}}}, {"group": 7, "items": {"baseline_pass1": {"mode": "baseline_pass1", "mode_label": "Baseline pass@1", "phase": "dreamzero_baseline", "video": "../media/bcd643030278_rollout.mp4", "source_video": "../media/bcd643030278_rollout.mp4", "contact_sheet": "../media/6453bf3432b2_final_frames.jpg", "final_right": "../media/ca291bf389b5_final_right.png", "final_left": "../media/d11597914255_final_left.png", "final_wrist": "../media/842bd1a6e676_final_wrist.png", "visual_success": null, "visual_label": "wait_for_tag", "visual_full_success": null, "visual_partial_success": null, "audit_source": "wait_for_tag", "audit_note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "motion_valid": true, "steps": "432", "open_loop_horizon": "24", "num_candidates": "0", "target_bank_type": "scene12_atomic_three_target_safe20_variant_bank", "selection_mode": "none", "target_aggregation": "none", "feature_model": "", "initial_state_bank": "/mnt/workspace-20260313/users/liwenhao/agent_vla/outputs/scene12_atomic_subtask_initial_states_20260518/banks/scene2/atomic_s7_banana_to_bin/scene2_atomic_s7_banana_to_bin_safe20_variant_bank.json", "source_experiment_root": "/mnt/workspace-20260313/users/liwenhao/agent_vla/runs/scene12_atomic_subtask_pass1_20260518/scene12_atomic_baseline_pass1_g0_19_20260518", "note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "instruction": "put the banana in the bin", "state_id": "S7", "horizon": "short", "scene": "Scene 2", "scene_key": "scene2", "original_task": "atomic_s7_banana_to_bin", "original_mode": "baseline_pass1", "diagnostic_success": null}}}, {"group": 8, "items": {"baseline_pass1": {"mode": "baseline_pass1", "mode_label": "Baseline pass@1", "phase": "dreamzero_baseline", "video": "../media/9313a0f03608_rollout.mp4", "source_video": "../media/9313a0f03608_rollout.mp4", "contact_sheet": "../media/01068dc1c86c_final_frames.jpg", "final_right": "../media/acc1027142c8_final_right.png", "final_left": "../media/8fdd9813f3c8_final_left.png", "final_wrist": "../media/34fba3f61f35_final_wrist.png", "visual_success": null, "visual_label": "wait_for_tag", "visual_full_success": null, "visual_partial_success": null, "audit_source": "wait_for_tag", "audit_note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "motion_valid": true, "steps": "432", "open_loop_horizon": "24", "num_candidates": "0", "target_bank_type": "scene12_atomic_three_target_safe20_variant_bank", "selection_mode": "none", "target_aggregation": "none", "feature_model": "", "initial_state_bank": "/mnt/workspace-20260313/users/liwenhao/agent_vla/outputs/scene12_atomic_subtask_initial_states_20260518/banks/scene2/atomic_s7_banana_to_bin/scene2_atomic_s7_banana_to_bin_safe20_variant_bank.json", "source_experiment_root": "/mnt/workspace-20260313/users/liwenhao/agent_vla/runs/scene12_atomic_subtask_pass1_20260518/scene12_atomic_baseline_pass1_g0_19_20260518", "note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "instruction": "put the banana in the bin", "state_id": "S7", "horizon": "short", "scene": "Scene 2", "scene_key": "scene2", "original_task": "atomic_s7_banana_to_bin", "original_mode": "baseline_pass1", "diagnostic_success": null}}}, {"group": 9, "items": {"baseline_pass1": {"mode": "baseline_pass1", "mode_label": "Baseline pass@1", "phase": "dreamzero_baseline", "video": "../media/81cde895e917_rollout.mp4", "source_video": "../media/81cde895e917_rollout.mp4", "contact_sheet": "../media/007ea5d632a5_final_frames.jpg", "final_right": "../media/314d08d8e69c_final_right.png", "final_left": "../media/7debeeff6ac6_final_left.png", "final_wrist": "../media/45ec81f5379e_final_wrist.png", "visual_success": null, "visual_label": "wait_for_tag", "visual_full_success": null, "visual_partial_success": null, "audit_source": "wait_for_tag", "audit_note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "motion_valid": true, "steps": "432", "open_loop_horizon": "24", "num_candidates": "0", "target_bank_type": "scene12_atomic_three_target_safe20_variant_bank", "selection_mode": "none", "target_aggregation": "none", "feature_model": "", "initial_state_bank": "/mnt/workspace-20260313/users/liwenhao/agent_vla/outputs/scene12_atomic_subtask_initial_states_20260518/banks/scene2/atomic_s7_banana_to_bin/scene2_atomic_s7_banana_to_bin_safe20_variant_bank.json", "source_experiment_root": "/mnt/workspace-20260313/users/liwenhao/agent_vla/runs/scene12_atomic_subtask_pass1_20260518/scene12_atomic_baseline_pass1_g0_19_20260518", "note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "instruction": "put the banana in the bin", "state_id": "S7", "horizon": "short", "scene": "Scene 2", "scene_key": "scene2", "original_task": "atomic_s7_banana_to_bin", "original_mode": "baseline_pass1", "diagnostic_success": null}}}, {"group": 10, "items": {"baseline_pass1": {"mode": "baseline_pass1", "mode_label": "Baseline pass@1", "phase": "dreamzero_baseline", "video": "../media/5f994feb1dfe_rollout.mp4", "source_video": "../media/5f994feb1dfe_rollout.mp4", "contact_sheet": "../media/d710e5a13f94_final_frames.jpg", "final_right": "../media/d6568401cc36_final_right.png", "final_left": "../media/586fb8aef404_final_left.png", "final_wrist": "../media/ebccd97ebc98_final_wrist.png", "visual_success": null, "visual_label": "wait_for_tag", "visual_full_success": null, "visual_partial_success": null, "audit_source": "wait_for_tag", "audit_note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "motion_valid": true, "steps": "432", "open_loop_horizon": "24", "num_candidates": "0", "target_bank_type": "scene12_atomic_three_target_safe20_variant_bank", "selection_mode": "none", "target_aggregation": "none", "feature_model": "", "initial_state_bank": "/mnt/workspace-20260313/users/liwenhao/agent_vla/outputs/scene12_atomic_subtask_initial_states_20260518/banks/scene2/atomic_s7_banana_to_bin/scene2_atomic_s7_banana_to_bin_safe20_variant_bank.json", "source_experiment_root": "/mnt/workspace-20260313/users/liwenhao/agent_vla/runs/scene12_atomic_subtask_pass1_20260518/scene12_atomic_baseline_pass1_g0_19_20260518", "note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "instruction": "put the banana in the bin", "state_id": "S7", "horizon": "short", "scene": "Scene 2", "scene_key": "scene2", "original_task": "atomic_s7_banana_to_bin", "original_mode": "baseline_pass1", "diagnostic_success": null}}}, {"group": 11, "items": {"baseline_pass1": {"mode": "baseline_pass1", "mode_label": "Baseline pass@1", "phase": "dreamzero_baseline", "video": "../media/7500aa74556f_rollout.mp4", "source_video": "../media/7500aa74556f_rollout.mp4", "contact_sheet": "../media/f8c2cae5d96c_final_frames.jpg", "final_right": "../media/328eb7349da7_final_right.png", "final_left": "../media/b670cd3954fb_final_left.png", "final_wrist": "../media/301e5c482074_final_wrist.png", "visual_success": null, "visual_label": "wait_for_tag", "visual_full_success": null, "visual_partial_success": null, "audit_source": "wait_for_tag", "audit_note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "motion_valid": true, "steps": "432", "open_loop_horizon": "24", "num_candidates": "0", "target_bank_type": "scene12_atomic_three_target_safe20_variant_bank", "selection_mode": "none", "target_aggregation": "none", "feature_model": "", "initial_state_bank": "/mnt/workspace-20260313/users/liwenhao/agent_vla/outputs/scene12_atomic_subtask_initial_states_20260518/banks/scene2/atomic_s7_banana_to_bin/scene2_atomic_s7_banana_to_bin_safe20_variant_bank.json", "source_experiment_root": "/mnt/workspace-20260313/users/liwenhao/agent_vla/runs/scene12_atomic_subtask_pass1_20260518/scene12_atomic_baseline_pass1_g0_19_20260518", "note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "instruction": "put the banana in the bin", "state_id": "S7", "horizon": "short", "scene": "Scene 2", "scene_key": "scene2", "original_task": "atomic_s7_banana_to_bin", "original_mode": "baseline_pass1", "diagnostic_success": null}}}, {"group": 12, "items": {"baseline_pass1": {"mode": "baseline_pass1", "mode_label": "Baseline pass@1", "phase": "dreamzero_baseline", "video": "../media/22d5741e954e_rollout.mp4", "source_video": "../media/22d5741e954e_rollout.mp4", "contact_sheet": "../media/bd481d8451ce_final_frames.jpg", "final_right": "../media/9de5d54f8507_final_right.png", "final_left": "../media/bfabc48d2135_final_left.png", "final_wrist": "../media/970f99b02a4e_final_wrist.png", "visual_success": null, "visual_label": "wait_for_tag", "visual_full_success": null, "visual_partial_success": null, "audit_source": "wait_for_tag", "audit_note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "motion_valid": true, "steps": "432", "open_loop_horizon": "24", "num_candidates": "0", "target_bank_type": "scene12_atomic_three_target_safe20_variant_bank", "selection_mode": "none", "target_aggregation": "none", "feature_model": "", "initial_state_bank": "/mnt/workspace-20260313/users/liwenhao/agent_vla/outputs/scene12_atomic_subtask_initial_states_20260518/banks/scene2/atomic_s7_banana_to_bin/scene2_atomic_s7_banana_to_bin_safe20_variant_bank.json", "source_experiment_root": "/mnt/workspace-20260313/users/liwenhao/agent_vla/runs/scene12_atomic_subtask_pass1_20260518/scene12_atomic_baseline_pass1_g0_19_20260518", "note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "instruction": "put the banana in the bin", "state_id": "S7", "horizon": "short", "scene": "Scene 2", "scene_key": "scene2", "original_task": "atomic_s7_banana_to_bin", "original_mode": "baseline_pass1", "diagnostic_success": null}}}, {"group": 13, "items": {"baseline_pass1": {"mode": "baseline_pass1", "mode_label": "Baseline pass@1", "phase": "dreamzero_baseline", "video": "../media/915ca4ab69a8_rollout.mp4", "source_video": "../media/915ca4ab69a8_rollout.mp4", "contact_sheet": "../media/af4d5a7ab7fd_final_frames.jpg", "final_right": "../media/971716920bf2_final_right.png", "final_left": "../media/a7b916584fb0_final_left.png", "final_wrist": "../media/d17055c3ce66_final_wrist.png", "visual_success": null, "visual_label": "wait_for_tag", "visual_full_success": null, "visual_partial_success": null, "audit_source": "wait_for_tag", "audit_note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "motion_valid": true, "steps": "432", "open_loop_horizon": "24", "num_candidates": "0", "target_bank_type": "scene12_atomic_three_target_safe20_variant_bank", "selection_mode": "none", "target_aggregation": "none", "feature_model": "", "initial_state_bank": "/mnt/workspace-20260313/users/liwenhao/agent_vla/outputs/scene12_atomic_subtask_initial_states_20260518/banks/scene2/atomic_s7_banana_to_bin/scene2_atomic_s7_banana_to_bin_safe20_variant_bank.json", "source_experiment_root": "/mnt/workspace-20260313/users/liwenhao/agent_vla/runs/scene12_atomic_subtask_pass1_20260518/scene12_atomic_baseline_pass1_g0_19_20260518", "note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "instruction": "put the banana in the bin", "state_id": "S7", "horizon": "short", "scene": "Scene 2", "scene_key": "scene2", "original_task": "atomic_s7_banana_to_bin", "original_mode": "baseline_pass1", "diagnostic_success": null}}}, {"group": 14, "items": {"baseline_pass1": {"mode": "baseline_pass1", "mode_label": "Baseline pass@1", "phase": "dreamzero_baseline", "video": "../media/773fdb126950_rollout.mp4", "source_video": "../media/773fdb126950_rollout.mp4", "contact_sheet": "../media/bd531e116b73_final_frames.jpg", "final_right": "../media/26994fa07d01_final_right.png", "final_left": "../media/74bcda581556_final_left.png", "final_wrist": "../media/6c6c4801a380_final_wrist.png", "visual_success": null, "visual_label": "wait_for_tag", "visual_full_success": null, "visual_partial_success": null, "audit_source": "wait_for_tag", "audit_note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "motion_valid": true, "steps": "432", "open_loop_horizon": "24", "num_candidates": "0", "target_bank_type": "scene12_atomic_three_target_safe20_variant_bank", "selection_mode": "none", "target_aggregation": "none", "feature_model": "", "initial_state_bank": "/mnt/workspace-20260313/users/liwenhao/agent_vla/outputs/scene12_atomic_subtask_initial_states_20260518/banks/scene2/atomic_s7_banana_to_bin/scene2_atomic_s7_banana_to_bin_safe20_variant_bank.json", "source_experiment_root": "/mnt/workspace-20260313/users/liwenhao/agent_vla/runs/scene12_atomic_subtask_pass1_20260518/scene12_atomic_baseline_pass1_g0_19_20260518", "note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "instruction": "put the banana in the bin", "state_id": "S7", "horizon": "short", "scene": "Scene 2", "scene_key": "scene2", "original_task": "atomic_s7_banana_to_bin", "original_mode": "baseline_pass1", "diagnostic_success": null}}}, {"group": 15, "items": {"baseline_pass1": {"mode": "baseline_pass1", "mode_label": "Baseline pass@1", "phase": "dreamzero_baseline", "video": "../media/2a25f73de687_rollout.mp4", "source_video": "../media/2a25f73de687_rollout.mp4", "contact_sheet": "../media/445213cb1c60_final_frames.jpg", "final_right": "../media/38c52b559cb6_final_right.png", "final_left": "../media/ce3dc9c0e386_final_left.png", "final_wrist": "../media/f5648c35b101_final_wrist.png", "visual_success": null, "visual_label": "wait_for_tag", "visual_full_success": null, "visual_partial_success": null, "audit_source": "wait_for_tag", "audit_note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "motion_valid": true, "steps": "432", "open_loop_horizon": "24", "num_candidates": "0", "target_bank_type": "scene12_atomic_three_target_safe20_variant_bank", "selection_mode": "none", "target_aggregation": "none", "feature_model": "", "initial_state_bank": "/mnt/workspace-20260313/users/liwenhao/agent_vla/outputs/scene12_atomic_subtask_initial_states_20260518/banks/scene2/atomic_s7_banana_to_bin/scene2_atomic_s7_banana_to_bin_safe20_variant_bank.json", "source_experiment_root": "/mnt/workspace-20260313/users/liwenhao/agent_vla/runs/scene12_atomic_subtask_pass1_20260518/scene12_atomic_baseline_pass1_g0_19_20260518", "note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "instruction": "put the banana in the bin", "state_id": "S7", "horizon": "short", "scene": "Scene 2", "scene_key": "scene2", "original_task": "atomic_s7_banana_to_bin", "original_mode": "baseline_pass1", "diagnostic_success": null}}}, {"group": 16, "items": {"baseline_pass1": {"mode": "baseline_pass1", "mode_label": "Baseline pass@1", "phase": "dreamzero_baseline", "video": "../media/ed44f622d958_rollout.mp4", "source_video": "../media/ed44f622d958_rollout.mp4", "contact_sheet": "../media/f9f1da40282f_final_frames.jpg", "final_right": "../media/8607d8782ede_final_right.png", "final_left": "../media/3d0a83d97524_final_left.png", "final_wrist": "../media/353ba74baf69_final_wrist.png", "visual_success": null, "visual_label": "wait_for_tag", "visual_full_success": null, "visual_partial_success": null, "audit_source": "wait_for_tag", "audit_note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "motion_valid": true, "steps": "432", "open_loop_horizon": "24", "num_candidates": "0", "target_bank_type": "scene12_atomic_three_target_safe20_variant_bank", "selection_mode": "none", "target_aggregation": "none", "feature_model": "", "initial_state_bank": "/mnt/workspace-20260313/users/liwenhao/agent_vla/outputs/scene12_atomic_subtask_initial_states_20260518/banks/scene2/atomic_s7_banana_to_bin/scene2_atomic_s7_banana_to_bin_safe20_variant_bank.json", "source_experiment_root": "/mnt/workspace-20260313/users/liwenhao/agent_vla/runs/scene12_atomic_subtask_pass1_20260518/scene12_atomic_baseline_pass1_g0_19_20260518", "note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "instruction": "put the banana in the bin", "state_id": "S7", "horizon": "short", "scene": "Scene 2", "scene_key": "scene2", "original_task": "atomic_s7_banana_to_bin", "original_mode": "baseline_pass1", "diagnostic_success": null}}}, {"group": 17, "items": {"baseline_pass1": {"mode": "baseline_pass1", "mode_label": "Baseline pass@1", "phase": "dreamzero_baseline", "video": "../media/7f511a05eefa_rollout.mp4", "source_video": "../media/7f511a05eefa_rollout.mp4", "contact_sheet": "../media/f27a0802fdf5_final_frames.jpg", "final_right": "../media/c664969a5218_final_right.png", "final_left": "../media/59280f7fb4ad_final_left.png", "final_wrist": "../media/5cb9e794b3ba_final_wrist.png", "visual_success": null, "visual_label": "wait_for_tag", "visual_full_success": null, "visual_partial_success": null, "audit_source": "wait_for_tag", "audit_note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "motion_valid": true, "steps": "432", "open_loop_horizon": "24", "num_candidates": "0", "target_bank_type": "scene12_atomic_three_target_safe20_variant_bank", "selection_mode": "none", "target_aggregation": "none", "feature_model": "", "initial_state_bank": "/mnt/workspace-20260313/users/liwenhao/agent_vla/outputs/scene12_atomic_subtask_initial_states_20260518/banks/scene2/atomic_s7_banana_to_bin/scene2_atomic_s7_banana_to_bin_safe20_variant_bank.json", "source_experiment_root": "/mnt/workspace-20260313/users/liwenhao/agent_vla/runs/scene12_atomic_subtask_pass1_20260518/scene12_atomic_baseline_pass1_g0_19_20260518", "note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "instruction": "put the banana in the bin", "state_id": "S7", "horizon": "short", "scene": "Scene 2", "scene_key": "scene2", "original_task": "atomic_s7_banana_to_bin", "original_mode": "baseline_pass1", "diagnostic_success": null}}}, {"group": 18, "items": {"baseline_pass1": {"mode": "baseline_pass1", "mode_label": "Baseline pass@1", "phase": "dreamzero_baseline", "video": "../media/913c9f49cf4f_rollout.mp4", "source_video": "../media/913c9f49cf4f_rollout.mp4", "contact_sheet": "../media/cd646c0cc918_final_frames.jpg", "final_right": "../media/b085c8b03747_final_right.png", "final_left": "../media/4d76e2398e75_final_left.png", "final_wrist": "../media/d4a076abe510_final_wrist.png", "visual_success": null, "visual_label": "wait_for_tag", "visual_full_success": null, "visual_partial_success": null, "audit_source": "wait_for_tag", "audit_note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "motion_valid": true, "steps": "432", "open_loop_horizon": "24", "num_candidates": "0", "target_bank_type": "scene12_atomic_three_target_safe20_variant_bank", "selection_mode": "none", "target_aggregation": "none", "feature_model": "", "initial_state_bank": "/mnt/workspace-20260313/users/liwenhao/agent_vla/outputs/scene12_atomic_subtask_initial_states_20260518/banks/scene2/atomic_s7_banana_to_bin/scene2_atomic_s7_banana_to_bin_safe20_variant_bank.json", "source_experiment_root": "/mnt/workspace-20260313/users/liwenhao/agent_vla/runs/scene12_atomic_subtask_pass1_20260518/scene12_atomic_baseline_pass1_g0_19_20260518", "note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "instruction": "put the banana in the bin", "state_id": "S7", "horizon": "short", "scene": "Scene 2", "scene_key": "scene2", "original_task": "atomic_s7_banana_to_bin", "original_mode": "baseline_pass1", "diagnostic_success": null}}}, {"group": 19, "items": {"baseline_pass1": {"mode": "baseline_pass1", "mode_label": "Baseline pass@1", "phase": "dreamzero_baseline", "video": "../media/e820889ad3d8_rollout.mp4", "source_video": "../media/e820889ad3d8_rollout.mp4", "contact_sheet": "../media/c64cb535edb5_final_frames.jpg", "final_right": "../media/5d319702f2de_final_right.png", "final_left": "../media/d97fa4b4f82d_final_left.png", "final_wrist": "../media/c14d225a7e51_final_wrist.png", "visual_success": null, "visual_label": "wait_for_tag", "visual_full_success": null, "visual_partial_success": null, "audit_source": "wait_for_tag", "audit_note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "motion_valid": true, "steps": "432", "open_loop_horizon": "24", "num_candidates": "0", "target_bank_type": "scene12_atomic_three_target_safe20_variant_bank", "selection_mode": "none", "target_aggregation": "none", "feature_model": "", "initial_state_bank": "/mnt/workspace-20260313/users/liwenhao/agent_vla/outputs/scene12_atomic_subtask_initial_states_20260518/banks/scene2/atomic_s7_banana_to_bin/scene2_atomic_s7_banana_to_bin_safe20_variant_bank.json", "source_experiment_root": "/mnt/workspace-20260313/users/liwenhao/agent_vla/runs/scene12_atomic_subtask_pass1_20260518/scene12_atomic_baseline_pass1_g0_19_20260518", "note": "State experiment dashboard initialized for fresh human review; all imported labels intentionally reset to wait_for_tag.", "instruction": "put the banana in the bin", "state_id": "S7", "horizon": "short", "scene": "Scene 2", "scene_key": "scene2", "original_task": "atomic_s7_banana_to_bin", "original_mode": "baseline_pass1", "diagnostic_success": null}}}], "modes": [{"mode": "baseline_pass1", "label": "Baseline pass@1", "count": 0, "success_count": 0, "partial_count": 0, "fail_count": 0, "unclear_count": 0, "rate": null, "partial_rate": null}]}], "sections": [{"section": "short_horizon_state", "label": "Short-Horizon State Tasks", "description": "Single-subtask state tasks with 20 groups ordered group_000 to group_019."}], "hidden_tasks": [], "split_page": true}</script>
+  <script>
+    const DATA = JSON.parse(document.getElementById('dashboard-data').textContent);
+    const tabs = document.getElementById('tabs');
+    const cards = document.getElementById('cards');
+    const sectionSelect = document.getElementById('sectionSelect');
+    const taskSelect = document.getElementById('taskSelect');
+    const sceneSelect = document.getElementById('sceneSelect');
+    const resultFilter = document.getElementById('resultFilter');
+    const layoutMode = document.getElementById('layoutMode');
+    const groupSearch = document.getElementById('groupSearch');
+    const overrideCount = document.getElementById('overrideCount');
+    const saveStatus = document.getElementById('saveStatus');
+    const lastSaveStatus = document.getElementById('lastSaveStatus');
+    const backendUrlInput = document.getElementById('backendUrl');
+    const reviewerIdInput = document.getElementById('reviewerId');
+    const writeSecretInput = document.getElementById('writeSecret');
+    const serverHelp = document.getElementById('serverHelp');
+
+    const modeOrder = ["baseline_pass1", "target_l1_last_schedule_retrieved_success_exclude_self_g20_k5", "target_feature_last_schedule_retrieved_success_exclude_self_g20_k5", "target_l1_last_retrieved_success_exclude_self_g20_k5", "target_feature_last_retrieved_success_exclude_self_g20_k5", "d2c_latent_l2_target_zero", "d2c_decoded_pixel_l1_schedule", "d2c_decoded_pixel_l1_schedule_strongalpha", "imagegen_successref_r2_hier_fixed_vit_k5", "imagegen_failureonly_r0_hier_fixed_vit_k5", "vlm_agent_realbank_routed_l1_k5", "vlm_agent_imagegenbank_routed_l1_k5", "vlm_agent_failureonly_r0_diagnostic_l1_k5", "breakthrough_fixed_vit_k5"];
+    const REVIEW_STORAGE_KEY = 'state-experiment-review-manual-overrides-v1';
+    const LAST_SAVE_STORAGE_KEY = 'state-experiment-review-last-save-v1';
+    const BACKEND_URL_STORAGE_KEY = 'state-experiment-review-backend-url-v1';
+    const REVIEWER_ID_STORAGE_KEY = 'state-experiment-review-reviewer-id-v1';
+    const WRITE_SECRET_SESSION_KEY = 'state-experiment-review-write-secret-session-v1';
+    const DEFAULT_BACKEND_URL = 'https://droid-selection-audit.agent-vla-audit.workers.dev';
+    const BACKEND_TIMEOUT_MS = 20000;
+    const SAVE_SERVER_URL = 'http://127.0.0.1:8765';
+    const START_SERVER_COMMAND = "python /Users/liwenhao.109/projects/claude_code/agent_vla/tools/droid_smoke/dashboard_audit_save_server.py --port 8765 --output-dir /Users/liwenhao.109/projects/claude_code/agent_vla/outputs/state_experiment_dashboard_export_20260517/video_review_dashboard/manual_reaudit_v2";
+    const START_SERVER_SCRIPT = "/Users/liwenhao.109/projects/claude_code/agent_vla/outputs/state_experiment_dashboard_export_20260517/video_review_dashboard/start_save_server.command";
+    let manualOverrides = loadOverrides();
+    let globalEventsBound = false;
+
+    function pct(value) {
+      if (value === null || value === undefined) return 'n/a';
+      return Math.round(value * 100) + '%';
+    }
+    function itemStatus(itemOrValue) {
+      if (itemOrValue && typeof itemOrValue === 'object') {
+        if (itemOrValue.visual_label) return itemOrValue.visual_label;
+        return itemStatus(itemOrValue.visual_success);
+      }
+      if (itemOrValue === true) return 'success';
+      if (itemOrValue === false) return 'fail';
+      return 'unclear';
+    }
+    function statusToVisualSuccess(status) {
+      if (status === 'success') return true;
+      if (status === 'fail' || status === 'partial') return false;
+      return null;
+    }
+    function successBadge(itemOrValue) {
+      const status = itemStatus(itemOrValue);
+      if (status === 'success') return '<span class="badge good">success</span>';
+      if (status === 'partial') return '<span class="badge partial">partial</span>';
+      if (status === 'fail') return '<span class="badge bad">fail</span>';
+      if (status === 'wait_for_tag') return '<span class="badge wait">wait for tag</span>';
+      return '<span class="badge">unclear</span>';
+    }
+    function manualBadge(hasOverride) {
+      return hasOverride ? '<span class="badge manual">manual</span>' : '';
+    }
+    function chip(label, itemOrValue) {
+      const status = itemStatus(itemOrValue);
+      const cls = status === 'success' ? 'good' : status === 'partial' ? 'partial' : status === 'fail' ? 'bad' : status === 'wait_for_tag' ? 'wait' : 'missing';
+      const text = status === 'success' ? '✓' : status === 'partial' ? '½' : status === 'fail' ? '×' : status === 'wait_for_tag' ? 'tag' : '?';
+      return `<span class="chip ${cls}">${label} ${text}</span>`;
+    }
+    function modeChipLabel(modeId, modeLabel) {
+      const labels = {
+        baseline_pass1: 'Base',
+        target_l1_last_schedule_retrieved_success_exclude_self_g20_k5: 'Rollout-Sub-L1',
+        target_feature_last_schedule_retrieved_success_exclude_self_g20_k5: 'Rollout-Sub-ViT',
+        target_l1_last_retrieved_success_exclude_self_g20_k5: 'Rollout-Final-L1',
+        target_feature_last_retrieved_success_exclude_self_g20_k5: 'Rollout-Final-ViT',
+        d2c_latent_l2_target_zero: 'Branch-Zero-L2',
+        d2c_decoded_pixel_l1_schedule: 'Branch-Sub-L1',
+        d2c_decoded_pixel_l1_schedule_strongalpha: 'Branch-Sub-L1α',
+        coarse_fixed_vit_g5_k3: 'Coarse-Fixed',
+        coarse_unordered_vit_g5_k3: 'Coarse-Unord',
+        hierarchical_fixed_vit_g5_k3: 'Hier-Fixed',
+        hierarchical_unordered_vit_g5_k3: 'Hier-Unord',
+        breakthrough_fixed_vit_k5: 'Breakthrough-Fixed',
+      };
+      return labels[modeId] || modeLabel.split(' ')[0];
+    }
+    function methodGuide(task) {
+      const modeIds = new Set(task.modes.map(mode => mode.mode));
+      const hasRolloutSelect = Array.from(modeIds).some(mode => mode.startsWith('target_'));
+      const hasDenoiseBranch = Array.from(modeIds).some(mode => mode.startsWith('d2c_'));
+      const hasBreakthroughBank = modeIds.has('breakthrough_fixed_vit_k5');
+      const hasLongHorizon = task.section === 'long_horizon';
+      const hasThreeObjectLongHorizon = task.section === 'three_object_long_horizon';
+      const cards = [
+        `<section class="method-guide-card"><h3>Baseline</h3><p><code>DreamZero pass@1</code>: one normal rollout from the fixed initial state. No target image, no candidate selection, no branch intervention.</p></section>`
+      ];
+      if (hasLongHorizon) {
+        cards.push(`<section class="method-guide-card"><h3>Long-Horizon Rule</h3><p>Full success requires <code>both ordered subtasks</code>. If only the first subtask is completed, mark <code>partial</code>, not success. Selection labels marked preliminary should be re-checked with the full rollout video.</p></section>`);
+        cards.push(`<section class="method-guide-card"><h3>Coarse vs Hierarchical</h3><p><code>Coarse</code> uses fewer target stages such as first object placed and final state. <code>Hierarchical</code> uses finer stages such as grasp/place for each object. <code>Unordered</code> is progress-blind min-over-stage; treat it as a visual proxy, not clean planning.</p></section>`);
+      }
+      if (hasThreeObjectLongHorizon) {
+        cards.push(`<section class="method-guide-card"><h3>Three-Object Rule</h3><p>Full success requires <code>all three ordered subtasks</code>. One or two completed placements should be marked <code>partial</code>, not success. These are baseline-only challenge pilots, not part of the two-object selection statistics.</p></section>`);
+      }
+      if (hasRolloutSelect) {
+        cards.push(`<section class="method-guide-card"><h3>Rollout-Select</h3><p>External future-target selection. For each query, request multiple full action-video candidates from the same observation, compare predicted future video to either a <code>Subtask Target</code> schedule or a fixed <code>Final Target</code>, then execute the lowest-distance candidate. Scores use <code>Pixel L1</code> or <code>ViT Feature</code> distance.</p></section>`);
+      }
+      if (hasDenoiseBranch) {
+        cards.push(`<section class="method-guide-card"><h3>Denoise-Branch</h3><p>Server-side branch selection inside the DreamZero denoising query. It chooses among alpha branches before returning one action chunk. <code>Subtask Decoded Pixel L1</code> decodes branch futures and compares them to scheduled targets; <code>Latent Zero + L2</code> is a control condition, not a task target.</p></section>`);
+      }
+      if (hasBreakthroughBank) {
+        cards.push(`<section class="method-guide-card"><h3>Breakthrough Success Bank</h3><p><code>Breakthrough-Fixed</code> uses a higher-quality hierarchical target bank constructed from breakthrough success trajectories, then runs fixed-schedule ViT feature selection with <code>K=5</code>. Full long-horizon success still requires both ordered subtasks; strict labels come from subagent multi-frame video review.</p></section>`);
+      }
+      return `<div class="method-guide">${cards.join('')}</div>`;
+    }
+    function escapeAttr(s) {
+      return String(s ?? '').replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;');
+    }
+    function escapeText(s) {
+      return String(s ?? '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+    }
+    function loadOverrides() {
+      try {
+        return JSON.parse(localStorage.getItem(REVIEW_STORAGE_KEY) || '{}');
+      } catch (err) {
+        console.warn('Failed to load manual overrides', err);
+        return {};
+      }
+    }
+    function saveOverrides() {
+      localStorage.setItem(REVIEW_STORAGE_KEY, JSON.stringify(manualOverrides));
+      updateOverrideCount();
+      saveStatus.textContent = 'unsaved local edits';
+    }
+    function loadBackendSettings() {
+      backendUrlInput.value = localStorage.getItem(BACKEND_URL_STORAGE_KEY) || DEFAULT_BACKEND_URL;
+      reviewerIdInput.value = localStorage.getItem(REVIEWER_ID_STORAGE_KEY) || '';
+      writeSecretInput.value = sessionStorage.getItem(WRITE_SECRET_SESSION_KEY) || '';
+    }
+    function currentBackendSettings() {
+      const backendUrl = backendUrlInput.value.trim().replace(/\/+$/, '');
+      const reviewerId = reviewerIdInput.value.trim().toLowerCase();
+      const writeSecret = writeSecretInput.value;
+      if (!backendUrl) throw new Error('Missing backend URL.');
+      if (!/^[a-z0-9][a-z0-9._-]{1,62}[a-z0-9]$/.test(reviewerId)) {
+        throw new Error('Invalid reviewer id. Use 3-64 chars: lowercase letters, numbers, dot, underscore, hyphen.');
+      }
+      if (!writeSecret) throw new Error('Missing write secret.');
+      localStorage.setItem(BACKEND_URL_STORAGE_KEY, backendUrl);
+      localStorage.setItem(REVIEWER_ID_STORAGE_KEY, reviewerId);
+      sessionStorage.setItem(WRITE_SECRET_SESSION_KEY, writeSecret);
+      return { backendUrl, reviewerId, writeSecret };
+    }
+    function updateLastSaveStatus() {
+      const savedAt = localStorage.getItem(LAST_SAVE_STORAGE_KEY);
+      lastSaveStatus.textContent = savedAt ? `last saved: ${new Date(savedAt).toLocaleString()}` : 'last saved: never';
+    }
+    function overrideKey(taskId, modeId, groupId) {
+      return `${taskId}::${modeId}::${groupId}`;
+    }
+    function getOverride(taskId, modeId, groupId) {
+      return manualOverrides[overrideKey(taskId, modeId, groupId)];
+    }
+    function applyManualOverride(taskId, modeId, groupId, item) {
+      if (!item) return item;
+      const override = getOverride(taskId, modeId, groupId);
+      if (!override) return item;
+      return {
+        ...item,
+        visual_success: override.visual_success,
+        visual_label: override.visual_label || itemStatus(override.visual_success),
+        note: `MANUAL OVERRIDE: ${override.label} · ${item.note || ''}`,
+        manual_override: override,
+      };
+    }
+    function taskWithOverrides(task) {
+      const groups = task.groups.map(group => {
+        const items = {};
+        Object.entries(group.items).forEach(([modeId, item]) => {
+          items[modeId] = applyManualOverride(task.task, modeId, group.group, item);
+        });
+        return { ...group, items };
+      });
+      const modes = task.modes.map(mode => {
+        let count = 0;
+        let successCount = 0;
+        groups.forEach(group => {
+          const item = group.items[mode.mode];
+          const status = itemStatus(item);
+          if (item && status !== 'wait_for_tag') {
+            count += 1;
+            successCount += status === 'success' ? 1 : 0;
+          }
+        });
+        return {
+          ...mode,
+          count,
+          success_count: successCount,
+          rate: count ? successCount / count : null,
+        };
+      });
+      return { ...task, groups, modes };
+    }
+    function effectiveTasks() {
+      return DATA.tasks.map(taskWithOverrides);
+    }
+    function currentSection() {
+      return sectionSelect.value || DATA.sections?.[0]?.section || 'six_task';
+    }
+    function sectionOnlyTasks() {
+      const section = currentSection();
+      return effectiveTasks().filter(task => (task.section || 'six_task') === section);
+    }
+    function currentSceneFilter() {
+      return sceneSelect?.value || 'all';
+    }
+    function sectionTasks() {
+      const scene = currentSceneFilter();
+      return sectionOnlyTasks().filter(task => scene === 'all' || (task.scene_key || task.scene) === scene);
+    }
+    function populateSections() {
+      if (sectionSelect.options.length) return;
+      const sections = DATA.sections || [{ section: 'six_task', label: 'Six-Task Selection' }];
+      sections.forEach(section => {
+        const option = document.createElement('option');
+        option.value = section.section;
+        option.textContent = section.label;
+        sectionSelect.appendChild(option);
+      });
+    }
+    function populateSceneFilter(tasks, preferredScene) {
+      const scenes = [...new Map(tasks.map(task => [task.scene_key || task.scene, task.scene || task.scene_key]).filter(([key]) => key)).entries()];
+      const previous = preferredScene || currentSceneFilter();
+      sceneSelect.innerHTML = '';
+      const allOption = document.createElement('option');
+      allOption.value = 'all';
+      allOption.textContent = 'all scenes';
+      sceneSelect.appendChild(allOption);
+      scenes.forEach(([key, label]) => {
+        const option = document.createElement('option');
+        option.value = key;
+        option.textContent = label;
+        sceneSelect.appendChild(option);
+      });
+      sceneSelect.value = scenes.some(([key]) => key === previous) ? previous : 'all';
+    }
+    function updateOverrideCount() {
+      const count = Object.keys(manualOverrides).length;
+      overrideCount.textContent = `${count} edit${count === 1 ? '' : 's'}`;
+    }
+    function auditControls(taskId, modeId, groupId, item) {
+      const override = getOverride(taskId, modeId, groupId);
+      const status = override ? (override.visual_label || itemStatus(override.visual_success)) : itemStatus(item);
+      const active = name => override && override.label === name ? ` active-${name}` : '';
+      return `<div class="audit-controls" data-task="${escapeAttr(taskId)}" data-mode="${escapeAttr(modeId)}" data-group="${groupId}">
+        <span class="audit-label">Manual audit</span>
+        <button class="audit-btn${active('success')}" data-audit-action="success">Mark success</button>
+        <button class="audit-btn${active('partial')}" data-audit-action="partial">Mark partial</button>
+        <button class="audit-btn${active('fail')}" data-audit-action="fail">Mark fail</button>
+        <button class="audit-btn${active('unclear')}" data-audit-action="unclear">Mark unclear</button>
+        <button class="audit-btn${active('wait_for_tag')}" data-audit-action="wait_for_tag">Wait tag</button>
+        <button class="audit-btn" data-audit-action="reset">Reset</button>
+        ${override ? `<span class="manual-note dirty">edited: ${escapeText(override.label)}</span>` : `<span class="manual-note">current: ${status}</span>`}
+      </div>`;
+    }
+    function itemCard(taskId, groupId, mode, item) {
+      if (!item) {
+        return `<article class="video-card" data-task="${escapeAttr(taskId)}" data-group="${groupId}" data-mode="${escapeAttr(mode.mode)}"><div class="video-title"><span>${escapeText(mode.label)}</span><span class="badge">not run</span></div><div class="empty">not run for this group</div></article>`;
+      }
+      const status = itemStatus(item);
+      const stateClass = status === 'success' ? 'success' : status === 'partial' ? 'partial' : status === 'fail' ? 'failure' : status === 'wait_for_tag' ? 'wait' : 'unclear';
+      const baselineClass = mode.mode === 'baseline_pass1' ? ' baseline' : '';
+      const manualClass = item.manual_override ? ' manual-override' : '';
+      const thumbs = [item.final_right, item.final_left, item.final_wrist].filter(Boolean).map(src => `<img src="${src}" loading="lazy">`).join('');
+      const media = item.video
+        ? `<video controls playsinline preload="none"${item.contact_sheet ? ` poster="${escapeAttr(item.contact_sheet)}"` : ''}><source src="${item.video}" type="video/mp4"></video>`
+        : item.contact_sheet
+          ? `<img class="fallback-img" src="${item.contact_sheet}" loading="lazy">`
+          : `<div class="empty">no media</div>`;
+      const contact = item.video && item.contact_sheet ? `<img class="fallback-img contact-fallback" data-src="${escapeAttr(item.contact_sheet)}" loading="lazy">` : '';
+      return `<article class="video-card ${stateClass}${baselineClass}${manualClass}" data-task="${escapeAttr(taskId)}" data-group="${groupId}" data-mode="${escapeAttr(mode.mode)}">
+        <div class="video-title"><span>${escapeText(mode.label)}</span><span>${manualBadge(!!item.manual_override)}${successBadge(item)}</span></div>
+        ${auditControls(taskId, mode.mode, groupId, item)}
+        ${media}
+        ${contact}
+        ${thumbs ? `<div class="thumbs">${thumbs}</div>` : ''}
+        <div class="note">${escapeText([item.audit_source, item.motion_valid === false ? 'MOTION INVALID' : '', item.note || ''].filter(Boolean).join(' · '))}</div>
+      </article>`;
+    }
+    function render(preferredTask) {
+      populateSections();
+      const previousTask = preferredTask || taskSelect.value || DATA.tasks[0]?.task;
+      const previousSection = currentSection();
+      const previousScene = currentSceneFilter();
+      const previousFilter = resultFilter.value;
+      const previousLayout = layoutMode.value;
+      const previousQuery = groupSearch.value;
+      populateSceneFilter(sectionOnlyTasks(), previousScene);
+      const tasks = sectionTasks();
+      const activeTask = tasks.some(task => task.task === previousTask) ? previousTask : tasks[0]?.task;
+      tabs.innerHTML = '';
+      cards.innerHTML = '';
+      taskSelect.innerHTML = '';
+      tasks.forEach((task, idx) => {
+        const isActive = task.task === activeTask || (!activeTask && idx === 0);
+        const tab = document.createElement('button');
+        tab.className = 'tab' + (isActive ? ' active' : '');
+        tab.textContent = task.label;
+        tab.dataset.task = task.task;
+        tabs.appendChild(tab);
+        const option = document.createElement('option');
+        option.value = task.task;
+        option.textContent = task.label;
+        taskSelect.appendChild(option);
+      });
+      const task = tasks.find(task => task.task === activeTask);
+      if (task) {
+        const card = document.createElement('section');
+        card.className = 'scene-card active';
+        card.dataset.task = task.task;
+        const bestRate = Math.max(...task.modes.map(mode => mode.rate ?? -1));
+        const scores = task.modes.map(mode => `<div class="score ${mode.rate === bestRate ? 'best' : ''}"><div class="name">${escapeText(mode.label)}</div><div class="value">${pct(mode.rate)}</div></div>`).join('');
+        const toggles = task.modes.map(mode => `<label class="mode-toggle"><input type="checkbox" checked data-mode-toggle="${escapeAttr(mode.mode)}">${escapeText(mode.label)}</label>`).join('');
+        const groupRows = task.groups.map(group => {
+          const baseline = group.items.baseline_pass1?.visual_success;
+          const selectionItems = Object.entries(group.items).filter(([mode]) => mode !== 'baseline_pass1').map(([, item]) => item);
+          const baselineStatus = itemStatus(group.items.baseline_pass1);
+          const anySelectionWin = baselineStatus !== 'success' && selectionItems.some(item => itemStatus(item) === 'success');
+          const anyFail = [group.items.baseline_pass1, ...selectionItems].some(item => ['fail', 'partial'].includes(itemStatus(item)));
+          const chips = task.modes.map(mode => chip(modeChipLabel(mode.mode, mode.label), group.items[mode.mode])).join('');
+          const cards = task.modes.map(mode => itemCard(task.task, group.group, mode, group.items[mode.mode])).join('');
+          const rowClass = `${anySelectionWin ? ' selection-win' : ''}${anyFail ? ' any-fail' : ''}`;
+          return `<section class="group-row${rowClass}" data-group="${group.group}" data-baseline="${baseline}" data-baseline-status="${baselineStatus}" data-any-fail="${anyFail}" data-selection-win="${anySelectionWin}">
+            <div class="group-head"><span>group_${String(group.group).padStart(3, '0')}</span><div class="chips">${chips}</div></div>
+            <div class="video-grid" style="--visible-cols:${task.modes.length}">${cards}</div>
+          </section>`;
+        }).join('');
+        card.innerHTML = `<div class="scene-head"><div><h2 class="scene-title">${escapeText(task.label)}</h2><div class="subtitle">${task.groups.length} groups · ${task.modes.length} policies/modes · green row = selection rescues baseline failure</div></div><div class="score-strip">${scores}</div></div><div class="mode-toggles">${toggles}<span class="legend"><span class="chip good">success</span><span class="chip partial">partial</span><span class="chip bad">fail</span><span class="chip wait">wait tag</span></span></div>${methodGuide(task)}<div class="group-list">${groupRows}</div>`;
+        cards.appendChild(card);
+      }
+      sectionSelect.value = previousSection;
+      if (activeTask) taskSelect.value = activeTask;
+      resultFilter.value = previousFilter;
+      layoutMode.value = previousLayout;
+      groupSearch.value = previousQuery;
+      bindGlobalEventsOnce();
+      bindTaskEvents();
+      bindVideoFallbacks();
+      bindAuditButtons();
+      updateOverrideCount();
+      updateLastSaveStatus();
+      applyFilters();
+    }
+    function bindVideoFallbacks() {
+      document.querySelectorAll('.video-card video').forEach(video => {
+        if (video.dataset.fallbackBound === '1') return;
+        video.dataset.fallbackBound = '1';
+        video.addEventListener('error', () => {
+          const card = video.closest('.video-card');
+          if (!card) return;
+          const fallback = card.querySelector('.contact-fallback');
+          if (fallback) {
+            if (!fallback.src && fallback.dataset.src) fallback.src = fallback.dataset.src;
+            video.style.display = 'none';
+            fallback.style.display = 'block';
+          }
+        });
+      });
+    }
+    function setActiveTask(taskId) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.task === taskId));
+      document.querySelectorAll('.scene-card').forEach(c => c.classList.toggle('active', c.dataset.task === taskId));
+      taskSelect.value = taskId;
+      applyFilters();
+    }
+    function bindGlobalEventsOnce() {
+      if (globalEventsBound) return;
+      globalEventsBound = true;
+      sectionSelect.addEventListener('change', () => render());
+      sceneSelect.addEventListener('change', () => render());
+      taskSelect.addEventListener('change', () => render(taskSelect.value));
+      resultFilter.addEventListener('change', applyFilters);
+      layoutMode.addEventListener('change', applyFilters);
+      groupSearch.addEventListener('input', applyFilters);
+      document.getElementById('playVisible').addEventListener('click', () => document.querySelectorAll('.scene-card.active .group-row:not(.is-filtered) video').forEach(v => v.play()));
+      document.getElementById('pauseVisible').addEventListener('click', () => document.querySelectorAll('video').forEach(v => v.pause()));
+      document.getElementById('saveAuditLocal').addEventListener('click', saveAuditLocal);
+      document.getElementById('checkSaveServer').addEventListener('click', checkSaveServer);
+      document.getElementById('copyServerCommand').addEventListener('click', copyStartServerCommand);
+      document.getElementById('exportAuditCsv').addEventListener('click', exportAuditCsv);
+      document.getElementById('exportAuditJson').addEventListener('click', exportAuditJson);
+      document.getElementById('backupAuditJson').addEventListener('click', backupAuditJson);
+      document.getElementById('saveAuditBackend').addEventListener('click', saveAuditBackend);
+      document.getElementById('loadAuditBackend').addEventListener('click', loadAuditBackend);
+      document.getElementById('checkBackend').addEventListener('click', checkBackend);
+      document.getElementById('clearManualAudit').addEventListener('click', clearManualAudit);
+    }
+    function bindTaskEvents() {
+      tabs.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => render(tab.dataset.task)));
+      document.querySelectorAll('[data-mode-toggle]').forEach(input => input.addEventListener('change', applyFilters));
+    }
+    function bindAuditButtons() {
+      document.querySelectorAll('[data-audit-action]').forEach(button => {
+        if (button.dataset.bound === '1') return;
+        button.dataset.bound = '1';
+        button.addEventListener('click', event => {
+          const controls = event.target.closest('.audit-controls');
+          const taskId = controls.dataset.task;
+          const modeId = controls.dataset.mode;
+          const groupId = controls.dataset.group;
+          const action = event.target.dataset.auditAction;
+          const key = overrideKey(taskId, modeId, groupId);
+          if (action === 'reset') {
+            delete manualOverrides[key];
+          } else {
+            const visualSuccess = statusToVisualSuccess(action);
+            const original = DATA.tasks
+              .find(task => task.task === taskId)?.groups
+              .find(group => String(group.group) === String(groupId))?.items?.[modeId]?.visual_success;
+            const originalLabel = DATA.tasks
+              .find(task => task.task === taskId)?.groups
+              .find(group => String(group.group) === String(groupId))?.items?.[modeId]?.visual_label || itemStatus(original);
+            manualOverrides[key] = {
+              task: taskId,
+              mode: modeId,
+              group: Number(groupId),
+              visual_success: visualSuccess,
+              visual_label: action,
+              label: action,
+              original_visual_success: original ?? null,
+              original_visual_label: originalLabel,
+              updated_at: new Date().toISOString(),
+            };
+          }
+          saveOverrides();
+          refreshSingleCard(taskId, modeId, Number(groupId));
+          refreshGroupSummary(taskId, Number(groupId));
+          refreshTaskScores(taskId);
+          applyFilters();
+        });
+      });
+    }
+    function findTask(taskId) {
+      return DATA.tasks.find(task => task.task === taskId);
+    }
+    function findGroup(task, groupId) {
+      return task?.groups.find(group => Number(group.group) === Number(groupId));
+    }
+    function findMode(task, modeId) {
+      return task?.modes.find(mode => mode.mode === modeId);
+    }
+    function refreshSingleCard(taskId, modeId, groupId) {
+      const task = findTask(taskId);
+      const group = findGroup(task, groupId);
+      const mode = findMode(task, modeId);
+      if (!task || !group || !mode) return;
+      const originalItem = group.items[modeId];
+      const item = applyManualOverride(taskId, modeId, groupId, originalItem);
+      const oldCard = document.querySelector(`.video-card[data-task="${CSS.escape(taskId)}"][data-group="${groupId}"][data-mode="${CSS.escape(modeId)}"]`);
+      if (!oldCard) return;
+      oldCard.outerHTML = itemCard(taskId, groupId, mode, item);
+      bindAuditButtons();
+      bindVideoFallbacks();
+    }
+    function refreshTaskScores(taskId) {
+      const task = taskWithOverrides(findTask(taskId));
+      const sceneCard = document.querySelector(`.scene-card[data-task="${CSS.escape(taskId)}"]`);
+      if (!task || !sceneCard) return;
+      const bestRate = Math.max(...task.modes.map(mode => mode.rate ?? -1));
+      const scores = task.modes.map(mode => `<div class="score ${mode.rate === bestRate ? 'best' : ''}"><div class="name">${escapeText(mode.label)}</div><div class="value">${pct(mode.rate)}</div></div>`).join('');
+      const strip = sceneCard.querySelector('.score-strip');
+      if (strip) strip.innerHTML = scores;
+    }
+    function refreshGroupSummary(taskId, groupId) {
+      const task = taskWithOverrides(findTask(taskId));
+      const group = findGroup(task, groupId);
+      const row = document.querySelector(`.scene-card[data-task="${CSS.escape(taskId)}"] .group-row[data-group="${groupId}"]`);
+      if (!task || !group || !row) return;
+      const baseline = group.items.baseline_pass1?.visual_success;
+      const selectionItems = Object.entries(group.items).filter(([mode]) => mode !== 'baseline_pass1').map(([, item]) => item);
+      const baselineStatus = itemStatus(group.items.baseline_pass1);
+      const anySelectionWin = baselineStatus !== 'success' && selectionItems.some(item => itemStatus(item) === 'success');
+      const anyFail = [group.items.baseline_pass1, ...selectionItems].some(item => ['fail', 'partial'].includes(itemStatus(item)));
+      row.dataset.baseline = String(baseline);
+      row.dataset.baselineStatus = String(baselineStatus);
+      row.dataset.anyFail = String(anyFail);
+      row.dataset.selectionWin = String(anySelectionWin);
+      row.classList.toggle('selection-win', anySelectionWin);
+      row.classList.toggle('any-fail', anyFail);
+      const chips = row.querySelector('.chips');
+      if (chips) chips.innerHTML = task.modes.map(mode => chip(modeChipLabel(mode.mode, mode.label), group.items[mode.mode])).join('');
+    }
+    function overrideRows() {
+      return Object.values(manualOverrides).sort((a, b) =>
+        `${a.task}::${a.mode}::${a.group}`.localeCompare(`${b.task}::${b.mode}::${b.group}`)
+      );
+    }
+    function effectiveOverrideRows() {
+      const rows = [];
+      effectiveTasks().forEach(task => {
+        task.groups.forEach(group => {
+          task.modes.forEach(mode => {
+            const item = group.items[mode.mode];
+            if (!item) return;
+            const originalItem = DATA.tasks
+              .find(originalTask => originalTask.task === task.task)?.groups
+              .find(originalGroup => Number(originalGroup.group) === Number(group.group))?.items?.[mode.mode];
+            const currentLabel = itemStatus(item);
+            const originalLabel = originalItem ? itemStatus(originalItem) : '';
+            rows.push({
+              task: task.task,
+              mode: mode.mode,
+              group: Number(group.group),
+              visual_success: statusToVisualSuccess(currentLabel),
+              visual_label: currentLabel,
+              label: currentLabel,
+              original_visual_success: originalItem?.visual_success ?? null,
+              original_visual_label: originalLabel,
+              updated_at: item.manual_override?.updated_at || new Date().toISOString(),
+            });
+          });
+        });
+      });
+      return rows.sort((a, b) =>
+        `${a.task}::${a.mode}::${a.group}`.localeCompare(`${b.task}::${b.mode}::${b.group}`)
+      );
+    }
+    function downloadText(filename, text, mimeType) {
+      const blob = new Blob([text], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    }
+    function toBase64Utf8(text) {
+      const bytes = new TextEncoder().encode(text);
+      let binary = '';
+      const chunkSize = 0x8000;
+      for (let i = 0; i < bytes.length; i += chunkSize) {
+        const chunk = bytes.subarray(i, i + chunkSize);
+        binary += String.fromCharCode(...chunk);
+      }
+      return btoa(binary);
+    }
+    function fromBase64Utf8(text) {
+      const binary = atob(text.replaceAll('\n', ''));
+      const bytes = new Uint8Array(binary.length);
+      for (let i = 0; i < binary.length; i += 1) bytes[i] = binary.charCodeAt(i);
+      return new TextDecoder().decode(bytes);
+    }
+    function auditBackupPayload(reason) {
+      return {
+        reason,
+        created_at: new Date().toISOString(),
+        page_url: window.location.href,
+        overrides: overrideRows(),
+        rows: fullAuditRows(),
+      };
+    }
+    function backendAuditPayload() {
+      const effectiveRows = effectiveOverrideRows();
+      return {
+        reason: 'backend_save',
+        created_at: new Date().toISOString(),
+        page_url: window.location.href,
+        // Backend saves should round-trip the full page state, not only the
+        // small set of explicit browser-local edits. This lets the local
+        // workspace recover the same success-rate table shown on GitHub Pages.
+        overrides: effectiveRows,
+        rows: [],
+      };
+    }
+    function backendFailureBackupPayload(reason) {
+      const effectiveRows = effectiveOverrideRows();
+      return {
+        reason,
+        created_at: new Date().toISOString(),
+        page_url: window.location.href,
+        backend_url: backendUrlInput.value.trim(),
+        reviewer_id: reviewerIdInput.value.trim().toLowerCase(),
+        overrides: effectiveRows,
+        rows: [],
+      };
+    }
+    function timestampForFilename() {
+      return new Date().toISOString().replaceAll(':', '').replaceAll('.', '-');
+    }
+    function downloadAuditBackup(reason) {
+      const payload = auditBackupPayload(reason);
+      const filename = `manual_audit_backup_${reason}_${timestampForFilename()}.json`;
+      downloadText(filename, JSON.stringify(payload, null, 2), 'application/json;charset=utf-8');
+      saveStatus.textContent = `backup downloaded: ${payload.overrides.length} edits`;
+    }
+    function csvEscape(value) {
+      const text = String(value ?? '');
+      return /[",\n]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
+    }
+    function exportAuditCsv() {
+      const header = ['task','mode','group','manual_visual_success','manual_visual_label','manual_label','original_visual_success','original_visual_label','updated_at'];
+      const rows = overrideRows().map(row => [
+        row.task,
+        row.mode,
+        row.group,
+        row.visual_success,
+        row.visual_label,
+        row.label,
+        row.original_visual_success,
+        row.original_visual_label,
+        row.updated_at,
+      ]);
+      const csv = [header, ...rows].map(row => row.map(csvEscape).join(',')).join('\n') + '\n';
+      downloadText('manual_audit_overrides.csv', csv, 'text/csv;charset=utf-8');
+    }
+    function exportAuditJson() {
+      downloadText('manual_audit_overrides.json', JSON.stringify(overrideRows(), null, 2), 'application/json;charset=utf-8');
+    }
+    function backupAuditJson() {
+      downloadAuditBackup('manual');
+    }
+    function downloadBackendFailureBackup(reason) {
+      const payload = backendFailureBackupPayload(reason);
+      const filename = `manual_audit_backend_backup_${reason}_${timestampForFilename()}.json`;
+      downloadText(filename, JSON.stringify(payload, null, 2), 'application/json;charset=utf-8');
+      saveStatus.textContent = `backup downloaded: ${payload.overrides.length} effective labels`;
+    }
+    function fullAuditRows() {
+      const rows = [];
+      DATA.tasks.forEach(task => {
+        task.groups.forEach(group => {
+          task.modes.forEach(mode => {
+            const item = group.items[mode.mode];
+            if (!item) return;
+            const override = getOverride(task.task, mode.mode, group.group);
+            rows.push({
+              task: task.task,
+              task_label: task.label,
+              mode: mode.mode,
+              mode_label: mode.label,
+              group: group.group,
+              original_visual_success: item.visual_success,
+              original_visual_label: item.visual_label || itemStatus(item),
+              current_visual_success: override ? override.visual_success : item.visual_success,
+              current_visual_label: override ? (override.visual_label || override.label) : (item.visual_label || itemStatus(item)),
+              manual_label: override ? override.label : '',
+              manual_updated_at: override ? override.updated_at : '',
+              audit_source: item.audit_source || '',
+              motion_valid: item.motion_valid ?? '',
+              note: item.note || '',
+              video: item.video || '',
+              contact_sheet: item.contact_sheet || '',
+            });
+          });
+        });
+      });
+      return rows;
+    }
+    function showServerHelp(message) {
+      serverHelp.classList.add('visible');
+      serverHelp.innerHTML = `${escapeText(message)}<br><br>Because this GitHub Pages dashboard is static, the browser cannot write files back to your local machine directly. Start the tiny local writer once, then click <b>save local</b> again.<br><br>Option A: copy and run this command in Terminal:<code>${escapeText(START_SERVER_COMMAND)}</code>Option B: double-click this generated launcher:<code>${escapeText(START_SERVER_SCRIPT)}</code>Your current edits are still safe in this browser's localStorage.`;
+    }
+    function showBackendHelp(message) {
+      serverHelp.classList.add('visible');
+      serverHelp.innerHTML = `${escapeText(message)}<br><br>If this says <code>request timed out</code>, this browser/network likely cannot reach the Cloudflare Workers domain <code>*.workers.dev</code>. The page will automatically try the localhost relay when the local save server is running. If both direct backend and relay fail, use <b>save local</b> or a backend URL on a custom domain that your browser can open directly. If the backend is reachable but saving fails, then check <code>reviewer id</code> and <code>write secret</code>. Your current edits are still safe in this browser's localStorage, and a light backup JSON is downloaded on failed backend saves.`;
+    }
+    async function backendRequest(path, body, timeoutMs = BACKEND_TIMEOUT_MS) {
+      const { backendUrl, reviewerId, writeSecret } = currentBackendSettings();
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), timeoutMs);
+      const response = await fetch(`${backendUrl}${path}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Write-Secret': writeSecret,
+        },
+        body: JSON.stringify({ reviewer_id: reviewerId, write_secret: writeSecret, ...body }),
+        signal: controller.signal,
+      });
+      clearTimeout(timeout);
+      const text = await response.text();
+      let result = null;
+      try {
+        result = text ? JSON.parse(text) : null;
+      } catch (err) {
+        throw new Error(`Backend returned non-JSON response: ${text.slice(0, 240)}`);
+      }
+      if (!response.ok || !result?.ok) {
+        throw new Error(result?.error || `Backend HTTP ${response.status}`);
+      }
+      return result;
+    }
+    async function backendRelayRequest(path, body, timeoutMs = 35000) {
+      const { backendUrl, reviewerId, writeSecret } = currentBackendSettings();
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), timeoutMs);
+      const relayBody = {
+        backend_url: backendUrl,
+        path,
+        write_secret: writeSecret,
+        body: { reviewer_id: reviewerId, write_secret: writeSecret, ...body },
+      };
+      const response = await fetch(`${SAVE_SERVER_URL}/relay-backend`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(relayBody),
+        signal: controller.signal,
+      });
+      clearTimeout(timeout);
+      const text = await response.text();
+      let result = null;
+      try {
+        result = text ? JSON.parse(text) : null;
+      } catch (err) {
+        throw new Error(`Local relay returned non-JSON response: ${text.slice(0, 240)}`);
+      }
+      if (!response.ok || !result?.ok || !result?.backend?.ok) {
+        throw new Error(result?.backend?.error || result?.error || `Local relay HTTP ${response.status}`);
+      }
+      return result.backend;
+    }
+    async function backendRelayHealth(backendUrl, timeoutMs = 15000) {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), timeoutMs);
+      const response = await fetch(`${SAVE_SERVER_URL}/relay-backend`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          backend_url: backendUrl,
+          path: '/health',
+          write_secret: '',
+          body: {},
+        }),
+        signal: controller.signal,
+      });
+      clearTimeout(timeout);
+      const text = await response.text();
+      let result = null;
+      try {
+        result = text ? JSON.parse(text) : null;
+      } catch (err) {
+        throw new Error(`Local relay health returned non-JSON response: ${text.slice(0, 240)}`);
+      }
+      if (!response.ok || !result?.ok || !result?.backend?.ok) {
+        throw new Error(result?.backend?.error || result?.error || `Local relay health HTTP ${response.status}`);
+      }
+      return result.backend;
+    }
+    async function checkBackend() {
+      let backendUrl = backendUrlInput.value.trim().replace(/\/+$/, '') || DEFAULT_BACKEND_URL;
+      backendUrlInput.value = backendUrl;
+      localStorage.setItem(BACKEND_URL_STORAGE_KEY, backendUrl);
+      saveStatus.textContent = 'checking backend...';
+      const started = performance.now();
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000);
+      try {
+        const response = await fetch(`${backendUrl}/health`, { cache: 'no-store', signal: controller.signal });
+        clearTimeout(timeout);
+        const elapsed = Math.round(performance.now() - started);
+        const result = await response.json();
+        if (!response.ok || !result?.ok) throw new Error(result?.error || `HTTP ${response.status}`);
+        saveStatus.textContent = `backend ok (${elapsed} ms)`;
+        serverHelp.classList.remove('visible');
+      } catch (err) {
+        clearTimeout(timeout);
+        try {
+          saveStatus.textContent = 'direct backend failed; checking local relay...';
+          await backendRelayHealth(backendUrl);
+          const elapsed = Math.round(performance.now() - started);
+          saveStatus.textContent = `backend ok via local relay (${elapsed} ms)`;
+          showBackendHelp('Direct backend health check failed, but the localhost relay can reach the backend. You can use save via backend as long as the local save server remains running.');
+        } catch (relayErr) {
+          console.error(err, relayErr);
+          saveStatus.textContent = 'backend check failed';
+          showBackendHelp(`Backend health check failed directly and via localhost relay: direct=${err.name === 'AbortError' ? 'request timed out' : err.message}; relay=${relayErr.name === 'AbortError' ? 'request timed out' : relayErr.message}`);
+        }
+      }
+    }
+    async function saveAuditBackend() {
+      const payload = backendAuditPayload();
+      const started = performance.now();
+      saveStatus.textContent = 'saving via backend...';
+      try {
+        let result = null;
+        let usedRelay = false;
+        try {
+          result = await backendRequest('/save-audit', { payload });
+        } catch (directErr) {
+          console.warn('Direct backend save failed; trying localhost relay.', directErr);
+          saveStatus.textContent = 'direct backend failed; trying local relay...';
+          result = await backendRelayRequest('/save-audit', { payload });
+          usedRelay = true;
+        }
+        const elapsed = Math.round(performance.now() - started);
+        localStorage.setItem(LAST_SAVE_STORAGE_KEY, payload.created_at);
+        updateLastSaveStatus();
+        saveStatus.textContent = `${usedRelay ? 'backend saved via local relay' : 'backend saved'} ${payload.overrides.length} effective labels (${elapsed} ms)`;
+        serverHelp.classList.remove('visible');
+        const savedPaths = [result.latest, result.snapshot].filter(Boolean).join('\n');
+        alert(`Saved audit via ${usedRelay ? 'local relay + backend' : 'backend'}:\n${savedPaths}`);
+      } catch (err) {
+        console.error(err);
+        saveStatus.textContent = 'backend save failed';
+        downloadBackendFailureBackup('backend_failed_save');
+        showBackendHelp(`Backend save failed after direct request and localhost relay: ${err.name === 'AbortError' ? 'request timed out' : err.message}`);
+      }
+    }
+    async function loadAuditBackend() {
+      if (Object.keys(manualOverrides).length && !confirm('Load backend audit and replace current browser-local edits? Export or backup first if you want to keep both.')) return;
+      saveStatus.textContent = 'loading backend audit...';
+      try {
+        let result = null;
+        let usedRelay = false;
+        try {
+          result = await backendRequest('/load-audit', {});
+        } catch (directErr) {
+          console.warn('Direct backend load failed; trying localhost relay.', directErr);
+          saveStatus.textContent = 'direct backend failed; trying local relay...';
+          result = await backendRelayRequest('/load-audit', {});
+          usedRelay = true;
+        }
+        const payload = result.payload || {};
+        const nextOverrides = {};
+        (payload.overrides || []).forEach(row => {
+          if (!row.task || !row.mode || row.group === undefined) return;
+          nextOverrides[overrideKey(row.task, row.mode, row.group)] = row;
+        });
+        manualOverrides = nextOverrides;
+        saveOverrides();
+        if (payload.created_at || payload.saved_by_backend_at) {
+          localStorage.setItem(LAST_SAVE_STORAGE_KEY, payload.created_at || payload.saved_by_backend_at);
+        }
+        updateLastSaveStatus();
+        render(taskSelect.value);
+        saveStatus.textContent = `loaded ${Object.keys(nextOverrides).length} backend labels${usedRelay ? ' via local relay' : ''}`;
+      } catch (err) {
+        console.error(err);
+        saveStatus.textContent = 'backend load failed';
+        showBackendHelp(`Backend load failed after direct request and localhost relay: ${err.message}`);
+      }
+    }
+    async function copyStartServerCommand() {
+      try {
+        await navigator.clipboard.writeText(START_SERVER_COMMAND);
+        saveStatus.textContent = 'start command copied';
+        showServerHelp('Start command copied. Paste it into Terminal if the save server is not running.');
+      } catch (err) {
+        console.warn(err);
+        saveStatus.textContent = 'copy unavailable';
+        showServerHelp('Clipboard copy was blocked by the browser, but you can manually select the command below.');
+      }
+    }
+    async function checkSaveServer() {
+      saveStatus.textContent = 'checking server...';
+      try {
+        const response = await fetch(`${SAVE_SERVER_URL}/health`, { cache: 'no-store' });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const result = await response.json();
+        saveStatus.textContent = 'server running';
+        serverHelp.classList.remove('visible');
+        alert(`Save server is running.\nWriting to:\n${result.output_dir}`);
+      } catch (err) {
+        console.error(err);
+        saveStatus.textContent = 'server not running';
+        showServerHelp(`Save server is not reachable: ${err.message}`);
+      }
+    }
+    async function saveAuditLocal() {
+      saveStatus.textContent = 'saving...';
+      const payload = {
+        saved_at: new Date().toISOString(),
+        overrides: overrideRows(),
+        rows: fullAuditRows(),
+      };
+      try {
+        const response = await fetch(`${SAVE_SERVER_URL}/save-audit-overrides`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const result = await response.json();
+        localStorage.setItem(LAST_SAVE_STORAGE_KEY, payload.saved_at);
+        updateLastSaveStatus();
+        saveStatus.textContent = `saved ${payload.overrides.length} edits`;
+        serverHelp.classList.remove('visible');
+        alert(`Saved manual audit files:\n${result.files.join('\n')}`);
+      } catch (err) {
+        console.error(err);
+        saveStatus.textContent = 'save failed';
+        downloadAuditBackup('failed_save');
+        showServerHelp(`Save failed: ${err.message}`);
+      }
+    }
+    function clearManualAudit() {
+      if (!confirm('Clear all locally saved manual audit edits for this dashboard?')) return;
+      manualOverrides = {};
+      saveOverrides();
+      render(taskSelect.value);
+    }
+    function applyFilters() {
+      const active = document.querySelector('.scene-card.active');
+      if (!active) return;
+      const query = groupSearch.value.trim();
+      const filter = resultFilter.value;
+      document.body.classList.toggle('layout-cinema', layoutMode.value === 'cinema');
+      document.body.classList.toggle('layout-contact', layoutMode.value === 'contact');
+      if (layoutMode.value === 'contact') {
+        active.querySelectorAll('.contact-fallback[data-src]:not([src])').forEach(img => {
+          img.src = img.dataset.src;
+        });
+      }
+      const visibleModes = new Set(Array.from(active.querySelectorAll('[data-mode-toggle]')).filter(i => i.checked).map(i => i.dataset.modeToggle));
+      active.querySelectorAll('.video-card').forEach(card => card.classList.toggle('hidden-mode', !visibleModes.has(card.dataset.mode)));
+      const cols = Math.max(1, visibleModes.size);
+      active.querySelectorAll('.video-grid').forEach(grid => grid.style.setProperty('--visible-cols', cols));
+      const normalizedQuery = query && /^\d+$/.test(query) ? String(Number(query)) : query;
+      active.querySelectorAll('.group-row').forEach(row => {
+        let hide = false;
+        if (normalizedQuery && !String(row.dataset.group).includes(normalizedQuery)) hide = true;
+        if (filter === 'any-fail' && row.dataset.anyFail !== 'true') hide = true;
+        if (filter === 'baseline-fail' && row.dataset.baselineStatus === 'success') hide = true;
+        if (filter === 'selection-win' && row.dataset.selectionWin !== 'true') hide = true;
+        row.classList.toggle('is-filtered', hide);
+      });
+    }
+    render();
+    loadBackendSettings();
+  </script>
+</body>
+</html>
