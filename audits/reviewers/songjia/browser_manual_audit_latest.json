@@ -1,6 +1,6 @@
 {
   "reason": "backend_save",
-  "created_at": "2026-05-20T15:28:36.388Z",
+  "created_at": "2026-05-20T15:32:40.362Z",
   "page_url": "https://sellerbubble.github.io/droid-selection-review-dashboard/state_experiments/index.html",
   "overrides": [
     {
@@ -2872,7 +2872,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:32:40.359Z"
     },
     {
       "task": "long_scene3_s5_can_to_bin",
@@ -2883,7 +2883,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:32:40.359Z"
     },
     {
       "task": "long_scene3_s5_can_to_bin",
@@ -2894,7 +2894,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:32:40.359Z"
     },
     {
       "task": "long_scene3_s5_can_to_bin",
@@ -2905,7 +2905,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:32:40.359Z"
     },
     {
       "task": "long_scene3_s5_can_to_bin",
@@ -2916,7 +2916,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:32:40.359Z"
     },
     {
       "task": "long_scene3_s5_can_to_bin",
@@ -2927,7 +2927,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:32:40.359Z"
     },
     {
       "task": "long_scene3_s5_can_to_bin",
@@ -2938,7 +2938,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:32:40.359Z"
     },
     {
       "task": "long_scene3_s5_can_to_bin",
@@ -2949,7 +2949,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.383Z"
+      "updated_at": "2026-05-20T15:32:40.359Z"
     },
     {
       "task": "long_scene3_s5_can_to_bin",
@@ -2960,7 +2960,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.383Z"
+      "updated_at": "2026-05-20T15:32:40.359Z"
     },
     {
       "task": "long_scene3_s5_can_to_bin",
@@ -2971,7 +2971,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.383Z"
+      "updated_at": "2026-05-20T15:32:40.360Z"
     },
     {
       "task": "long_scene3_s5_can_to_bin",
@@ -2982,7 +2982,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.383Z"
+      "updated_at": "2026-05-20T15:32:40.360Z"
     },
     {
       "task": "long_scene3_s5_can_to_bin",
@@ -2993,7 +2993,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.383Z"
+      "updated_at": "2026-05-20T15:32:40.360Z"
     },
     {
       "task": "long_scene3_s5_can_to_bin",
@@ -3004,7 +3004,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:32:40.359Z"
     },
     {
       "task": "long_scene3_s5_can_to_bin",
@@ -3015,7 +3015,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:32:40.359Z"
     },
     {
       "task": "long_scene3_s5_can_to_bin",
@@ -3026,7 +3026,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:32:40.359Z"
     },
     {
       "task": "long_scene3_s5_can_to_bin",
@@ -3037,7 +3037,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:32:40.359Z"
     },
     {
       "task": "long_scene3_s5_can_to_bin",
@@ -3048,7 +3048,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:32:40.359Z"
     },
     {
       "task": "long_scene3_s5_can_to_bin",
@@ -3059,7 +3059,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:32:40.359Z"
     },
     {
       "task": "long_scene3_s5_can_to_bin",
@@ -3070,7 +3070,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:32:40.359Z"
     },
     {
       "task": "long_scene3_s5_can_to_bin",
@@ -3081,7 +3081,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:32:40.359Z"
     },
     {
       "task": "long_scene3_s7_banana_to_bin",
@@ -3532,7 +3532,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.383Z"
+      "updated_at": "2026-05-20T15:32:40.360Z"
     },
     {
       "task": "long_scene3_s7_banana_to_bin",
@@ -3543,7 +3543,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.383Z"
+      "updated_at": "2026-05-20T15:32:40.360Z"
     },
     {
       "task": "long_scene3_s7_banana_to_bin",
@@ -3554,7 +3554,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.383Z"
+      "updated_at": "2026-05-20T15:32:40.360Z"
     },
     {
       "task": "long_scene3_s7_banana_to_bin",
@@ -3565,7 +3565,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.383Z"
+      "updated_at": "2026-05-20T15:32:40.360Z"
     },
     {
       "task": "long_scene3_s7_banana_to_bin",
@@ -3576,7 +3576,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.383Z"
+      "updated_at": "2026-05-20T15:32:40.360Z"
     },
     {
       "task": "long_scene3_s7_banana_to_bin",
@@ -3587,7 +3587,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.383Z"
+      "updated_at": "2026-05-20T15:32:40.360Z"
     },
     {
       "task": "long_scene3_s7_banana_to_bin",
@@ -3598,7 +3598,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.383Z"
+      "updated_at": "2026-05-20T15:32:40.360Z"
     },
     {
       "task": "long_scene3_s7_banana_to_bin",
@@ -3609,7 +3609,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.383Z"
+      "updated_at": "2026-05-20T15:32:40.360Z"
     },
     {
       "task": "long_scene3_s7_banana_to_bin",
@@ -3620,7 +3620,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.383Z"
+      "updated_at": "2026-05-20T15:32:40.360Z"
     },
     {
       "task": "long_scene3_s7_banana_to_bin",
@@ -3631,7 +3631,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.383Z"
+      "updated_at": "2026-05-20T15:32:40.360Z"
     },
     {
       "task": "long_scene3_s7_banana_to_bin",
@@ -3642,7 +3642,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.383Z"
+      "updated_at": "2026-05-20T15:32:40.360Z"
     },
     {
       "task": "long_scene3_s7_banana_to_bin",
@@ -3653,7 +3653,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.383Z"
+      "updated_at": "2026-05-20T15:32:40.360Z"
     },
     {
       "task": "long_scene3_s7_banana_to_bin",
@@ -3664,7 +3664,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.383Z"
+      "updated_at": "2026-05-20T15:32:40.360Z"
     },
     {
       "task": "long_scene3_s7_banana_to_bin",
@@ -3675,7 +3675,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.383Z"
+      "updated_at": "2026-05-20T15:32:40.360Z"
     },
     {
       "task": "long_scene3_s7_banana_to_bin",
@@ -3686,7 +3686,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.383Z"
+      "updated_at": "2026-05-20T15:32:40.360Z"
     },
     {
       "task": "long_scene3_s7_banana_to_bin",
@@ -3697,7 +3697,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.383Z"
+      "updated_at": "2026-05-20T15:32:40.360Z"
     },
     {
       "task": "long_scene3_s7_banana_to_bin",
@@ -3708,7 +3708,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.383Z"
+      "updated_at": "2026-05-20T15:32:40.360Z"
     },
     {
       "task": "long_scene3_s7_banana_to_bin",
@@ -3719,7 +3719,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.383Z"
+      "updated_at": "2026-05-20T15:32:40.360Z"
     },
     {
       "task": "long_scene3_s7_banana_to_bin",
@@ -3730,7 +3730,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.383Z"
+      "updated_at": "2026-05-20T15:32:40.360Z"
     },
     {
       "task": "long_scene3_s7_banana_to_bin",
@@ -3741,7 +3741,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.383Z"
+      "updated_at": "2026-05-20T15:32:40.360Z"
     },
     {
       "task": "short_scene1_s1_cube_to_bowl",
@@ -9687,111 +9687,111 @@
       "task": "short_scene3_s6_banana_to_bowl",
       "mode": "hierarchical_fixed_vit_schedule168_k5",
       "group": 0,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:28:59.641Z"
     },
     {
       "task": "short_scene3_s6_banana_to_bowl",
       "mode": "hierarchical_fixed_vit_schedule168_k5",
       "group": 1,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:29:06.910Z"
     },
     {
       "task": "short_scene3_s6_banana_to_bowl",
       "mode": "hierarchical_fixed_vit_schedule168_k5",
       "group": 2,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:29:21.615Z"
     },
     {
       "task": "short_scene3_s6_banana_to_bowl",
       "mode": "hierarchical_fixed_vit_schedule168_k5",
       "group": 3,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:29:40.420Z"
     },
     {
       "task": "short_scene3_s6_banana_to_bowl",
       "mode": "hierarchical_fixed_vit_schedule168_k5",
       "group": 4,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:29:48.153Z"
     },
     {
       "task": "short_scene3_s6_banana_to_bowl",
       "mode": "hierarchical_fixed_vit_schedule168_k5",
       "group": 5,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "partial",
+      "label": "partial",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:29:56.101Z"
     },
     {
       "task": "short_scene3_s6_banana_to_bowl",
       "mode": "hierarchical_fixed_vit_schedule168_k5",
       "group": 6,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:30:03.282Z"
     },
     {
       "task": "short_scene3_s6_banana_to_bowl",
       "mode": "hierarchical_fixed_vit_schedule168_k5",
       "group": 7,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:30:44.293Z"
     },
     {
       "task": "short_scene3_s6_banana_to_bowl",
       "mode": "hierarchical_fixed_vit_schedule168_k5",
       "group": 8,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:30:51.098Z"
     },
     {
       "task": "short_scene3_s6_banana_to_bowl",
       "mode": "hierarchical_fixed_vit_schedule168_k5",
       "group": 9,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:31:01.445Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
@@ -10242,7 +10242,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:32:40.359Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
@@ -10253,7 +10253,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:32:40.359Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
@@ -10264,7 +10264,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:32:40.359Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
@@ -10275,7 +10275,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:32:40.359Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
@@ -10286,7 +10286,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:32:40.359Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
@@ -10297,7 +10297,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:32:40.359Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
@@ -10308,7 +10308,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:32:40.359Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
@@ -10319,7 +10319,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:32:40.359Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
@@ -10330,7 +10330,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:32:40.359Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
@@ -10341,11 +10341,11 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-20T15:28:36.382Z"
+      "updated_at": "2026-05-20T15:32:40.359Z"
     }
   ],
   "rows": [],
   "reviewer_id": "songjia",
-  "saved_by_backend_at": "2026-05-20T15:28:42.460Z",
+  "saved_by_backend_at": "2026-05-20T15:32:45.724Z",
   "backend": "cloudflare_worker"
 }
