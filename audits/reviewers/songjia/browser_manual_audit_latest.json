@@ -1,6 +1,6 @@
 {
   "reason": "backend_save",
-  "created_at": "2026-05-22T15:41:52.397Z",
+  "created_at": "2026-05-22T15:43:49.269Z",
   "page_url": "https://sellerbubble.github.io/droid-selection-review-dashboard/state_experiments/index.html",
   "overrides": [
     {
@@ -7487,221 +7487,221 @@
       "task": "short_scene2_s4_can_to_bowl",
       "mode": "unordered_success_bank_vit_k5_partial",
       "group": 0,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.392Z"
+      "updated_at": "2026-05-22T15:42:13.588Z"
     },
     {
       "task": "short_scene2_s4_can_to_bowl",
       "mode": "unordered_success_bank_vit_k5_partial",
       "group": 1,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.392Z"
+      "updated_at": "2026-05-22T15:42:19.226Z"
     },
     {
       "task": "short_scene2_s4_can_to_bowl",
       "mode": "unordered_success_bank_vit_k5_partial",
       "group": 10,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.392Z"
+      "updated_at": "2026-05-22T15:43:00.049Z"
     },
     {
       "task": "short_scene2_s4_can_to_bowl",
       "mode": "unordered_success_bank_vit_k5_partial",
       "group": 11,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.392Z"
+      "updated_at": "2026-05-22T15:43:05.823Z"
     },
     {
       "task": "short_scene2_s4_can_to_bowl",
       "mode": "unordered_success_bank_vit_k5_partial",
       "group": 12,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.392Z"
+      "updated_at": "2026-05-22T15:43:12.044Z"
     },
     {
       "task": "short_scene2_s4_can_to_bowl",
       "mode": "unordered_success_bank_vit_k5_partial",
       "group": 13,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.392Z"
+      "updated_at": "2026-05-22T15:43:18.386Z"
     },
     {
       "task": "short_scene2_s4_can_to_bowl",
       "mode": "unordered_success_bank_vit_k5_partial",
       "group": 14,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "partial",
+      "label": "partial",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.392Z"
+      "updated_at": "2026-05-22T15:43:26.870Z"
     },
     {
       "task": "short_scene2_s4_can_to_bowl",
       "mode": "unordered_success_bank_vit_k5_partial",
       "group": 15,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.392Z"
+      "updated_at": "2026-05-22T15:43:29.982Z"
     },
     {
       "task": "short_scene2_s4_can_to_bowl",
       "mode": "unordered_success_bank_vit_k5_partial",
       "group": 16,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.392Z"
+      "updated_at": "2026-05-22T15:43:31.885Z"
     },
     {
       "task": "short_scene2_s4_can_to_bowl",
       "mode": "unordered_success_bank_vit_k5_partial",
       "group": 17,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.392Z"
+      "updated_at": "2026-05-22T15:43:34.147Z"
     },
     {
       "task": "short_scene2_s4_can_to_bowl",
       "mode": "unordered_success_bank_vit_k5_partial",
       "group": 18,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.392Z"
+      "updated_at": "2026-05-22T15:43:43.058Z"
     },
     {
       "task": "short_scene2_s4_can_to_bowl",
       "mode": "unordered_success_bank_vit_k5_partial",
       "group": 19,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.392Z"
+      "updated_at": "2026-05-22T15:43:45.583Z"
     },
     {
       "task": "short_scene2_s4_can_to_bowl",
       "mode": "unordered_success_bank_vit_k5_partial",
       "group": 2,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.392Z"
+      "updated_at": "2026-05-22T15:42:26.191Z"
     },
     {
       "task": "short_scene2_s4_can_to_bowl",
       "mode": "unordered_success_bank_vit_k5_partial",
       "group": 3,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.392Z"
+      "updated_at": "2026-05-22T15:42:28.168Z"
     },
     {
       "task": "short_scene2_s4_can_to_bowl",
       "mode": "unordered_success_bank_vit_k5_partial",
       "group": 4,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.392Z"
+      "updated_at": "2026-05-22T15:42:30.030Z"
     },
     {
       "task": "short_scene2_s4_can_to_bowl",
       "mode": "unordered_success_bank_vit_k5_partial",
       "group": 5,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.392Z"
+      "updated_at": "2026-05-22T15:42:37.682Z"
     },
     {
       "task": "short_scene2_s4_can_to_bowl",
       "mode": "unordered_success_bank_vit_k5_partial",
       "group": 6,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.392Z"
+      "updated_at": "2026-05-22T15:42:43.864Z"
     },
     {
       "task": "short_scene2_s4_can_to_bowl",
       "mode": "unordered_success_bank_vit_k5_partial",
       "group": 7,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.392Z"
+      "updated_at": "2026-05-22T15:42:50.149Z"
     },
     {
       "task": "short_scene2_s4_can_to_bowl",
       "mode": "unordered_success_bank_vit_k5_partial",
       "group": 8,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.392Z"
+      "updated_at": "2026-05-22T15:42:52.557Z"
     },
     {
       "task": "short_scene2_s4_can_to_bowl",
       "mode": "unordered_success_bank_vit_k5_partial",
       "group": 9,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.392Z"
+      "updated_at": "2026-05-22T15:42:54.411Z"
     },
     {
       "task": "short_scene2_s5_can_to_bin",
@@ -8152,7 +8152,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.392Z"
+      "updated_at": "2026-05-22T15:43:49.263Z"
     },
     {
       "task": "short_scene2_s6_banana_to_bowl",
@@ -8163,7 +8163,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.392Z"
+      "updated_at": "2026-05-22T15:43:49.263Z"
     },
     {
       "task": "short_scene2_s6_banana_to_bowl",
@@ -8174,7 +8174,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.392Z"
+      "updated_at": "2026-05-22T15:43:49.263Z"
     },
     {
       "task": "short_scene2_s6_banana_to_bowl",
@@ -8185,7 +8185,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.392Z"
+      "updated_at": "2026-05-22T15:43:49.263Z"
     },
     {
       "task": "short_scene2_s6_banana_to_bowl",
@@ -8196,7 +8196,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.392Z"
+      "updated_at": "2026-05-22T15:43:49.263Z"
     },
     {
       "task": "short_scene2_s6_banana_to_bowl",
@@ -8207,7 +8207,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.392Z"
+      "updated_at": "2026-05-22T15:43:49.263Z"
     },
     {
       "task": "short_scene2_s6_banana_to_bowl",
@@ -8218,7 +8218,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.392Z"
+      "updated_at": "2026-05-22T15:43:49.263Z"
     },
     {
       "task": "short_scene2_s6_banana_to_bowl",
@@ -8229,7 +8229,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.392Z"
+      "updated_at": "2026-05-22T15:43:49.263Z"
     },
     {
       "task": "short_scene2_s6_banana_to_bowl",
@@ -8240,7 +8240,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.392Z"
+      "updated_at": "2026-05-22T15:43:49.263Z"
     },
     {
       "task": "short_scene2_s7_banana_to_bin",
@@ -11991,7 +11991,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.393Z"
+      "updated_at": "2026-05-22T15:43:49.264Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
@@ -12002,7 +12002,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.393Z"
+      "updated_at": "2026-05-22T15:43:49.264Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
@@ -12013,7 +12013,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.393Z"
+      "updated_at": "2026-05-22T15:43:49.264Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
@@ -12024,7 +12024,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.393Z"
+      "updated_at": "2026-05-22T15:43:49.264Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
@@ -12035,7 +12035,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.393Z"
+      "updated_at": "2026-05-22T15:43:49.264Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
@@ -12046,7 +12046,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.393Z"
+      "updated_at": "2026-05-22T15:43:49.264Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
@@ -12057,7 +12057,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.393Z"
+      "updated_at": "2026-05-22T15:43:49.264Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
@@ -12068,7 +12068,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.393Z"
+      "updated_at": "2026-05-22T15:43:49.264Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
@@ -12079,7 +12079,7 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.393Z"
+      "updated_at": "2026-05-22T15:43:49.264Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
@@ -12090,11 +12090,11 @@
       "label": "wait_for_tag",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-22T15:41:52.393Z"
+      "updated_at": "2026-05-22T15:43:49.264Z"
     }
   ],
   "rows": [],
   "reviewer_id": "songjia",
-  "saved_by_backend_at": "2026-05-22T15:41:55.003Z",
+  "saved_by_backend_at": "2026-05-22T15:43:52.680Z",
   "backend": "cloudflare_worker"
 }
