@@ -427,7 +427,7 @@
     }
     video, .fallback-img {
       width: 100%;
-      aspect-ratio: 960 / 204;
+      height: clamp(190px, 20vw, 320px);
       object-fit: contain;
       background: #15130f;
       border-radius: 14px;
@@ -479,7 +479,7 @@
     }
     body.layout-cinema video,
     body.layout-cinema .fallback-img {
-      aspect-ratio: 960 / 204;
+      height: clamp(220px, 22vw, 360px);
     }
     body.layout-contact .video-card video {
       display: none;
