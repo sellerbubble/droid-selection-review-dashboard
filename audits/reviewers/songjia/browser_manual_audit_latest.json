@@ -1,6 +1,6 @@
 {
   "reason": "backend_save",
-  "created_at": "2026-05-26T08:16:37.486Z",
+  "created_at": "2026-05-26T08:18:25.366Z",
   "page_url": "https://sellerbubble.github.io/droid-selection-review-dashboard/state_experiments/index.html",
   "overrides": [
     {
@@ -17068,221 +17068,221 @@
       "task": "short_xfer_short_scene3_s3_can_to_mug__to_scene1",
       "mode": "scene3_short_cross_scene_baseline_transfer_pass1_g0_19",
       "group": 0,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-25T09:53:16.655Z"
+      "updated_at": "2026-05-26T08:16:53.740Z"
     },
     {
       "task": "short_xfer_short_scene3_s3_can_to_mug__to_scene1",
       "mode": "scene3_short_cross_scene_baseline_transfer_pass1_g0_19",
       "group": 1,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-25T09:53:16.655Z"
+      "updated_at": "2026-05-26T08:16:58.098Z"
     },
     {
       "task": "short_xfer_short_scene3_s3_can_to_mug__to_scene1",
       "mode": "scene3_short_cross_scene_baseline_transfer_pass1_g0_19",
       "group": 10,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-25T09:53:16.655Z"
+      "updated_at": "2026-05-26T08:17:19.361Z"
     },
     {
       "task": "short_xfer_short_scene3_s3_can_to_mug__to_scene1",
       "mode": "scene3_short_cross_scene_baseline_transfer_pass1_g0_19",
       "group": 11,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-25T09:53:16.655Z"
+      "updated_at": "2026-05-26T08:17:22.630Z"
     },
     {
       "task": "short_xfer_short_scene3_s3_can_to_mug__to_scene1",
       "mode": "scene3_short_cross_scene_baseline_transfer_pass1_g0_19",
       "group": 12,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-25T09:53:16.655Z"
+      "updated_at": "2026-05-26T08:17:28.034Z"
     },
     {
       "task": "short_xfer_short_scene3_s3_can_to_mug__to_scene1",
       "mode": "scene3_short_cross_scene_baseline_transfer_pass1_g0_19",
       "group": 13,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-25T09:53:16.655Z"
+      "updated_at": "2026-05-26T08:17:34.786Z"
     },
     {
       "task": "short_xfer_short_scene3_s3_can_to_mug__to_scene1",
       "mode": "scene3_short_cross_scene_baseline_transfer_pass1_g0_19",
       "group": 14,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-25T09:53:16.655Z"
+      "updated_at": "2026-05-26T08:17:42.743Z"
     },
     {
       "task": "short_xfer_short_scene3_s3_can_to_mug__to_scene1",
       "mode": "scene3_short_cross_scene_baseline_transfer_pass1_g0_19",
       "group": 15,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-25T09:53:16.655Z"
+      "updated_at": "2026-05-26T08:18:03.400Z"
     },
     {
       "task": "short_xfer_short_scene3_s3_can_to_mug__to_scene1",
       "mode": "scene3_short_cross_scene_baseline_transfer_pass1_g0_19",
       "group": 16,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-25T09:53:16.655Z"
+      "updated_at": "2026-05-26T08:18:11.137Z"
     },
     {
       "task": "short_xfer_short_scene3_s3_can_to_mug__to_scene1",
       "mode": "scene3_short_cross_scene_baseline_transfer_pass1_g0_19",
       "group": 17,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-25T09:53:16.655Z"
+      "updated_at": "2026-05-26T08:18:13.609Z"
     },
     {
       "task": "short_xfer_short_scene3_s3_can_to_mug__to_scene1",
       "mode": "scene3_short_cross_scene_baseline_transfer_pass1_g0_19",
       "group": 18,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-25T09:53:16.655Z"
+      "updated_at": "2026-05-26T08:18:16.816Z"
     },
     {
       "task": "short_xfer_short_scene3_s3_can_to_mug__to_scene1",
       "mode": "scene3_short_cross_scene_baseline_transfer_pass1_g0_19",
       "group": 19,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-25T09:53:16.655Z"
+      "updated_at": "2026-05-26T08:18:20.406Z"
     },
     {
       "task": "short_xfer_short_scene3_s3_can_to_mug__to_scene1",
       "mode": "scene3_short_cross_scene_baseline_transfer_pass1_g0_19",
       "group": 2,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-25T09:53:16.655Z"
+      "updated_at": "2026-05-26T08:17:00.267Z"
     },
     {
       "task": "short_xfer_short_scene3_s3_can_to_mug__to_scene1",
       "mode": "scene3_short_cross_scene_baseline_transfer_pass1_g0_19",
       "group": 3,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-25T09:53:16.655Z"
+      "updated_at": "2026-05-26T08:17:02.464Z"
     },
     {
       "task": "short_xfer_short_scene3_s3_can_to_mug__to_scene1",
       "mode": "scene3_short_cross_scene_baseline_transfer_pass1_g0_19",
       "group": 4,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-25T09:53:16.655Z"
+      "updated_at": "2026-05-26T08:17:05.902Z"
     },
     {
       "task": "short_xfer_short_scene3_s3_can_to_mug__to_scene1",
       "mode": "scene3_short_cross_scene_baseline_transfer_pass1_g0_19",
       "group": 5,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-25T09:53:16.655Z"
+      "updated_at": "2026-05-26T08:17:08.645Z"
     },
     {
       "task": "short_xfer_short_scene3_s3_can_to_mug__to_scene1",
       "mode": "scene3_short_cross_scene_baseline_transfer_pass1_g0_19",
       "group": 6,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-25T09:53:16.655Z"
+      "updated_at": "2026-05-26T08:17:10.548Z"
     },
     {
       "task": "short_xfer_short_scene3_s3_can_to_mug__to_scene1",
       "mode": "scene3_short_cross_scene_baseline_transfer_pass1_g0_19",
       "group": 7,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-25T09:53:16.655Z"
+      "updated_at": "2026-05-26T08:17:12.284Z"
     },
     {
       "task": "short_xfer_short_scene3_s3_can_to_mug__to_scene1",
       "mode": "scene3_short_cross_scene_baseline_transfer_pass1_g0_19",
       "group": 8,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-25T09:53:16.655Z"
+      "updated_at": "2026-05-26T08:17:14.651Z"
     },
     {
       "task": "short_xfer_short_scene3_s3_can_to_mug__to_scene1",
       "mode": "scene3_short_cross_scene_baseline_transfer_pass1_g0_19",
       "group": 9,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-25T09:53:16.655Z"
+      "updated_at": "2026-05-26T08:17:16.466Z"
     },
     {
       "task": "short_xfer_short_scene3_s3_can_to_mug__to_scene2",
@@ -18387,6 +18387,6 @@
   ],
   "rows": [],
   "reviewer_id": "songjia",
-  "saved_by_backend_at": "2026-05-26T08:16:38.992Z",
+  "saved_by_backend_at": "2026-05-26T08:18:27.110Z",
   "backend": "cloudflare_worker"
 }
