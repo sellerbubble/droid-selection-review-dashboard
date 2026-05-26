@@ -1,6 +1,6 @@
 {
   "reason": "backend_save",
-  "created_at": "2026-05-26T08:34:57.159Z",
+  "created_at": "2026-05-26T08:37:15.769Z",
   "page_url": "https://sellerbubble.github.io/droid-selection-review-dashboard/state_experiments/index.html",
   "overrides": [
     {
@@ -11975,34 +11975,34 @@
       "task": "short_scene3_s3_can_to_mug",
       "mode": "vlm_router_target_feature_last_k2",
       "group": 15,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "partial",
+      "label": "partial",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-25T09:53:16.653Z"
+      "updated_at": "2026-05-26T08:36:46.857Z"
     },
     {
       "task": "short_scene3_s3_can_to_mug",
       "mode": "vlm_router_target_feature_last_k2",
       "group": 16,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-25T09:53:16.653Z"
+      "updated_at": "2026-05-26T08:36:53.718Z"
     },
     {
       "task": "short_scene3_s3_can_to_mug",
       "mode": "vlm_router_target_feature_last_k2",
       "group": 17,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-25T09:53:16.653Z"
+      "updated_at": "2026-05-26T08:37:02.034Z"
     },
     {
       "task": "short_scene3_s3_can_to_mug",
@@ -12085,12 +12085,12 @@
       "task": "short_scene3_s3_can_to_mug",
       "mode": "vlm_router_target_feature_last_k2",
       "group": 7,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-25T09:53:16.653Z"
+      "updated_at": "2026-05-26T08:35:51.546Z"
     },
     {
       "task": "short_scene3_s3_can_to_mug",
@@ -12107,12 +12107,12 @@
       "task": "short_scene3_s3_can_to_mug",
       "mode": "vlm_router_target_feature_last_k2",
       "group": 9,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-25T09:53:16.653Z"
+      "updated_at": "2026-05-26T08:36:17.032Z"
     },
     {
       "task": "short_scene3_s3_can_to_mug",
@@ -12195,12 +12195,12 @@
       "task": "short_scene3_s3_can_to_mug",
       "mode": "vlm_router_target_l1_last_k2",
       "group": 15,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-25T09:53:16.653Z"
+      "updated_at": "2026-05-26T08:36:40.500Z"
     },
     {
       "task": "short_scene3_s3_can_to_mug",
@@ -12217,12 +12217,12 @@
       "task": "short_scene3_s3_can_to_mug",
       "mode": "vlm_router_target_l1_last_k2",
       "group": 17,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-25T09:53:16.653Z"
+      "updated_at": "2026-05-26T08:36:59.211Z"
     },
     {
       "task": "short_scene3_s3_can_to_mug",
@@ -12239,12 +12239,12 @@
       "task": "short_scene3_s3_can_to_mug",
       "mode": "vlm_router_target_l1_last_k2",
       "group": 19,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-25T09:53:16.653Z"
+      "updated_at": "2026-05-26T08:37:12.381Z"
     },
     {
       "task": "short_scene3_s3_can_to_mug",
@@ -12283,12 +12283,12 @@
       "task": "short_scene3_s3_can_to_mug",
       "mode": "vlm_router_target_l1_last_k2",
       "group": 5,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-25T09:53:16.653Z"
+      "updated_at": "2026-05-26T08:35:40.623Z"
     },
     {
       "task": "short_scene3_s3_can_to_mug",
@@ -12305,12 +12305,12 @@
       "task": "short_scene3_s3_can_to_mug",
       "mode": "vlm_router_target_l1_last_k2",
       "group": 7,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-25T09:53:16.653Z"
+      "updated_at": "2026-05-26T08:35:49.219Z"
     },
     {
       "task": "short_scene3_s3_can_to_mug",
@@ -12327,12 +12327,12 @@
       "task": "short_scene3_s3_can_to_mug",
       "mode": "vlm_router_target_l1_last_k2",
       "group": 9,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-25T09:53:16.653Z"
+      "updated_at": "2026-05-26T08:36:14.040Z"
     },
     {
       "task": "short_scene3_s4_can_to_bowl",
@@ -18387,6 +18387,6 @@
   ],
   "rows": [],
   "reviewer_id": "songjia",
-  "saved_by_backend_at": "2026-05-26T08:34:58.389Z",
+  "saved_by_backend_at": "2026-05-26T08:37:16.931Z",
   "backend": "cloudflare_worker"
 }
