@@ -1,6 +1,6 @@
 {
   "reason": "backend_save",
-  "created_at": "2026-05-28T10:39:09.695Z",
+  "created_at": "2026-05-28T10:43:23.971Z",
   "page_url": "https://sellerbubble.github.io/droid-selection-review-dashboard/state_experiments/index.html",
   "overrides": [
     {
@@ -20588,441 +20588,441 @@
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_feature_k5",
       "group": 0,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:39:45.584Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_feature_k5",
       "group": 1,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:39:54.895Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_feature_k5",
       "group": 10,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "partial",
+      "label": "partial",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:41:45.571Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_feature_k5",
       "group": 11,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:41:56.000Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_feature_k5",
       "group": 12,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:42:05.021Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_feature_k5",
       "group": 13,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:42:13.992Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_feature_k5",
       "group": 14,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:42:23.500Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_feature_k5",
       "group": 15,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:42:32.969Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_feature_k5",
       "group": 16,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:42:42.829Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_feature_k5",
       "group": 17,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:42:55.778Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_feature_k5",
       "group": 18,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:43:07.140Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_feature_k5",
       "group": 19,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:43:17.202Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_feature_k5",
       "group": 2,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:40:04.627Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_feature_k5",
       "group": 3,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:40:13.519Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_feature_k5",
       "group": 4,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:40:21.931Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_feature_k5",
       "group": 5,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "partial",
+      "label": "partial",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:40:38.879Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_feature_k5",
       "group": 6,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:40:48.440Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_feature_k5",
       "group": 7,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:40:57.759Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_feature_k5",
       "group": 8,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:41:10.700Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_feature_k5",
       "group": 9,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:41:21.772Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_l1_k5",
       "group": 0,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:39:43.121Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_l1_k5",
       "group": 1,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:39:52.752Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_l1_k5",
       "group": 10,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:41:35.062Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_l1_k5",
       "group": 11,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:41:53.786Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_l1_k5",
       "group": 12,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:42:02.797Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_l1_k5",
       "group": 13,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:42:12.026Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_l1_k5",
       "group": 14,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:42:20.886Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_l1_k5",
       "group": 15,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:42:31.122Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_l1_k5",
       "group": 16,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:42:39.646Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_l1_k5",
       "group": 17,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:42:52.099Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_l1_k5",
       "group": 18,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:43:04.278Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_l1_k5",
       "group": 19,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:43:14.354Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_l1_k5",
       "group": 2,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:40:02.644Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_l1_k5",
       "group": 3,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:40:11.512Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_l1_k5",
       "group": 4,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:40:19.661Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_l1_k5",
       "group": 5,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:40:30.368Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_l1_k5",
       "group": 6,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:40:46.025Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_l1_k5",
       "group": 7,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:40:55.664Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_l1_k5",
       "group": 8,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:41:08.666Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "state_table1_last_target_l1_k5",
       "group": 9,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:41:19.237Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
@@ -21248,221 +21248,221 @@
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "vlm_router_target_l1_last_k2",
       "group": 0,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:39:47.999Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "vlm_router_target_l1_last_k2",
       "group": 1,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:39:57.646Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "vlm_router_target_l1_last_k2",
       "group": 10,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:41:49.248Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "vlm_router_target_l1_last_k2",
       "group": 11,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:41:58.224Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "vlm_router_target_l1_last_k2",
       "group": 12,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:42:07.397Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "vlm_router_target_l1_last_k2",
       "group": 13,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:42:16.674Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "vlm_router_target_l1_last_k2",
       "group": 14,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": false,
+      "visual_label": "fail",
+      "label": "fail",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:42:27.004Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "vlm_router_target_l1_last_k2",
       "group": 15,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:42:35.416Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "vlm_router_target_l1_last_k2",
       "group": 16,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:42:45.475Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "vlm_router_target_l1_last_k2",
       "group": 17,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:42:57.977Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "vlm_router_target_l1_last_k2",
       "group": 18,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:43:09.700Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "vlm_router_target_l1_last_k2",
       "group": 19,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:43:20.020Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "vlm_router_target_l1_last_k2",
       "group": 2,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:40:07.100Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "vlm_router_target_l1_last_k2",
       "group": 3,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:40:15.862Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "vlm_router_target_l1_last_k2",
       "group": 4,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:40:25.138Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "vlm_router_target_l1_last_k2",
       "group": 5,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:40:42.122Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "vlm_router_target_l1_last_k2",
       "group": 6,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:40:51.566Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "vlm_router_target_l1_last_k2",
       "group": 7,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:41:00.118Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "vlm_router_target_l1_last_k2",
       "group": 8,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:41:13.192Z"
     },
     {
       "task": "short_scene3_s7_banana_to_bin",
       "mode": "vlm_router_target_l1_last_k2",
       "group": 9,
-      "visual_success": null,
-      "visual_label": "wait_for_tag",
-      "label": "wait_for_tag",
+      "visual_success": true,
+      "visual_label": "success",
+      "label": "success",
       "original_visual_success": null,
       "original_visual_label": "wait_for_tag",
-      "updated_at": "2026-05-28T10:39:09.686Z"
+      "updated_at": "2026-05-28T10:41:30.737Z"
     },
     {
       "task": "short_xfer_short_scene3_s2_cube_to_bin__to_scene1",
@@ -23227,6 +23227,6 @@
   ],
   "rows": [],
   "reviewer_id": "songjia",
-  "saved_by_backend_at": "2026-05-28T10:39:10.865Z",
+  "saved_by_backend_at": "2026-05-28T10:43:25.739Z",
   "backend": "cloudflare_worker"
 }
